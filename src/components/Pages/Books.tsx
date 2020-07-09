@@ -4,9 +4,7 @@ import { useState } from 'preact/hooks';
 import List from '../List/List';
 import { filterList } from '../../utils/list-filters';
 
-import { mockList } from '../../../__mocks__/data';
-
-const Books = () => {
+const Books = ({ list }) => {
   const [filter, setFilter] = useState('read');
 
   const onChange = (e: Event) => {
@@ -22,7 +20,7 @@ const Books = () => {
         <option value="read">Read</option>
         <option value="unread">Unread</option>
       </select>
-      <List list={filterList(filter, mockList)} />
+      <List list={filterList(filter, list)} />
     </Fragment>
   );
 };

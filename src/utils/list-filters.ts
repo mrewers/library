@@ -11,3 +11,9 @@ export const filterList = (filter: string, list) => {
       return list;
   }
 };
+
+export const getListStats = (list) => ({
+  all: list.length || 0,
+  read: getRead(list).length || 0,
+  unread: getUnread(list).length || 0,
+});
