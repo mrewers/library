@@ -14,6 +14,7 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "preact": "^10.4.5"
+    "preact": "^10.4.5",
+    "preact-router": "^3.2.1"
   }
 }
