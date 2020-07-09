@@ -15,4 +15,6 @@ const Header = ({ title }: { title: string }) => (
   </header>
 );
 
+Header.displayName = 'Header';
+
 export default Header;

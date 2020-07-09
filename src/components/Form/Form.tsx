@@ -49,4 +49,6 @@ const Form = () => {
   );
 };
 
+Form.displayName = 'Form';
+
 export default Form;

@@ -19,4 +19,6 @@ const Navigation = () => (
   </nav>
 );
 
+Navigation.displayName = 'Navigation';
+
 export default Navigation;

@@ -21,4 +21,6 @@ const Stats = ({ list }) => {
   );
 };
 
+Stats.displayName = 'Stats';
+
 export default Stats;

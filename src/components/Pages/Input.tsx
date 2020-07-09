@@ -11,4 +11,6 @@ const Input = () => (
   </Fragment>
 );
 
+Input.displayName = 'Input';
+
 export default Input;

@@ -16,4 +16,6 @@ const List = ({ list }: { list: any }) => (
   </section>
 );
 
+List.displayName = 'List';
+
 export default List;

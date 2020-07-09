@@ -31,4 +31,6 @@ const Books = ({ list }) => {
   );
 };
 
+Books.displayName = 'Books';
+
 export default Books;
