@@ -1,17 +1,18 @@
 import { Fragment, h, render } from 'preact';
 import Router from 'preact-router';
 
-import Navigation from './components/Navigation/Navigation';
+import Header from './components/Header/Header';
 
 import Books from './components/Pages/Books';
 import Input from './components/Pages/Input';
 
+import { mockList } from '../__mocks__/data';
+
 const App = () => (
   <Fragment>
-    <h1>Hello from Preact and Typescript!</h1>
-    <Navigation />
+    <Header title="Library" />
     <Router>
-      <Books path="/" />
+      <Books list={mockList} path="/" />
       <Input path="/add" />
     </Router>
   </Fragment>
