@@ -2,11 +2,17 @@ import { h } from 'preact';
 
 import ListItem from '../ListItem/ListItem';
 
+import './List.scss';
+
 const List = ({ list }: { list: any }) => (
   <section>
-    {list.map((item) => (
-      <ListItem title={item.title} />
-    ))}
+    <ul class="book-list">
+      {list.map((item) => (
+        <li class={item.read ? 'read' : ''}>
+          <ListItem item={item} />
+        </li>
+      ))}
+    </ul>
   </section>
 );
 

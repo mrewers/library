@@ -1,0 +1,41 @@
+@import '../../style/colors.scss';
+@import '../../style/typography.scss';
+
+.stats {
+  @include border-medium-shadow;
+  background-color: $white;
+  display: grid;
+  margin-right: 1.5rem;
+  padding: 1rem;
+  text-align: center;
+  width: 20vw;
+
+  &-container {
+    margin-left: calc(98% - 20vw);
+    margin-right: 2%;
+    position: sticky;
+    top: 1rem;
+    z-index: 1;
+  }
+
+  &-pair {
+    border-bottom: $borderGreyLight;
+    border-top: $borderGreyLight;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+
+    > span:first-of-type {
+      border-right: $borderGreyLight;
+    }
+  }
+
+  &-principal {
+    @include heading-style;
+    font-size: $fontSizeMediumLarge;
+    padding: 0.4rem 0;
+  }
+
+  &-secondary {
+    padding: 0.4rem 0;
+  }
+}

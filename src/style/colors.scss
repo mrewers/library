@@ -1,0 +1,78 @@
+// Colors
+$blueDark: #000e4d;
+$blueLight: #7ac0ff;
+$pink: #ee78ac;
+
+// Monochromes
+$black: #1c1d23;
+$blackLight: #383838;
+$greyDark: #757575;
+$greyLight: #e0e0e0;
+$greyLightest: #f5f5f5;
+$greyMedium: #bdbdbd;
+$white: #ffffff;
+
+// Opacities
+$black25: rgba($black, 0.25);
+$black95: rgba($black, 0.95);
+$greyDark25: rgba($greyDark, 0.25);
+$greyLight50: rgba($greyLight, 0.5);
+
+// Gradients
+$gradientPinkBlueLight: radial-gradient(circle, rgba($pink, 1) 0%, rgba($blueLight, 1) 100%);
+$gradientTransparentPink: linear-gradient(160deg, transparent 70%, rgba($pink, 0.3) 0);
+$gradientTransparentWhite: linear-gradient(180deg, transparent 70%, rgba($white, 0.3) 0);
+
+// Borders
+$borderRadius: 5px;
+
+$borderBlack: 1px solid $black;
+$borderGreyDark: 1px solid $greyDark;
+$borderGreyLight: 1px solid $greyLight;
+$borderGreyMedium: 1px solid $greyMedium;
+
+//Box Shadows
+$deep: 3px 3px 3px 2px;
+$inset: inset 0px 0px 10px;
+$normal: 2px 1px 3px 2px;
+
+$boxShadowGrey: $normal $greyLight50;
+$boxShadowGreyDark: $normal $greyDark25;
+$boxShadowGreyDarkDeep: $deep $greyDark25;
+$boxShadowBlack: $normal $black25;
+$boxShadowInset: $inset rgba($black, 0.1);
+$boxShadowInsetDark: $inset rgba($black, 0.4);
+
+// Focus states
+$focusShadow: 0 0 5px rgba($pink, 0.7);
+$focusShadowStrong: 0 0 5px $blueLight;
+$focusShadowStrongAlternate: 0 0 5px $blueDark;
+
+// Mixins
+@mixin border-rounded {
+  border-radius: $borderRadius;
+}
+
+@mixin border-shadow {
+  box-shadow: $boxShadowGreyDark;
+}
+
+@mixin border-light {
+  @include border-rounded;
+  border: $borderGreyLight;
+}
+
+@mixin border-medium {
+  @include border-rounded;
+  border: $borderGreyMedium;
+}
+
+@mixin border-light-shadow {
+  @include border-light;
+  @include border-shadow;
+}
+
+@mixin border-medium-shadow {
+  @include border-medium;
+  @include border-shadow;
+}

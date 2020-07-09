@@ -1,0 +1,41 @@
+@import '../../style/colors.scss';
+
+.button {
+  @include border-light-shadow;
+  padding: 0.4rem 0.7rem;
+
+  &:focus {
+    box-shadow: $focusShadow;
+    outline: none;
+  }
+}
+
+.accent {
+  color: $blueDark;
+  background-color: $pink;
+
+  &:focus {
+    box-shadow: $focusShadowStrong;
+  }
+}
+
+.dark {
+  color: $white;
+  background-color: $blueDark;
+}
+
+.light {
+  color: $blueDark;
+  background-color: $blueLight;
+}
+
+.plain {
+  color: $blueDark;
+  background-color: $greyLight;
+  box-shadow: $boxShadowBlack;
+}
+
+.white {
+  color: $blueDark;
+  background-color: $white;
+}

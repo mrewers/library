@@ -1,0 +1,20 @@
+@import '../../style/colors.scss';
+@import '../../style/mixins.scss';
+
+.book-list {
+  @include border-light-shadow;
+  @include reset-ul;
+  overflow: hidden;
+
+  > li {
+    padding: 0.5rem;
+
+    &:not(:last-of-type) {
+      border-bottom: $borderGreyLight;
+    }
+  }
+}
+
+.read {
+  background-color: $greyLightest;
+}

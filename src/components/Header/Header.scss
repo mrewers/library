@@ -1,0 +1,15 @@
+@import '../../style/colors.scss';
+@import '../../style/mixins.scss';
+
+header {
+  background: $blueLight;
+  background: $gradientPinkBlueLight;
+  box-shadow: $boxShadowGreyDark;
+  color: $blueDark;
+  padding: 0.1rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.head-container {
+  @include page-width;
+}

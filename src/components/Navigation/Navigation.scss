@@ -1,0 +1,17 @@
+@import '../../style/colors.scss';
+@import '../../style/mixins.scss';
+
+.nav {
+  &-items {
+    @include reset-ul;
+    display: flex;
+
+    > li:not(:first-of-type) {
+      margin-left: 1rem;
+    }
+  }
+
+  &-link:hover {
+    @include link-hover-white;
+  }
+}

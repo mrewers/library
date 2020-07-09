@@ -2,10 +2,16 @@ import { h } from 'preact';
 
 import Navigation from '../Navigation/Navigation';
 
+import './Header.scss';
+
 const Header = ({ title }: { title: string }) => (
   <header>
-    <h1>{title}</h1>
-    <Navigation />
+    <div class="head-container">
+      <h1>
+        <a href="/">{title}</a>
+      </h1>
+      <Navigation />
+    </div>
   </header>
 );
 

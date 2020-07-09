@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Proza+Libre:wght@400;600&display=swap');
+
+// Font Families
+$fontFamilyBase: 'Lora', serif;
+$fontFamilyHeadings: 'Proza Libre', sans-serif;
+
+// Font sizes
+$baseFontSize: 16px;
+$typeScale: 1.25;
+
+$fontSizeSmall: calc(#{$baseFontSize} / #{$typeScale});
+$fontSizeNormal: $baseFontSize;
+$fontSizeMediumSmall: calc(#{$baseFontSize} * #{$typeScale});
+$fontSizeMedium: calc(#{$fontSizeMediumSmall} * #{$typeScale});
+$fontSizeMediumLarge: calc(#{$fontSizeMedium} * #{$typeScale});
+$fontSizeLarge: calc(#{$fontSizeMediumLarge} * #{$typeScale});
+$fontSizeXLarge: calc(#{$fontSizeLarge} * #{$typeScale});
+
+// Mixins
+@mixin heading-style {
+  font-family: $fontFamilyHeadings;
+  font-weight: 600;
+}
+
+@mixin font-base {
+  color: $black;
+  font-family: $fontFamilyBase;
+  font-weight: 400;
+}

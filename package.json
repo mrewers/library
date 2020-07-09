@@ -10,11 +10,19 @@
     "build": "parcel build src/index.html"
   },
   "devDependencies": {
+    "autoprefixer": "^9.8.4",
     "parcel-bundler": "^1.12.4",
+    "sass": "^1.26.10",
     "typescript": "^3.9.6"
   },
   "dependencies": {
     "preact": "^10.4.5",
     "preact-router": "^3.2.1"
+  },
+  "browserslist": "defaults",
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
   }
 }

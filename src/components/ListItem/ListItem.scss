@@ -1,0 +1,23 @@
+.list-item {
+  align-items: center;
+  display: flex;
+}
+
+@mixin icon {
+  background-position: center;
+  background-size: cover;
+  display: block;
+  height: 25px;
+  margin: 0 0.5rem;
+  width: 25px;
+}
+
+.checked {
+  @include icon;
+  background: url('../../assets/icons/check-square.svg');
+}
+
+.unchecked {
+  @include icon;
+  background: url('../../assets/icons/square.svg');
+}

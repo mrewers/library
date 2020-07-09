@@ -7,16 +7,22 @@ import Stats from './components/Stats/Stats';
 import Books from './components/Pages/Books';
 import Input from './components/Pages/Input';
 
+import './style/style.scss';
+
 import { mockList } from '../__mocks__/data';
 
 const App = () => (
   <Fragment>
     <Header title="Library" />
-    <Stats list={mockList} />
-    <Router>
-      <Books list={mockList} path="/" />
-      <Input path="/add" />
-    </Router>
+    <div class="page-container">
+      <Stats list={mockList} />
+      <main>
+        <Router>
+          <Books list={mockList} path="/" />
+          <Input path="/add" />
+        </Router>
+      </main>
+    </div>
   </Fragment>
 );
 

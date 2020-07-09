@@ -1,13 +1,19 @@
 import { h } from 'preact';
 
+import './Navigation.scss';
+
 const Navigation = () => (
   <nav>
-    <ul>
+    <ul class="nav-items">
       <li>
-        <a href="/">Home</a>
+        <a class="nav-link" href="/">
+          Home
+        </a>
       </li>
       <li>
-        <a href="/add">Add New</a>
+        <a class="nav-link" href="/add">
+          Add New
+        </a>
       </li>
     </ul>
   </nav>

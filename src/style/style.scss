@@ -1,0 +1,71 @@
+@import './mixins.scss';
+@import './typography.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+* + * {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  background-size: 0 100%;
+  color: $blueDark;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+body {
+  @include font-base;
+  font-size: $fontSizeNormal;
+}
+
+button {
+  font-family: $fontFamilyHeadings;
+  font-weight: 600;
+}
+
+h1 {
+  @include heading-style;
+  font-size: $fontSizeXLarge;
+}
+
+h2 {
+  @include heading-style;
+  font-size: $fontSizeLarge;
+}
+
+h3 {
+  @include heading-style;
+  font-size: $fontSizeMediumLarge;
+}
+
+main {
+  transform: translateY(-10rem);
+}
+
+input,
+select {
+  @include border-light;
+  @include font-base;
+  // appearance: none;
+  font-size: $fontSizeSmall;
+  padding: 0.1rem 0.3rem;
+  box-shadow: $boxShadowInset;
+
+  &:focus {
+    box-shadow: $focusShadow;
+    outline: none;
+  }
+}
+
+strong {
+  font-weight: 600;
+}
+
+.page-container {
+  @include page-width;
+  position: relative;
+}

@@ -1,7 +1,14 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 
 import Form from '../Form/Form';
 
-const Input = () => <Form />;
+import './Pages.scss';
+
+const Input = () => (
+  <Fragment>
+    <h2 class="sub-head">Add New Book</h2>
+    <Form />
+  </Fragment>
+);
 
 export default Input;

@@ -1,0 +1,25 @@
+@import './colors.scss';
+@import './typography.scss';
+
+@mixin link-hover {
+  background-color: transparent;
+  transition: background-size 0.25s ease;
+  background-size: 100% 100%;
+}
+
+@mixin link-hover-white {
+  @include link-hover;
+
+  background-image: $gradientTransparentWhite;
+}
+
+@mixin page-width {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 95vw;
+}
+
+@mixin reset-ul {
+  list-style: none;
+  padding: 0;
+}
