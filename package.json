@@ -1,0 +1,19 @@
+{
+  "name": "library",
+  "version": "0.0.1",
+  "description": "Inventory of books",
+  "main": "index.js",
+  "author": "Marek Rewers",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+    "preact": "^10.4.5"
+  }
+}
