@@ -27,8 +27,8 @@ const Form = (): h.JSX.Element => {
     e.preventDefault();
   };
 
-  const onInput = (e: TypeEventInput): void => {
-    const { name, value } = e.currentTarget;
+  const onInput = ({ currentTarget }: TypeEventInput): void => {
+    const { name, value } = currentTarget;
 
     routeInput(name, value);
   };

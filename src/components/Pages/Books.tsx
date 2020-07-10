@@ -1,4 +1,4 @@
-import { Fragment, h, JSX } from 'preact';
+import { Fragment, h } from 'preact';
 import { useState } from 'preact/hooks';
 
 import List from '../List/List';
@@ -13,7 +13,7 @@ interface IBooksProps {
 const Books = ({ list }: IBooksProps): h.JSX.Element => {
   const [filter, setFilter] = useState('all');
 
-  const handleChange = ({ currentTarget }: JSX.TargetedEvent<HTMLInputElement>): void => {
+  const handleChange = ({ currentTarget }: TypeEventSelect): void => {
     const { value } = currentTarget;
 
     setFilter(value);

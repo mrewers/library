@@ -37,5 +37,6 @@
       "autoprefixer": {}
     }
   },
-  "prettier": "@cryptopapers/prettier-config"
+  "prettier": "@cryptopapers/prettier-config",
+  "types": "./src/typings.d.ts"
 }

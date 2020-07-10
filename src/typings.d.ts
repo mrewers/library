@@ -4,27 +4,30 @@ declare module '*.module.scss';
 
 declare module '*.svg';
 
-declare module '*/__mocks__/data';
+declare global {
+  interface IBook {
+    readonly title: string;
+    readonly author?: string;
+    readonly read: string[];
+  }
 
-interface IBook {
-  readonly title: string;
-  readonly author: string;
-  readonly read: boolean;
+  interface IStats {
+    readonly all: number;
+    readonly read: number;
+    readonly unread: number;
+  }
+
+  interface IButton {
+    readonly classes: string;
+    readonly color: string;
+    readonly label: string;
+    readonly type: string;
+  }
+
+  /* eslint-disable @typescript-eslint/no-type-alias */
+  type TypeEventInput = JSX.TargetedEvent<HTMLInputElement>;
+  type TypeEventSelect = JSX.TargetedEvent<HTMLSelectElement>;
+
+  type TypeBookList = readonly IBook[];
+  /* eslint-enable @typescript-eslint/no-type-alias */
 }
-
-interface IStats {
-  readonly all: number;
-  readonly read: number;
-  readonly unread: number;
-}
-
-interface IButton {
-  readonly classes: string;
-  readonly color: string;
-  readonly label: string;
-  readonly type: string;
-}
-
-type TypeEventInput = JSX.TargetedEvent<HTMLInputElement>;
-
-type TypeBookList = readonly IBook[];

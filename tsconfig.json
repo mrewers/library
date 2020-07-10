@@ -9,5 +9,6 @@
     "jsx": "react",
     "jsxFactory": "h"
   },
-  "include": ["./src/**/*"]
+  "exclude": ["dist", "node_modules"],
+  "include": [".eslintrc.js", "./src/**/*", "./__mocks__/**/*.ts"]
 }
