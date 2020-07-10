@@ -2,7 +2,7 @@ import { h } from 'preact';
 
 import './Navigation.scss';
 
-const Navigation = () => (
+const Navigation = (): h.JSX.Element => (
   <nav>
     <ul class="nav-items">
       <li>

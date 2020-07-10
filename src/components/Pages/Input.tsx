@@ -4,7 +4,7 @@ import Form from '../Form/Form';
 
 import './Pages.scss';
 
-const Input = () => (
+const Input = (): h.JSX.Element => (
   <Fragment>
     <h2 class="sub-head">Add New Book</h2>
     <Form />

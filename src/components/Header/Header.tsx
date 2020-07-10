@@ -4,7 +4,11 @@ import Navigation from '../Navigation/Navigation';
 
 import './Header.scss';
 
-const Header = ({ title }: { title: string }) => (
+interface IHeaderProps {
+  readonly title: string;
+}
+
+const Header = ({ title }: IHeaderProps): h.JSX.Element => (
   <header>
     <div class="head-container">
       <h1>

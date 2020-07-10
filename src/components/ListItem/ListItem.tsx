@@ -2,7 +2,11 @@ import { h } from 'preact';
 
 import './ListItem.scss';
 
-const ListItem = ({ item }) => (
+interface IListItemProps {
+  readonly item: IBook;
+}
+
+const ListItem = ({ item }: IListItemProps): h.JSX.Element => (
   <article class="list-item">
     <i class={item.read ? 'checked' : 'unchecked'} />
     <p>

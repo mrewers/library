@@ -4,7 +4,11 @@ import { getListStats } from '../../utils/list-filters';
 
 import './Stats.scss';
 
-const Stats = ({ list }) => {
+interface IStatsProps {
+  readonly list: TypeBookList;
+}
+
+const Stats = ({ list }: IStatsProps): h.JSX.Element => {
   const { all, read, unread } = getListStats(list);
 
   return (

@@ -4,11 +4,15 @@ import ListItem from '../ListItem/ListItem';
 
 import './List.scss';
 
-const List = ({ list }: { list: any }) => (
+interface IListProps {
+  readonly list: TypeBookList;
+}
+
+const List = ({ list }: IListProps): h.JSX.Element => (
   <section>
     <ul class="book-list">
-      {list.map((item) => (
-        <li class={item.read ? 'read' : ''}>
+      {list.map(item => (
+        <li key={item.title} class={item.read ? 'read' : ''}>
           <ListItem item={item} />
         </li>
       ))}

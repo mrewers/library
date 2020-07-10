@@ -5,11 +5,11 @@ import Button from '../Button/Button';
 
 import './Form.scss';
 
-const Form = () => {
+const Form = (): h.JSX.Element => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
 
-  const routeInput = (name: string, value: string) => {
+  const routeInput = (name: string, value: string): void => {
     switch (name) {
       case 'author':
         setAuthor(value);
@@ -22,14 +22,13 @@ const Form = () => {
     }
   };
 
-  const onSubmit = (e: Event) => {
+  const onSubmit = (e: Event): void => {
     alert(title);
     e.preventDefault();
   };
 
-  const onInput = (e: Event) => {
-    const { name, value } = e.target;
-    console.log(name, value);
+  const onInput = (e: TypeEventInput): void => {
+    const { name, value } = e.currentTarget;
 
     routeInput(name, value);
   };
