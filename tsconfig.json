@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "sourceMap": true,
-    "noImplicitAny": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "lib": ["es2020"],
     "module": "es6",
     "moduleResolution": "node",
-    "target": "es6",
-    "jsx": "react",
-    "jsxFactory": "h"
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "target": "es6"
   },
   "exclude": ["dist", "node_modules"],
   "include": [".eslintrc.js", "./src/**/*", "./__mocks__/**/*.ts"]

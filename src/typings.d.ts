@@ -8,7 +8,7 @@ declare global {
   interface IBook {
     readonly title: string;
     readonly author?: string;
-    readonly read: string[];
+    readonly read: readonly string[];
   }
 
   interface IStats {

@@ -1,5 +1,8 @@
-const getRead = (list: TypeBookList): TypeBookList => list.filter((item: IBook) => item.read);
-const getUnread = (list: TypeBookList): TypeBookList => list.filter((item: IBook) => !item.read);
+const getRead = (list: TypeBookList): TypeBookList =>
+  list.filter((item: IBook) => item.read.length > 0);
+
+const getUnread = (list: TypeBookList): TypeBookList =>
+  list.filter((item: IBook) => item.read.length === 0);
 
 export const filterList = (filter: string, list: TypeBookList): TypeBookList => {
   switch (filter) {

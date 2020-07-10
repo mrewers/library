@@ -12,7 +12,7 @@ const List = ({ list }: IListProps): h.JSX.Element => (
   <section>
     <ul class="book-list">
       {list.map(item => (
-        <li key={item.title} class={item.read ? 'read' : ''}>
+        <li key={item.title} class={item.read.length !== 0 ? 'read' : ''}>
           <ListItem item={item} />
         </li>
       ))}
