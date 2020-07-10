@@ -1,6 +1,8 @@
 import { h } from 'preact';
+import { useContext } from 'preact/hooks';
 
 import { getListStats } from '../../utils/list-filters';
+import { FilterContext } from '../../context/filterContext';
 
 import './Stats.scss';
 
@@ -9,7 +11,9 @@ interface IStatsProps {
 }
 
 const Stats = ({ list }: IStatsProps): h.JSX.Element => {
-  const { all, read, unread } = getListStats(list);
+  const { state } = useContext(FilterContext);
+
+  const { all, read, unread } = getListStats(list, state.reader);
 
   return (
     <aside class="stats-container">

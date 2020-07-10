@@ -1,22 +1,34 @@
-const getRead = (list: TypeBookList): TypeBookList =>
-  list.filter((item: IBook) => item.read.length > 0);
+const getRead = (list: TypeBookList, reader: string): TypeBookList => {
+  switch (reader) {
+    case 'all':
+      return list.filter((item: IBook) => item.read.length > 0);
+    default:
+      return list.filter((item: IBook) => item.read.includes(reader));
+  }
+};
 
-const getUnread = (list: TypeBookList): TypeBookList =>
-  list.filter((item: IBook) => item.read.length === 0);
+const getUnread = (list: TypeBookList, reader: string): TypeBookList => {
+  switch (reader) {
+    case 'all':
+      return list.filter((item: IBook) => item.read.length === 0);
+    default:
+      return list.filter((item: IBook) => !item.read.includes(reader));
+  }
+};
 
-export const filterList = (filter: string, list: TypeBookList): TypeBookList => {
-  switch (filter) {
+export const filterList = (type: string, reader: string, list: TypeBookList): TypeBookList => {
+  switch (type) {
     case 'read':
-      return getRead(list);
+      return getRead(list, reader);
     case 'unread':
-      return getUnread(list);
+      return getUnread(list, reader);
     default:
       return list;
   }
 };
 
-export const getListStats = (list: TypeBookList): IStats => ({
+export const getListStats = (list: TypeBookList, reader: string): IStats => ({
   all: list.length || 0,
-  read: getRead(list).length || 0,
-  unread: getUnread(list).length || 0,
+  read: getRead(list, reader).length || 0,
+  unread: getUnread(list, reader).length || 0,
 });
