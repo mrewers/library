@@ -14,11 +14,6 @@ import { devApiServer } from './mirage';
 
 import './style/style.scss';
 
-import { mockList } from '../__mocks__/data';
-
-/* eslint-disable react/no-multi-comp */
-const renderBooks = (): h.JSX.Element => <Books list={mockList} />;
-
 devApiServer({ environment: 'development' });
 
 const App = (): h.JSX.Element => {
@@ -38,10 +33,10 @@ const App = (): h.JSX.Element => {
       <div class="page-container">
         <BookContext.Provider value={{ dispatch: bookDispatch, state: bookState }}>
           <FilterContext.Provider value={{ dispatch: filterDispatch, state: filterState }}>
-            <Stats list={mockList} />
+            <Stats />
             <main>
               <Router>
-                <Route component={renderBooks} path="/" />
+                <Route component={Books} path="/" />
                 <Route component={Input} path="/add" />
               </Router>
             </main>
@@ -51,10 +46,7 @@ const App = (): h.JSX.Element => {
     </Fragment>
   );
 };
-/* eslint-enable react/no-multi-comp */
 
 App.displayName = 'App';
-
-renderBooks.displayName = 'RenderBooks';
 
 render(<App />, document.getElementById('root'));

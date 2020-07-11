@@ -3,17 +3,17 @@ import { useContext } from 'preact/hooks';
 
 import { getListStats } from '../../utils/list-filters';
 import { FilterContext } from '../../context/filterContext';
+import { BookContext } from '../../context/bookContext';
 
 import './Stats.scss';
 
-interface IStatsProps {
-  readonly list: TypeBookList;
-}
-
-const Stats = ({ list }: IStatsProps): h.JSX.Element => {
+const Stats = (): h.JSX.Element => {
   const { state } = useContext(FilterContext);
+  const {
+    state: { books },
+  } = useContext(BookContext);
 
-  const { all, read, unread } = getListStats(list, state.reader);
+  const { all, read, unread } = getListStats(books, state.reader);
 
   return (
     <aside class="stats-container">
