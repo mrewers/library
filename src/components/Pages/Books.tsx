@@ -3,9 +3,10 @@ import { useContext } from 'preact/hooks';
 
 import Filter from '../Filter/Filter';
 import List from '../List/List';
-import { filterList } from '../../utils/list-filters';
-import { FilterContext } from '../../context/filterContext';
+
 import { BookContext } from '../../context/bookContext';
+import { FilterContext } from '../../context/filterContext';
+import { filterList } from '../../utils/list-filters';
 
 import './Pages.scss';
 

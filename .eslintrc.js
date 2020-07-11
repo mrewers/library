@@ -24,6 +24,7 @@ module.exports = {
       { selector: 'variable', format: ['camelCase'] },
       { selector: 'variable', types: ['function'], format: ['camelCase', 'PascalCase'] },
     ],
+    '@typescript-eslint/no-type-alias': ['error', { allowAliases: 'in-unions' }],
   },
   settings: {
     react: {

@@ -10,20 +10,28 @@ import Input from './components/Pages/Input';
 
 import { FilterContext, filterReducer, initialFilterState } from './context/filterContext';
 import { BookContext, bookReducer, initialBookState } from './context/bookContext';
-import { devApiServer } from './mirage';
+import { devApiServer, EnvOptions } from './mirage';
+import { fetchData } from './utils/api';
 
 import './style/style.scss';
 
-devApiServer({ environment: 'development' });
+devApiServer({ environment: EnvOptions.DEV });
 
 const App = (): h.JSX.Element => {
   const [filterState, filterDispatch] = useReducer(filterReducer, initialFilterState);
   const [bookState, bookDispatch] = useReducer(bookReducer, initialBookState);
 
   useEffect(() => {
-    fetch('/api/books')
-      .then(res => res.json())
-      .then((data: readonly string[]) => bookDispatch({ type: 'books', payload: { books: data } }))
+    // Fetch book data
+    fetchData('books')
+      .then((data: TypeBookList) => bookDispatch({ type: 'books', payload: { books: data } }))
+      .catch(err => console.error(err));
+
+    // Fetch reader data
+    fetchData('readers')
+      .then((data: readonly string[]) =>
+        bookDispatch({ type: 'readers', payload: { readers: data } })
+      )
       .catch(err => console.error(err));
   }, []);
 

@@ -1,4 +1,4 @@
-export const mockList = [
+export const mockBooks = [
   { title: 'The Ball is Round', read: [] },
   { title: 'Great at Work', read: [] },
   { title: 'Fiasco', author: 'Thomas Ricks', read: ['Marek'] },
@@ -8,4 +8,4 @@ export const mockList = [
   { title: 'Annihilation', author: 'Jeff Vandermeer', read: ['Jul', 'Marek'] },
 ];
 
-export const users = ['Jul', 'Marek'];
+export const mockReaders = ['Jul', 'Marek'];
