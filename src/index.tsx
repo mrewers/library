@@ -24,13 +24,15 @@ const App = (): h.JSX.Element => {
   useEffect(() => {
     // Fetch book data
     fetchData('books')
-      .then((data: TypeBookList) => bookDispatch({ type: 'books', payload: { books: data } }))
+      .then((data: TypeBookList) =>
+        bookDispatch({ type: 'UPDATE_BOOKS', payload: { books: data } })
+      )
       .catch(err => console.error(err));
 
     // Fetch reader data
     fetchData('readers')
-      .then((data: readonly string[]) =>
-        bookDispatch({ type: 'readers', payload: { readers: data } })
+      .then((data: readonly IReader[]) =>
+        bookDispatch({ type: 'UPDATE_READER_DATA', payload: { data } })
       )
       .catch(err => console.error(err));
   }, []);

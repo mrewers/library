@@ -3,6 +3,7 @@ import { useContext } from 'preact/hooks';
 
 import { BookContext } from '../../context/bookContext';
 import { FilterContext } from '../../context/filterContext';
+import { filterList } from '../../utils/list-filters';
 
 import './Filter.scss';
 
@@ -14,13 +15,16 @@ const Filter = (): h.JSX.Element => {
     const { name, value } = currentTarget;
 
     if (name === 'type' && typeof value === 'string') {
-      dispatch({ type: 'type', payload: { type: value } });
+      dispatch({ type: 'UPDATE_TYPE', payload: { status: value } });
     }
 
     if (name === 'reader' && typeof value === 'string') {
-      dispatch({ type: 'reader', payload: { reader: value } });
+      dispatch({ type: 'UPDATE_READER', payload: { reader: value } });
     }
   };
+
+  const matches = filterList(state.status, state.reader, bookState.readers.length, bookState.books)
+    .length;
 
   return (
     <p>
@@ -29,7 +33,7 @@ const Filter = (): h.JSX.Element => {
         <select
           id="filter-type"
           name="type"
-          value={state.type}
+          value={state.status}
           onBlur={handleChange}
           onChange={handleChange}
         >
@@ -56,6 +60,7 @@ const Filter = (): h.JSX.Element => {
           ))}
         </select>
       </label>
+      <strong>{` - ${matches || 0} matches`}</strong>
     </p>
   );
 };

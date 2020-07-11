@@ -3,7 +3,7 @@ import { createContext } from 'preact';
 export const initialFilterState = {
   operator: 'or',
   reader: 'any',
-  type: 'all',
+  status: 'all',
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -15,13 +15,13 @@ export const FilterContext = createContext({
 interface IFilterState {
   readonly operator: string;
   readonly reader: string;
-  readonly type: string;
+  readonly status: string;
 }
 
 interface IFilterAction {
   readonly payload: {
     readonly reader?: string;
-    readonly type?: string;
+    readonly status?: string;
   };
   readonly type: string;
 }
@@ -32,16 +32,16 @@ export const filterReducer = (state: IFilterState, action: IFilterAction): IFilt
   const { payload } = action;
 
   switch (action.type) {
-    case 'reader':
+    case 'UPDATE_READER':
       return {
         ...state,
         operator: setOperator(payload.reader),
         reader: payload.reader,
       };
-    case 'type':
+    case 'UPDATE_TYPE':
       return {
         ...state,
-        type: payload.type,
+        status: payload.status,
       };
     default:
       return state;

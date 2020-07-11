@@ -8,4 +8,7 @@ export const mockBooks = [
   { title: 'Annihilation', author: 'Jeff Vandermeer', read: ['Jul', 'Marek'] },
 ];
 
-export const mockReaders = ['Jul', 'Marek'];
+export const mockReaders = [
+  { color: 'pink', name: 'Jul' },
+  { color: 'blue', name: 'Marek' },
+];

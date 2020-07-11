@@ -2,6 +2,7 @@ import { createContext } from 'preact';
 
 export const initialBookState: IBookState = {
   books: [],
+  readerData: [],
   readers: [],
 };
 
@@ -11,29 +12,26 @@ export const BookContext = createContext({
   state: initialBookState,
 });
 
-interface IBookState {
-  readonly books: readonly IBook[];
-  readonly readers: readonly string[];
-}
-
-interface IBookAction {
-  readonly payload: {
-    readonly books?: readonly IBook[];
-    readonly readers?: readonly string[];
-  };
-  readonly type: string;
-}
+const getReadersList = (data: readonly IReader[]): string[] => {
+  return data.map(reader => reader.name);
+};
 
 export const bookReducer = (state: IBookState, action: IBookAction): IBookState => {
   const { payload } = action;
 
   switch (action.type) {
-    case 'books':
+    case 'UPDATE_BOOKS':
       return {
         ...state,
         books: payload.books,
       };
-    case 'readers':
+    case 'UPDATE_READER_DATA':
+      return {
+        ...state,
+        readerData: payload.data,
+        readers: getReadersList(payload.data),
+      };
+    case 'UPDATE_READERS':
       return {
         ...state,
         readers: payload.readers,
@@ -42,3 +40,26 @@ export const bookReducer = (state: IBookState, action: IBookAction): IBookState 
       return state;
   }
 };
+
+// Book context types
+declare global {
+  interface IReader {
+    readonly name: string;
+    readonly color?: string;
+  }
+
+  interface IBookState {
+    readonly books: readonly IBook[];
+    readonly readerData: readonly IReader[];
+    readonly readers: readonly string[];
+  }
+
+  interface IBookAction {
+    readonly payload: {
+      readonly books?: readonly IBook[];
+      readonly data?: readonly IReader[];
+      readonly readers?: readonly string[];
+    };
+    readonly type: string;
+  }
+}

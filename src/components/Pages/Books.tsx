@@ -12,7 +12,7 @@ import './Pages.scss';
 
 const Books = (): h.JSX.Element => {
   const {
-    state: { type, reader },
+    state: { status, reader },
   } = useContext(FilterContext);
   const {
     state: { books, readers },
@@ -22,7 +22,7 @@ const Books = (): h.JSX.Element => {
     <Fragment>
       <h2 class="sub-head">Inventory</h2>
       <Filter />
-      <List list={filterList(type, reader, readers.length, books)} />
+      <List list={filterList(status, reader, readers.length, books)} />
     </Fragment>
   );
 };

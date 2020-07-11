@@ -24,6 +24,11 @@
     @include icon;
     background: url('../../assets/icons/check-square-pink.svg');
   }
+
+  &-generic {
+    @include icon;
+    background: url('../../assets/icons/check-square.svg');
+  }
 }
 
 .unchecked {

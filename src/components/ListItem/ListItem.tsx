@@ -1,4 +1,8 @@
 import { h } from 'preact';
+import { useContext } from 'preact/hooks';
+
+import { FilterContext } from '../../context/filterContext';
+import { BookContext } from '../../context/bookContext';
 
 import './ListItem.scss';
 
@@ -6,18 +10,54 @@ interface IListItemProps {
   readonly item: IBook;
 }
 
-const containsReader = (arr: readonly string[], name: string): boolean => arr.includes(name);
+const containsReader = (readers: readonly string[], name: string): boolean =>
+  readers.includes(name);
 
-const ListItem = ({ item }: IListItemProps): h.JSX.Element => (
-  <article class="list-item">
-    <i class={containsReader(item.read, 'Marek') ? 'checked-blue' : 'unchecked'} />
-    <i class={containsReader(item.read, 'Jul') ? 'checked-pink' : 'unchecked'} />
-    <p>
-      <strong>{item.title}</strong>
-      {item.author && <span>{` - ${item.author}`}</span>}
-    </p>
-  </article>
-);
+const getSelectedReaderData = (readers: readonly IReader[], name: string): IReader => {
+  const reader = readers.filter(reader => reader.name === name);
+
+  return reader[0];
+};
+
+const getCheckMark = (reader: IReader): string => {
+  return reader.color ? `checked-${reader.color}` : 'checked-generic';
+};
+
+const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
+  const {
+    state: { reader },
+  } = useContext(FilterContext);
+  const {
+    state: { readerData },
+  } = useContext(BookContext);
+
+  const isCollective = reader === 'all' || reader === 'any';
+
+  return (
+    <article class="list-item">
+      {isCollective &&
+        readerData.map(r => (
+          <i
+            key={r.name}
+            class={containsReader(item.read, r.name) ? getCheckMark(r) : 'unchecked'}
+          />
+        ))}
+      {!isCollective && (
+        <i
+          class={
+            containsReader(item.read, reader)
+              ? getCheckMark(getSelectedReaderData(readerData, reader))
+              : 'unchecked'
+          }
+        />
+      )}
+      <p>
+        <strong>{item.title}</strong>
+        {item.author && <span>{` - ${item.author}`}</span>}
+      </p>
+    </article>
+  );
+};
 
 ListItem.displayName = 'ListItem';
 
