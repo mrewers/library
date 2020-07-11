@@ -19,7 +19,11 @@ $greyDark25: rgba($greyDark, 0.25);
 $greyLight50: rgba($greyLight, 0.5);
 
 // Gradients
-$gradientPinkBlueLight: radial-gradient(circle, rgba($pink, 1) 0%, rgba($blueLight, 1) 100%);
+$gradientPinkBlueLight: radial-gradient(
+  ellipse at top right,
+  rgba($pink, 1) 0%,
+  rgba($blueLight, 1) 100%
+);
 $gradientTransparentPink: linear-gradient(160deg, transparent 70%, rgba($pink, 0.3) 0);
 $gradientTransparentWhite: linear-gradient(180deg, transparent 70%, rgba($white, 0.3) 0);
 
