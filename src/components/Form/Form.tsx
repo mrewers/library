@@ -43,7 +43,7 @@ const Form = (): h.JSX.Element => {
         Author:
         <input id="author" name="author" type="text" value={author} onInput={onInput} />
       </label>
-      <Button classes="form-submit" color="accent" label="Submit" type="submit" />
+      <Button classes="form-submit" color="light" label="Submit" type="submit" />
     </form>
   );
 };

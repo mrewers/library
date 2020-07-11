@@ -10,13 +10,16 @@ interface IListProps {
 
 const List = ({ list }: IListProps): h.JSX.Element => (
   <section>
-    <ul class="book-list">
-      {list.map(item => (
-        <li key={item.title} class={item.read.length !== 0 ? 'read' : ''}>
-          <ListItem item={item} />
-        </li>
-      ))}
-    </ul>
+    {list.length === 0 && <div class="loader">Loading...</div>}
+    {list.length > 0 && (
+      <ul class="book-list">
+        {list.map(item => (
+          <li key={item.title} class={item.read.length !== 0 ? 'read' : ''}>
+            <ListItem item={item} />
+          </li>
+        ))}
+      </ul>
+    )}
   </section>
 );
 
