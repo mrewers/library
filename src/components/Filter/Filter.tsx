@@ -1,12 +1,14 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
+import { BookContext } from '../../context/bookContext';
 import { FilterContext } from '../../context/filterContext';
 
 import './Filter.scss';
 
 const Filter = (): h.JSX.Element => {
   const { state, dispatch } = useContext(FilterContext);
+  const { state: bookState } = useContext(BookContext);
 
   const handleChange = ({ currentTarget }: TypeEventSelect): void => {
     const { name, value } = currentTarget;
@@ -45,9 +47,13 @@ const Filter = (): h.JSX.Element => {
           onBlur={handleChange}
           onChange={handleChange}
         >
+          <option value="any">Any Reader</option>
           <option value="all">All Readers</option>
-          <option value="Jul">Jul</option>
-          <option value="Marek">Marek</option>
+          {bookState.readers.map(reader => (
+            <option key={reader} value={reader}>
+              {reader}
+            </option>
+          ))}
         </select>
       </label>
     </p>

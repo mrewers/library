@@ -10,3 +10,22 @@ export const calcPercentOf = (subset: number, total: number): number => {
 
   return Math.round((subset / total) * 100);
 };
+
+export const getReaders = (rs: readonly string[] = [], operator = 'or'): string => {
+  if (rs.length === 0) return '';
+
+  if (rs.length > 3) {
+    const message = operator === 'and' ? ' all readers' : ' any reader';
+
+    return message;
+  }
+
+  return rs.reduce((r, curr, i) => {
+    const op = operator === 'and' ? '&' : 'or';
+    const spacer = rs.length < 3 ? ' ' : ', ';
+
+    const delimiter = r.length ? (i + 1 === rs.length ? `${spacer}${op}` : ',') : '';
+
+    return `${r}${delimiter} ${curr}`;
+  }, '');
+};

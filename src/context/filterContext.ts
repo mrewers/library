@@ -1,7 +1,8 @@
 import { createContext } from 'preact';
 
 export const initialFilterState = {
-  reader: 'all',
+  operator: 'or',
+  reader: 'any',
   type: 'all',
 };
 
@@ -12,6 +13,7 @@ export const FilterContext = createContext({
 });
 
 interface IFilterState {
+  readonly operator: string;
   readonly reader: string;
   readonly type: string;
 }
@@ -24,6 +26,8 @@ interface IFilterAction {
   readonly type: string;
 }
 
+const setOperator = (reader: string): string => (reader === 'all' ? 'and' : 'or');
+
 export const filterReducer = (state: IFilterState, action: IFilterAction): IFilterState => {
   const { payload } = action;
 
@@ -31,6 +35,7 @@ export const filterReducer = (state: IFilterState, action: IFilterAction): IFilt
     case 'reader':
       return {
         ...state,
+        operator: setOperator(payload.reader),
         reader: payload.reader,
       };
     case 'type':

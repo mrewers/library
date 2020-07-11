@@ -32,10 +32,17 @@
   &-principal {
     @include heading-style;
     font-size: $fontSizeMediumLarge;
-    padding: 0.4rem 0;
   }
 
   &-secondary {
+    padding: 0.4rem 0;
+  }
+
+  &-topline {
+    @include heading-style;
+    display: flex;
+    flex-direction: column;
+    font-size: $fontSizeSmall;
     padding: 0.4rem 0;
   }
 }

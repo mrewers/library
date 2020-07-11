@@ -11,16 +11,18 @@ import { filterList } from '../../utils/list-filters';
 import './Pages.scss';
 
 const Books = (): h.JSX.Element => {
-  const { state } = useContext(FilterContext);
   const {
-    state: { books },
+    state: { type, reader },
+  } = useContext(FilterContext);
+  const {
+    state: { books, readers },
   } = useContext(BookContext);
 
   return (
     <Fragment>
       <h2 class="sub-head">Inventory</h2>
       <Filter />
-      <List list={filterList(state.type, state.reader, books)} />
+      <List list={filterList(type, reader, readers.length, books)} />
     </Fragment>
   );
 };
