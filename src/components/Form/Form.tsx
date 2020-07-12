@@ -5,6 +5,7 @@ import Button from '~/components/Button/Button';
 
 import { BookContext } from '~/context/bookContext';
 import { getDateString } from '~/utils/dates';
+import { submitData } from '~/utils/api';
 
 import './Form.scss';
 
@@ -22,8 +23,11 @@ const Form = (): h.JSX.Element => {
   const [date, setDate] = useState(getDateString());
   const [read, setRead] = useState([]);
   const [title, setTitle] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [overlayText, setOverlayText] = useState('Saving..');
 
   const {
+    dispatch,
     state: { readers },
   } = useContext(BookContext);
 
@@ -49,8 +53,34 @@ const Form = (): h.JSX.Element => {
     }
   };
 
+  const resetOverlay = (msg: string): void => {
+    setOverlayText(msg);
+    setTimeout((): void => {
+      setSaving(false);
+      setOverlayText('Saving...');
+    }, 1000);
+  };
+
+  const resetForm = (): void => {
+    resetOverlay('Successfully Saved!');
+    setAcquired('no');
+    setAuthor('');
+    setDate(getDateString());
+    setRead([]);
+    setTitle('');
+  };
+
   const onSubmit = (e: Event): void => {
-    console.log(title, acquired, author, date, read, title);
+    setSaving(true);
+    submitData({ book: { acquired, author, date, read, title } }, 'books')
+      .then((data: IBooksResponse) => {
+        dispatch({ type: 'UPDATE_BOOKS', payload: { books: data.books } });
+        resetForm();
+      })
+      .catch(err => {
+        resetOverlay('We encountered an error while saving :(');
+        console.error(err);
+      });
     e.preventDefault();
   };
 
@@ -62,6 +92,7 @@ const Form = (): h.JSX.Element => {
 
   return (
     <form class="form" onSubmit={onSubmit}>
+      {saving && <div class="form-overlay">{overlayText}</div>}
       <label class="form-label" for="title">
         Title:
         <input id="title" name="title" type="text" value={title} onInput={onInput} />

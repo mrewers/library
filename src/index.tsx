@@ -30,8 +30,8 @@ const App = (): h.JSX.Element => {
   useEffect(() => {
     // Fetch book data
     fetchData('books')
-      .then((data: TypeBookList) =>
-        bookDispatch({ type: 'UPDATE_BOOKS', payload: { books: data } })
+      .then((data: IBooksResponse) =>
+        bookDispatch({ type: 'UPDATE_BOOKS', payload: { books: data.books } })
       )
       .catch(err => console.error(err));
 

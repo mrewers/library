@@ -1,6 +1,6 @@
-import { Server } from 'miragejs';
+import { Model, Response, Server } from 'miragejs';
 
-import { mockBooks, mockReaders } from '~/__mocks__/data';
+import { mockBooks as books, mockReaders as readers } from '~/__mocks__/data';
 
 /**
  * Initializes a Mirage development server to mock API requests.
@@ -16,12 +16,29 @@ const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
   return new Server({
     environment,
 
+    models: {
+      book: Model,
+    },
+
+    seeds(server) {
+      books.forEach(book => server.create('book', book));
+    },
+
     routes(): void {
       this.namespace = 'api';
 
       // Get routes
-      this.get('/books', () => mockBooks, { timing });
-      this.get('/readers', () => mockReaders, { timing });
+      this.get('/books', schema => schema.books.all(), { timing });
+      this.get('/readers', () => readers, { timing });
+
+      // Post routes
+      this.post('/books', (schema, request) => {
+        return new Response(400);
+        const attrs = JSON.parse(request.requestBody);
+
+        schema.books.create(attrs.book);
+        return schema.books.all();
+      });
     },
   });
 };

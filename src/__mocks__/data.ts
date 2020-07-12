@@ -1,14 +1,49 @@
 export const mockBooks = [
-  { title: 'The Ball is Round', read: [] },
-  { title: 'Great at Work', read: [] },
-  { title: 'Fiasco', author: 'Thomas Ricks', read: ['Marek'] },
-  { title: "The Startup Owner's Manual", read: [] },
-  { title: 'Tea Time With Terrorists', read: ['Marek'] },
-  { title: 'My Year of Running Dangerously', author: 'Tom Foreman', read: ['Jul'] },
-  { title: 'Annihilation', author: 'Jeff Vandermeer', read: ['Jul', 'Marek'] },
+  {
+    id: '1',
+    acquired: 'no',
+    author: 'David Goldblatt',
+    date: '',
+    read: [],
+    title: 'The Ball is Round',
+  },
+  { id: '2', acquired: 'yes', author: '', date: '2020-06-28', read: [], title: 'Great at Work' },
+  {
+    id: '3',
+    acquired: 'no',
+    author: 'Thomas Ricks',
+    date: '2013-05-11',
+    read: ['Marek'],
+    title: 'Fiasco',
+  },
+  { id: '4', acquired: 'no', author: '', date: '', read: [], title: "The Startup Owner's Manual" },
+  {
+    id: '5',
+    acquired: 'yes',
+    author: '',
+    date: '2020-07-01',
+    read: ['Marek'],
+    title: 'Tea Time With Terrorists',
+  },
+  {
+    id: '6',
+    acquired: 'no',
+    author: 'Tom Foreman',
+    date: '',
+    read: ['Jul'],
+    title: 'My Year of Running Dangerously',
+  },
+  {
+    id: '7',
+    acquired: 'no',
+    author: 'Jeff Vandermeer',
+    date: '',
+    read: ['Jul', 'Marek'],
+    title: 'Annihilation',
+  },
 ];
 
 export const mockReaders = [
-  { color: 'pink', name: 'Jul' },
-  { color: 'blue', name: 'Marek' },
+  { id: '1', color: 'pink', name: 'Jul' },
+  { id: '2', color: 'blue', name: 'Marek' },
 ];

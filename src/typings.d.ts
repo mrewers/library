@@ -6,9 +6,12 @@ declare module '*.svg';
 
 declare global {
   interface IBook {
-    readonly title: string;
+    readonly id: string;
+    readonly acquired: 'yes' | 'no';
     readonly author?: string;
+    readonly data?: string;
     readonly read: readonly string[];
+    readonly title: string;
   }
 
   interface IStats {
