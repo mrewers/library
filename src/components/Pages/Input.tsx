@@ -6,7 +6,7 @@ import './Pages.scss';
 
 const Input = (): h.JSX.Element => (
   <Fragment>
-    <h2 class="sub-head">Add New Book</h2>
+    <h2 class="input-header sub-head">Add New Book</h2>
     <Form />
   </Fragment>
 );

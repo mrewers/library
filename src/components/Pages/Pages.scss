@@ -1,4 +1,10 @@
 .sub-head {
   margin: 1.5rem 0;
+  position: relative;
   text-align: center;
+
+  &.input-header {
+    margin-left: 5rem;
+    width: calc(70% - 5rem);
+  }
 }

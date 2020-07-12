@@ -1,0 +1,30 @@
+@import '../../style/colors.scss';
+
+.mask {
+  fill: $white;
+  position: absolute;
+  height: 60vh;
+  width: calc(100% + 6rem);
+
+  &-background {
+    background-image: url('../../assets/book-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+  }
+
+  &-container {
+    position: sticky;
+    top: 0;
+  }
+
+  &-credit {
+    visibility: hidden;
+  }
+
+  &-bottom {
+    margin-top: calc(100vh - 60vh);
+  }
+}

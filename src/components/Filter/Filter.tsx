@@ -29,7 +29,7 @@ const Filter = (): h.JSX.Element => {
   const matches = filterList(status, reader, bookState.readers.length, bookState.books).length;
 
   return (
-    <p>
+    <p class="filter-container">
       Show
       <label class="dropdown" for="filter-type">
         <select

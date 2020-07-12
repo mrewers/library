@@ -1,8 +1,21 @@
+@import '../../style/mixins.scss';
+@import '../../style/typography.scss';
+
 .form {
+  @include border-light-shadow;
+  background-color: $greyLightest;
   display: flex;
   flex-direction: column;
+  margin-left: 5rem;
+  padding: 1rem;
+  position: relative;
+  width: calc(70% - 5rem);
 
   &-label {
+    display: grid;
+    font-family: $fontFamilyHeadings;
+    font-weight: 600;
+    grid-template-columns: 6rem 1fr;
     margin: 0.5rem 0;
 
     > input {
@@ -11,7 +24,7 @@
   }
 
   &-submit {
-    align-self: flex-start;
-    margin: 0.6rem 0;
+    align-self: flex-end;
+    margin: 1rem 0.5rem 0;
   }
 }
