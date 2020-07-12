@@ -1,6 +1,19 @@
 @import '~/style/mixins.scss';
 @import '~/style/typography.scss';
 
+@mixin label-grid {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  margin: 0.7rem 0;
+}
+
+@mixin label-text {
+  font-family: $fontFamilyHeadings;
+  font-size: $fontSizeSmall;
+  font-weight: 600;
+}
+
 .form {
   @include border-light-shadow;
   background-color: $greyLightest;
@@ -12,14 +25,38 @@
   width: calc(70% - 5rem);
 
   &-label {
-    display: grid;
-    font-family: $fontFamilyHeadings;
-    font-weight: 600;
-    grid-template-columns: 6rem 1fr;
-    margin: 0.5rem 0;
+    @include label-grid;
+    @include label-text;
 
     > input {
       margin: 0 0.5rem;
+    }
+  }
+
+  &-meta-label {
+    @include label-grid;
+
+    &-text {
+      @include label-text;
+    }
+  }
+
+  &-sub-label {
+    @include label-text;
+    display: flex;
+    margin: 0 1rem;
+
+    > input {
+      margin: 0 0.5rem;
+    }
+
+    &-column {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-container {
+      display: flex;
     }
   }
 
