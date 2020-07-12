@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 
-import Button from '../Button/Button';
+import Button from '~/components/Button/Button';
 
 import './Form.scss';
 

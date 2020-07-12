@@ -1,12 +1,12 @@
 import { Fragment, h } from 'preact';
 import { useContext } from 'preact/hooks';
 
-import Filter from '../Filter/Filter';
-import List from '../List/List';
+import Filter from '~/components/Filter/Filter';
+import List from '~/components/List/List';
 
-import { BookContext } from '../../context/bookContext';
-import { FilterContext } from '../../context/filterContext';
-import { filterList, getRead } from '../../utils/list-filters';
+import { BookContext } from '~/context/bookContext';
+import { FilterContext } from '~/context/filterContext';
+import { filterList, getRead } from '~/utils/list-filters';
 
 import './Pages.scss';
 

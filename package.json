@@ -32,8 +32,16 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
+    "mocks": "0.0.15",
     "preact": "^10.4.5",
     "preact-router": "^3.2.1"
+  },
+  "alias": {
+    "components": "./components",
+    "context": "./context",
+    "__mocks__": "./__mocks__",
+    "style": "./style",
+    "utils": "./utils"
   },
   "browserslist": [
     "last 2 Chrome versions"

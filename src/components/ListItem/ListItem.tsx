@@ -1,8 +1,8 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
-import { FilterContext } from '../../context/filterContext';
-import { BookContext } from '../../context/bookContext';
+import { FilterContext } from '~/context/filterContext';
+import { BookContext } from '~/context/bookContext';
 
 import './ListItem.scss';
 

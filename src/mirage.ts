@@ -1,6 +1,6 @@
 import { Server } from 'miragejs';
 
-import { mockBooks, mockReaders } from '../__mocks__/data';
+import { mockBooks, mockReaders } from '~/__mocks__/data';
 
 /**
  * Initializes a Mirage development server to mock API requests.

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "jsx": "react",
     "jsxFactory": "h",
     "lib": ["dom", "esnext"],
@@ -7,9 +8,12 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./dist",
+    "paths": {
+      "~*": ["src/*"]
+    },
     "sourceMap": true,
     "target": "es6"
   },
   "exclude": ["dist", "node_modules"],
-  "include": [".eslintrc.js", "./src/**/*", "./__mocks__/**/*.ts"]
+  "include": [".eslintrc.js", "./src/**/*", "src/__mocks__/**/*.ts"]
 }

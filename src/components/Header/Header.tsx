@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-import Navigation from '../Navigation/Navigation';
+import Navigation from '~/components/Navigation/Navigation';
 
 import './Header.scss';
 

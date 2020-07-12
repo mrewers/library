@@ -5,6 +5,10 @@ module.exports = {
     '@cryptopapers/eslint-config/typescript',
   ],
   ignorePatterns: ['dist/**/*', '/node_modules/**/*'],
+  parserOptions: {
+    project: './tsconfig.json',
+    tsconfigRootDir: './',
+  },
   rules: {
     // preact
     'react/no-unknown-property': ['error', { ignore: ['class', 'for'] }],

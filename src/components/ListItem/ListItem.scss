@@ -1,4 +1,4 @@
-@import '../../style/colors.scss';
+@import '~/style/colors.scss';
 
 .list-item {
   align-items: center;
@@ -17,21 +17,21 @@
 .checked {
   &-blue {
     @include icon;
-    background: url('../../assets/icons/check-square-blue.svg');
+    background: url('~/assets/icons/check-square-blue.svg');
   }
 
   &-pink {
     @include icon;
-    background: url('../../assets/icons/check-square-pink.svg');
+    background: url('~/assets/icons/check-square-pink.svg');
   }
 
   &-generic {
     @include icon;
-    background: url('../../assets/icons/check-square.svg');
+    background: url('~/assets/icons/check-square.svg');
   }
 }
 
 .unchecked {
   @include icon;
-  background: url('../../assets/icons/square.svg');
+  background: url('~/assets/icons/square.svg');
 }

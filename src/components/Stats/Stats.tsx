@@ -1,10 +1,10 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
-import { calcPercentOf, getReaders } from '../../utils/stats';
-import { getListStats } from '../../utils/list-filters';
-import { FilterContext } from '../../context/filterContext';
-import { BookContext } from '../../context/bookContext';
+import { calcPercentOf, getReaders } from '~/utils/stats';
+import { getListStats } from '~/utils/list-filters';
+import { FilterContext } from '~/context/filterContext';
+import { BookContext } from '~/context/bookContext';
 
 import './Stats.scss';
 

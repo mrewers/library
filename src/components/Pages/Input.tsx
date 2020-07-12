@@ -1,6 +1,6 @@
 import { h, Fragment } from 'preact';
 
-import Form from '../Form/Form';
+import Form from '~/components/Form/Form';
 
 import './Pages.scss';
 
