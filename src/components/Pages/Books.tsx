@@ -6,7 +6,7 @@ import List from '../List/List';
 
 import { BookContext } from '../../context/bookContext';
 import { FilterContext } from '../../context/filterContext';
-import { filterList } from '../../utils/list-filters';
+import { filterList, getRead } from '../../utils/list-filters';
 
 import './Pages.scss';
 
@@ -18,11 +18,13 @@ const Books = (): h.JSX.Element => {
     state: { books, readers },
   } = useContext(BookContext);
 
+  const count = readers.length;
+
   return (
     <Fragment>
       <h2 class="sub-head">Inventory</h2>
       <Filter />
-      <List list={filterList(status, reader, readers.length, books)} />
+      <List list={filterList(status, reader, count, books)} read={getRead(books, reader, count)} />
     </Fragment>
   );
 };

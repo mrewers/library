@@ -6,7 +6,7 @@
  * @param {number} readerCount Total number of readers (needed to calculate if all readers read an book).
  *
  */
-const getRead = (list: TypeBookList, reader: string, readerCount: number): TypeBookList => {
+export const getRead = (list: TypeBookList, reader: string, readerCount: number): TypeBookList => {
   switch (reader) {
     case 'all':
       return list.filter((item: IBook) => item.read.length === readerCount);
