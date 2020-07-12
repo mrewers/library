@@ -2,20 +2,15 @@ import { Server } from 'miragejs';
 
 import { mockBooks, mockReaders } from '../__mocks__/data';
 
-export enum EnvOptions {
-  DEV = 'development',
-  TEST = 'test',
-}
-
-interface IMirageServerConfigs {
-  readonly environment?: EnvOptions;
-  readonly delay?: number;
-}
-
-export const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
+/**
+ * Initializes a Mirage development server to mock API requests.
+ *
+ * @param {IMirageServerConfigs} config Mirage server configuration options.
+ */
+const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
   // Sets the timing on the server response if provided, otherwise uses the default response time
   // Default delay is 0.3 seconds, unless the environment is set to test in which case it's zero seconds
-  const defaultTiming = environment === EnvOptions.DEV ? 0 : 300;
+  const defaultTiming = environment === 'test' ? 0 : 300;
   const timing = delay || defaultTiming;
 
   return new Server({
@@ -30,3 +25,15 @@ export const devApiServer = ({ environment, delay }: IMirageServerConfigs): Serv
     },
   });
 };
+
+declare global {
+  interface IMirageServerConfigs {
+    readonly environment?: 'development' | 'test';
+    readonly delay?: number;
+  }
+
+  type TypeMirageServer = Server; // eslint-disable-line @typescript-eslint/no-type-alias -- 'Server' is too generic
+}
+
+// Using CommonJS export rather than ES6 since this is dynamically required based on NODE_ENV
+module.exports = devApiServer;

@@ -8,7 +8,9 @@ export const initialFilterState = {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const FilterContext = createContext({
-  dispatch: (action: IFilterAction): void => {},
+  dispatch: (action: IFilterAction): void => {
+    console.log(action);
+  },
   state: initialFilterState,
 });
 

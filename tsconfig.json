@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "jsxFactory": "h",
-    "lib": ["dom", "es2020"],
+    "lib": ["dom", "esnext"],
     "module": "es6",
     "moduleResolution": "node",
     "noImplicitAny": true,

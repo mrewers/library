@@ -10,12 +10,17 @@ import Input from './components/Pages/Input';
 
 import { FilterContext, filterReducer, initialFilterState } from './context/filterContext';
 import { BookContext, bookReducer, initialBookState } from './context/bookContext';
-import { devApiServer, EnvOptions } from './mirage';
 import { fetchData } from './utils/api';
 
 import './style/style.scss';
 
-devApiServer({ environment: EnvOptions.DEV });
+/* eslint-disable -- dynamic importing of a CommonJS modules causes all sorts of linting issues */
+if (process.env.NODE_ENV !== 'production') {
+  const devApiServer = require('./mirage');
+
+  devApiServer({ environment: 'development' });
+}
+/* eslint-enable */
 
 const App = (): h.JSX.Element => {
   const [filterState, filterDispatch] = useReducer(filterReducer, initialFilterState);

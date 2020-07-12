@@ -8,7 +8,9 @@ export const initialBookState: IBookState = {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const BookContext = createContext({
-  dispatch: (action: IBookAction): void => {},
+  dispatch: (action: IBookAction): void => {
+    console.log(action);
+  },
   state: initialBookState,
 });
 

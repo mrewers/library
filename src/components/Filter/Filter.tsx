@@ -8,8 +8,11 @@ import { filterList } from '../../utils/list-filters';
 import './Filter.scss';
 
 const Filter = (): h.JSX.Element => {
-  const { state, dispatch } = useContext(FilterContext);
   const { state: bookState } = useContext(BookContext);
+  const {
+    state: { reader, status },
+    dispatch,
+  } = useContext(FilterContext);
 
   const handleChange = ({ currentTarget }: TypeEventSelect): void => {
     const { name, value } = currentTarget;
@@ -23,8 +26,7 @@ const Filter = (): h.JSX.Element => {
     }
   };
 
-  const matches = filterList(state.status, state.reader, bookState.readers.length, bookState.books)
-    .length;
+  const matches = filterList(status, reader, bookState.readers.length, bookState.books).length;
 
   return (
     <p>
@@ -33,7 +35,7 @@ const Filter = (): h.JSX.Element => {
         <select
           id="filter-type"
           name="type"
-          value={state.status}
+          value={status}
           onBlur={handleChange}
           onChange={handleChange}
         >
@@ -47,7 +49,7 @@ const Filter = (): h.JSX.Element => {
         <select
           id="filter-reader"
           name="reader"
-          value={state.reader}
+          value={reader}
           onBlur={handleChange}
           onChange={handleChange}
         >
