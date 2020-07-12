@@ -4,6 +4,7 @@ module.exports = {
     '@cryptopapers/eslint-config/react',
     '@cryptopapers/eslint-config/typescript',
   ],
+  ignorePatterns: ['dist/**/*', '/node_modules/**/*'],
   rules: {
     // preact
     'react/no-unknown-property': ['error', { ignore: ['class', 'for'] }],

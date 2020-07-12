@@ -6,8 +6,9 @@
   "author": "Marek Rewers",
   "license": "MIT",
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "lint": "eslint --ext .js,.ts,.tsx ./"
   },
   "devDependencies": {
     "@cryptopapers/eslint-config": "^1.0.1",
