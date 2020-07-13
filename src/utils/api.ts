@@ -1,4 +1,6 @@
-export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses> => {
+export const fetchData = async (
+  endpoint: TypeAvailableEndpoints
+): Promise<TypeAllowedResponses> => {
   try {
     const data = await fetch(`/api/${endpoint}`)
       .then((res: Response) => res.json())
@@ -10,12 +12,13 @@ export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses>
   }
 };
 
-export const submitData = async (body, endpoint: string) => {
+export const submitData = async (body, endpoint: TypeAvailableEndpoints) => {
   // console.log(body);
   try {
     const response = await fetch(`/api/${endpoint}`, {
       method: 'POST',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -34,5 +37,10 @@ declare global {
     readonly books: TypeBookList;
   }
 
-  type TypeAllowedResponses = void | readonly IReader[] | IBooksResponse;
+  interface IReadersResponse {
+    readonly readers: readonly IReader[];
+  }
+
+  type TypeAllowedResponses = void | IReadersResponse | IBooksResponse;
+  type TypeAvailableEndpoints = 'books' | 'readers';
 }

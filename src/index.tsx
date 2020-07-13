@@ -37,8 +37,8 @@ const App = (): h.JSX.Element => {
 
     // Fetch reader data
     fetchData('readers')
-      .then((data: readonly IReader[]) =>
-        bookDispatch({ type: 'UPDATE_READER_DATA', payload: { data } })
+      .then((data: IReadersResponse) =>
+        bookDispatch({ type: 'UPDATE_READER_DATA', payload: { data: data.readers } })
       )
       .catch(err => console.error(err));
   }, []);
