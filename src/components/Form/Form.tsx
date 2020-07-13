@@ -34,7 +34,7 @@ const Form = (): h.JSX.Element => {
   const routeInput = (name: string, value: string): void => {
     switch (name) {
       case 'acquired':
-        setAcquired(value);
+        if (value === 'yes' || value === 'no') setAcquired(value);
         break;
       case 'author':
         setAuthor(value);
@@ -74,8 +74,12 @@ const Form = (): h.JSX.Element => {
     setSaving(true);
     submitData({ book: { acquired, author, date, read, title } }, 'books')
       .then((data: IBooksResponse) => {
-        dispatch({ type: 'UPDATE_BOOKS', payload: { books: data.books } });
-        resetForm();
+        if (data !== undefined) {
+          dispatch({ type: 'UPDATE_BOOKS', payload: { books: data.books } });
+          resetForm();
+        } else {
+          resetOverlay('We encountered an error while saving :(');
+        }
       })
       .catch(err => {
         resetOverlay('We encountered an error while saving :(');
