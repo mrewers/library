@@ -5,5 +5,8 @@ dist
 # Dependencies
 node_modules
 
+# Environmental Variables
+.env
+
 # Error Logs
 *.log

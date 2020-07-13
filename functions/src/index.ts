@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import * as cors from 'cors';
@@ -10,7 +12,7 @@ const serviceAccount = require('../serviceAccountKey.json');
 // Initialize connection to firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://books-670e1.firebaseio.com',
+  databaseURL: process.env.FIRESTORE_URL,
 });
 
 const db = admin.firestore();
@@ -19,7 +21,7 @@ const db = admin.firestore();
 const app = express();
 
 // Set middleware for Express server
-app.use(cors({ origin: 'http://localhost:1234' }));
+app.use(cors({ origin: process.env.API_ALLOWED_ORIGIN }));
 
 /* GET Routes - Used to retrieve data from the database */
 app.get('/books', (req, res) => {
