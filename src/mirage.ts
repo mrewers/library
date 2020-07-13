@@ -1,4 +1,5 @@
 import { Model, Server } from 'miragejs';
+import Schema from 'miragejs/orm/schema';
 
 import { mockBooks as books, mockReaders as readers } from '~/__mocks__/data';
 
@@ -13,36 +14,36 @@ const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
   const defaultTiming = environment === 'test' ? 0 : 300;
   const timing = delay || defaultTiming;
 
+  const getModels = (schema, endpoint: TypeAvailableEndpoints): TypeAllowedResponses => ({
+    [endpoint]: schema[endpoint].all().models,
+  });
+
   return new Server({
     environment,
 
     models: {
       book: Model,
+      reader: Model,
     },
 
-    seeds(server): void {
-      books.forEach((book: IBook) => server.create('book', book));
+    seeds(server: ServerConfig): void {
+      books.forEach((book: Partial) => server.create('book', book));
+      readers.forEach((reader: Partial) => server.create('reader', reader));
     },
 
     routes(): void {
       this.namespace = 'api';
 
       // Get routes
-      this.get(
-        '/books',
-        schema => ({
-          books: schema.books.all(),
-        }),
-        { timing }
-      );
-      this.get('/readers', () => readers, { timing });
+      this.get('/books', (schema: Schema) => getModels(schema, 'books'), { timing });
+      this.get('/readers', (schema: Schema) => getModels(schema, 'readers'), { timing });
 
       // Post routes
       this.post('/books', (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
 
         schema.books.create(attrs.book);
-        return { books: schema.books.all() };
+        return getModels(schema, 'books');
       });
     },
   });
