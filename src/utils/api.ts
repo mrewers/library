@@ -2,7 +2,7 @@ export const fetchData = async (
   endpoint: TypeAvailableEndpoints
 ): Promise<TypeAllowedResponses> => {
   try {
-    const data = await fetch(`/api/${endpoint}`)
+    const data = await fetch(`${process.env.API_BASE_URL}/${endpoint}`)
       .then((res: Response) => res.json())
       .then((d: TypeAllowedResponses) => d);
 
@@ -12,10 +12,12 @@ export const fetchData = async (
   }
 };
 
-export const submitData = async (body, endpoint: TypeAvailableEndpoints) => {
-  // console.log(body);
+export const submitData = async (
+  body: IRequestBody,
+  endpoint: TypeAvailableEndpoints
+): Promise<TypeAllowedResponses> => {
   try {
-    const response = await fetch(`/api/${endpoint}`, {
+    const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -39,6 +41,10 @@ declare global {
 
   interface IReadersResponse {
     readonly readers: readonly IReader[];
+  }
+
+  interface IRequestBody {
+    readonly book: IBook;
   }
 
   type TypeAllowedResponses = void | IReadersResponse | IBooksResponse;

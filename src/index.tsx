@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+
 import { Fragment, h, render } from 'preact';
 import { useReducer, useEffect } from 'preact/hooks';
 import { Router, Route } from 'preact-router';
@@ -14,6 +16,9 @@ import { BookContext, bookReducer, initialBookState } from '~/context/bookContex
 import { fetchData } from '~/utils/api';
 
 import './style/style.scss';
+
+// Load environmental variables
+dotenv.config();
 
 /* eslint-disable -- dynamic importing of a CommonJS modules causes all sorts of linting issues */
 if (process.env.NODE_ENV !== 'production') {
