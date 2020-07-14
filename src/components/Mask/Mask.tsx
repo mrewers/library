@@ -16,7 +16,7 @@ const Mask = (): h.JSX.Element => (
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M0 64 C16 40 42 64 50 44 C53 29 46 20 64 18 L64 0 L0 0 Z" />
+      <path d="M64 0 L0 0 L0 50 C4 38 12 40 64 26 Z" />
     </svg>
     <svg
       class="mask mask-bottom"
