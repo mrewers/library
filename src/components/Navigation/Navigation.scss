@@ -2,6 +2,10 @@
 @import '~/style/mixins.scss';
 
 .nav {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
   &-items {
     @include reset-ul;
     display: flex;

@@ -21,7 +21,7 @@ declare global {
   }
 
   interface IButton {
-    readonly classes: string;
+    readonly classes?: string;
     readonly color: 'accent' | 'dark' | 'light' | 'plain' | 'white';
     readonly label: string;
     readonly type: 'button' | 'submit';

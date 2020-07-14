@@ -7,6 +7,7 @@ import { Router, Route } from 'preact-router';
 import Header from '~/components/Header/Header';
 import Stats from '~/components/Stats/Stats';
 import Mask from '~/components/Mask/Mask';
+import Auth from '~/components/Auth/Auth';
 
 import Books from '~/components/Pages/Books';
 import Input from '~/components/Pages/Input';
@@ -60,6 +61,7 @@ const App = (): h.JSX.Element => {
               <Router>
                 <Route component={Books} path="/" />
                 <Route component={Input} path="/add" />
+                <Route component={Auth} path="/auth" />
               </Router>
             </main>
           </FilterContext.Provider>

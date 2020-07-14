@@ -16,13 +16,8 @@
 
 .form {
   @include border-light-shadow;
+  @include form-layout;
   background-color: $greyLightest;
-  display: flex;
-  flex-direction: column;
-  margin-left: 5rem;
-  padding: 1rem;
-  position: relative;
-  width: calc(70% - 5rem);
 
   &-label {
     @include label-grid;
