@@ -38,7 +38,8 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-        run: gsutil -m rsync -d -c -r dist gs://${{ secrets.GCP_BUCKET }}
-        run: gsutil -m setmeta -h "Cache-Control:public, max-age=3600" gs://${{ secrets.GCP_BUCKET }}/**/*.html
-        run: gsutil -m setmeta -h "Cache-Control:public, max-age=31536000" gs://${{ secrets.GCP_BUCKET }}/js/*.js
-        run: gsutil -m setmeta -h "Cache-Control:public, max-age=31536000" gs://${{ secrets.GCP_BUCKET }}/css/*.css
+
+      - run: gsutil -m rsync -d -c -r dist gs://${{ secrets.GCP_BUCKET }}
+      - run: gsutil -m setmeta -h "Cache-Control:public, max-age=3600" gs://${{ secrets.GCP_BUCKET }}/**/*.html
+      - run: gsutil -m setmeta -h "Cache-Control:public, max-age=31536000" gs://${{ secrets.GCP_BUCKET }}/js/*.js
+      - run: gsutil -m setmeta -h "Cache-Control:public, max-age=31536000" gs://${{ secrets.GCP_BUCKET }}/css/*.css
