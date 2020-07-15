@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useContext, useState } from 'preact/hooks';
 
 import Button from '~/components/Button/Button';
+import Overlay from '~/components/Overlay/Overlay';
 
 import { BookContext } from '~/context/bookContext';
 import { getDateString } from '~/utils/dates';
@@ -96,7 +97,7 @@ const Form = (): h.JSX.Element => {
 
   return (
     <form class="form" onSubmit={onSubmit}>
-      {saving && <div class="form-overlay">{overlayText}</div>}
+      {saving && <Overlay text={overlayText} />}
       <label class="form-label" for="title">
         Title:
         <input id="title" name="title" type="text" value={title} onInput={onInput} />
