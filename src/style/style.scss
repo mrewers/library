@@ -60,10 +60,10 @@ input,
 select {
   @include border-light;
   @include font-base;
-  // appearance: none;
-  font-size: $fontSizeSmall;
-  padding: 0.1rem 0.3rem;
   box-shadow: $boxShadowInset;
+  font-size: $fontSizeNormal;
+  line-height: 1.5;
+  padding: 0.1rem 0.3rem;
 
   &:focus {
     box-shadow: $focusShadow;
