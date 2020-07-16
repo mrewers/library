@@ -114,6 +114,7 @@ export const requireAuth = (nextState, replace): void => {
 
 /**
  * Clear access tokens from local storage and return to the homepage
+ * Uses window.location to redirect rather than preact-route to force a refresh of the page so that the logout button disappears
  */
 export const logout = (): void => {
   clearFromStorage('id_token');
