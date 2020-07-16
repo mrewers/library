@@ -11,6 +11,7 @@ import Auth from '~/components/Auth/Auth';
 
 import Books from '~/components/Pages/Books';
 import Input from '~/components/Pages/Input';
+import Privacy from '~/components/Pages/Privacy';
 
 import { FilterContext, filterReducer, initialFilterState } from '~/context/filterContext';
 import { BookContext, bookReducer, initialBookState } from '~/context/bookContext';
@@ -62,6 +63,7 @@ const App = (): h.JSX.Element => {
                 <Route component={Books} path="/" />
                 <Route component={Input} path="/add" />
                 <Route component={Auth} path="/auth" />
+                <Route component={Privacy} path="/privacy" />
               </Router>
             </main>
           </FilterContext.Provider>
