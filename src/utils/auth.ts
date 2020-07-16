@@ -1,4 +1,4 @@
-const decode = require('jwt-decode'); // eslint-disable-line -- Does not work using standard imports
+const decode = require('jwt-decode'); // eslint-disable-line -- Does not work using ES6 imports
 
 import * as auth0 from 'auth0-js';
 
@@ -7,6 +7,9 @@ const auth = new auth0.WebAuth({
   domain: process.env.AUTH0_CLIENT_DOMAIN,
 });
 
+/**
+ * Initiate a login.
+ */
 export const login = (): void => {
   auth.authorize({
     responseType: 'token id_token',
@@ -16,45 +19,62 @@ export const login = (): void => {
   });
 };
 
-export const getIdToken = (): string => {
-  return localStorage.getItem(process.env.AUTH0_ID_TOKEN_KEY);
+/**
+ * Retrieve a value from local storage by key name.
+ *
+ * @param key The key of the item to retrieve.
+ */
+export const getFromStorage = (key: string): string => localStorage.getItem(key);
+
+/**
+ * Remove a value from local storage by key name.
+ *
+ * @param key The key of the item to retrieve.
+ */
+export const clearFromStorage = (key: string): void => {
+  localStorage.removeItem(key);
 };
 
-export const getAccessToken = (): string => {
-  return localStorage.getItem(process.env.AUTH0_ACCESS_TOKEN_KEY);
-};
-
-const clearIdToken = (): void => {
-  localStorage.removeItem(process.env.AUTH0_ID_TOKEN_KEY);
-};
-
-const clearAccessToken = (): void => {
-  localStorage.removeItem(process.env.AUTH0_ACCESS_TOKEN_KEY);
-};
-
-// Helper function that will allow us to extract the access_token and id_token
+/**
+ * Helper function that will allow us to extract the access_token and id_token.
+ *
+ * @param name Parameter name to search for.
+ */
 const getParameterByName = (name: string): string => {
   const match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
 
   return decodeURIComponent(match[1].replace(/\+/g, ' '));
 };
 
-// Get and store access_token in local storage
-export const setAccessToken = (): void => {
-  const accessToken = getParameterByName('access_token');
+/**
+ * Get the token value from the URL parameters and save it in local storage.
+ *
+ * @param {string} tokenName
+ */
+export const setToken = (tokenName: 'access_token' | 'id_token'): void => {
+  let key;
 
-  localStorage.setItem(process.env.AUTH0_ACCESS_TOKEN_KEY, accessToken);
+  switch (tokenName) {
+    case 'access_token':
+      key = 'access_token';
+      break;
+    case 'id_token':
+      key = 'id_token';
+      break;
+    default:
+      key = '';
+  }
+
+  localStorage.setItem(key, getParameterByName(tokenName));
 };
 
-// Get and store id_token in local storage
-export const setIdToken = (): void => {
-  const idToken = getParameterByName('id_token');
-
-  localStorage.setItem(process.env.AUTH0_ID_TOKEN_KEY, idToken);
-};
-
+/**
+ * Retrieves the token expiration date.
+ *
+ * @param encodedToken Token
+ */
 const getTokenExpirationDate = (encodedToken: string): Date | null => {
-  const token = decode(encodedToken);
+  const token: TTokenDto = decode(encodedToken);
 
   if (!token || !token.exp) {
     return null;
@@ -66,26 +86,37 @@ const getTokenExpirationDate = (encodedToken: string): Date | null => {
   return date;
 };
 
+/**
+ * Checks whether or not a token is expired.
+ *
+ * @param token A token
+ */
 const isTokenExpired = (token: string): boolean => {
   const expirationDate = getTokenExpirationDate(token);
 
   return expirationDate < new Date();
 };
 
+/**
+ * Check if current user is login and the token is not expired.
+ */
 export const isLoggedIn = (): boolean => {
-  const idToken = getIdToken();
+  const idToken = getFromStorage('id_token');
 
   return !!idToken && !isTokenExpired(idToken);
 };
 
-export const requireAuth = (nextState, replace) => {
+export const requireAuth = (nextState, replace): void => {
   if (!isLoggedIn()) {
     replace({ pathname: '/' });
   }
 };
 
+/**
+ * Clear access tokens from local storage and return to the homepage
+ */
 export const logout = (): void => {
-  clearIdToken();
-  clearAccessToken();
+  clearFromStorage('id_token');
+  clearFromStorage('access_token');
   window.location.href = '/';
 };

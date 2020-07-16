@@ -1,13 +1,14 @@
-import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
+import { route } from 'preact-router';
 
-import { setIdToken, setAccessToken } from '~/utils/auth';
+import { setToken } from '~/utils/auth';
 
 const TokenManager = (): null => {
   useEffect(() => {
-    setAccessToken();
-    setIdToken();
-    window.location.href = '/add';
+    setToken('access_token');
+    setToken('id_token');
+
+    route('/add', true);
   }, []);
 
   return null;

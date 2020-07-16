@@ -1,3 +1,5 @@
+import { getFromStorage } from './auth';
+
 export const fetchData = async (
   endpoint: TypeAvailableEndpoints
 ): Promise<TypeAllowedResponses> => {
@@ -21,6 +23,7 @@ export const submitData = async (
       method: 'POST',
       headers: {
         'Accept': 'application/json',
+        'Authorization': `Bearer ${getFromStorage('access_token')}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
