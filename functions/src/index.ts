@@ -1,13 +1,17 @@
-require('dotenv').config();
+const dotEnv = require('dotenv');
 
 import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
+import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
+import * as functions from 'firebase-functions';
 
 import { getCollection } from './utils/firestore-queries';
+import { authenticateJWT } from './auth';
 
 const serviceAccount = require('../serviceAccountKey.json');
+
+dotEnv.config();
 
 // Initialize connection to firebase
 admin.initializeApp({
@@ -19,6 +23,9 @@ const db = admin.firestore();
 
 // Initialize the Express server
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set middleware for Express server
 app.use(cors({ origin: process.env.API_ALLOWED_ORIGIN }));
@@ -61,9 +68,13 @@ app.get('/readers', (req, res) => {
 });
 
 /* POST Routes - Used to add data to the database */
-app.post('/books', (req, res) => {
+app.post('/books', authenticateJWT, (req, res) => {
   const writeData = async () => {
     try {
+      if (!res.locals.user || res.locals.user.scope !== 'add:books') {
+        return res.sendStatus(401);
+      }
+
       const { book } = req.body;
 
       await db.collection('books').add({
@@ -81,12 +92,13 @@ app.post('/books', (req, res) => {
 
       return res.status(200).send({ books: data });
     } catch (err) {
-      console.error(err);
-      return res.status(500).send();
+      return res.status(500).send(err);
     }
   };
 
   writeData();
 });
+
+app.disable('x-powered-by');
 
 exports.app = functions.https.onRequest(app);
