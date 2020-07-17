@@ -1,10 +1,10 @@
 # Build Files
-**/*.js
-**/*.js.map
+lib/**/*.js
+lib/**/*.js.map
 
 # Dependencies
 node_modules/
 
 # Secrets
-serviceAccountKey.json
+serviceAccountKey.*
 
