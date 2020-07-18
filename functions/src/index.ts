@@ -22,7 +22,7 @@ const databaseURL: string =
 
 // Initialize connection to firebase
 admin.initializeApp({
-  credential: admin.credential.cert(JSON.parse(serviceAccount)),
+  credential: admin.credential.cert(serviceAccount),
   databaseURL,
 });
 
