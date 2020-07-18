@@ -1,5 +1,6 @@
-# Builds
+# Builds & Caches
 .cache
+.firebase
 dist
 
 # Dependencies

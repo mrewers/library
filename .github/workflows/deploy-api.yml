@@ -46,4 +46,4 @@ jobs:
           FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
 
       - name: Deploying to Firebase...
-        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --only functions --project ${{ secrets.FIRESTORE_PROJECT }}
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --project ${{ secrets.FIRESTORE_PROJECT }}
