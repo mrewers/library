@@ -41,7 +41,9 @@ const App = (): h.JSX.Element => {
         bookDispatch({ type: 'UPDATE_BOOKS', payload: { books: data.books } })
       )
       .catch(err => console.error(err));
+  }, []);
 
+  useEffect(() => {
     // Fetch reader data
     fetchData('readers')
       .then((data: IReadersResponse) =>
