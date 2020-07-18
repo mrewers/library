@@ -1,0 +1,47 @@
+name: Deploy Library API to Firebase
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repository...
+        uses: actions/checkout@v2
+
+      - name: Setting up environment...
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Navigating to functions directory...
+        run: cd functions/
+
+      - name: Preparing dependency cache...
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Installing dependencies...
+        run: npm install
+        run: npm install -g firebase-tools@latest
+
+      - name: Building...
+        run: npm run build
+        env:
+          API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
+          FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
+          FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
+          FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
+
+      - name: Deploying to Firebase...
+        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --only functions --project ${{ secrets.FIRESTORE_PROJECT }}

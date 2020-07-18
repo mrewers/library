@@ -1,4 +1,4 @@
-name: Deploy Library Frontend
+name: Deploy Library Frontend to GCP
 on:
   push:
     branches:
