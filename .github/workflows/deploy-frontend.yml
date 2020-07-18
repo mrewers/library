@@ -1,8 +1,7 @@
 name: Deploy Library Frontend to GCP
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   build_and_deploy:
