@@ -4,6 +4,10 @@ on:
     branches:
       - main
 
+default:
+  run:
+    working-directory: functions
+
 jobs:
   build_and_deploy:
     name: Build & Deploy
