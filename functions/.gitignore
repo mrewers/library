@@ -6,5 +6,5 @@ lib/**/*.js.map
 node_modules/
 
 # Secrets
-serviceAccountKey.*
+serviceAccountKey*
 

@@ -9,8 +9,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 
-import { deleteOne, getAll, getOne } from './utils/route-types';
-import { getCollection } from './utils/firestore-queries';
+import { add, deleteOne, getAll, getOne, update } from './utils/route-types';
 import { authenticateJWT } from './auth';
 
 const serviceAccount: string =
@@ -73,38 +72,17 @@ app.get('/readers/:id', (req, res) => {
 
 /* POST Routes - Used to add data to the database */
 app.post('/books', authenticateJWT, (req, res) => {
-  const writeData = async (): Promise<express.Response> => {
-    const scope =
-      typeof process.env.AUTH0_SCOPE === 'string' ? process.env.AUTH0_SCOPE : 'add:books';
-
-    try {
-      if (!res.locals?.user?.scope || res.locals.user.scope !== scope) {
-        return res.sendStatus(403);
-      }
-
-      const { book } = req.body;
-
-      await db.collection('books').add({
-        acquired: book.acquired,
-        date: book.date,
-        read: book.read,
-        author: book.author,
-        title: book.title,
-      });
-
-      const data = await db
-        .collection('books')
-        .get()
-        .then(snapshot => getCollection(snapshot));
-
-      return res.status(200).send({ books: data });
-    } catch (err) {
-      return res.status(500).send(err);
-    }
-  };
-
   try {
-    return writeData();
+    return add('books', db, req, res);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+});
+
+/* PUT Routes - Used to add data to the database */
+app.put('/books', authenticateJWT, (req, res) => {
+  try {
+    return update('books', db, req, res);
   } catch (err) {
     return res.status(500).send(err);
   }

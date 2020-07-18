@@ -2,6 +2,16 @@ import * as jwks from 'jwks-rsa';
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
+export const hasScope = (res: Response): boolean => {
+  const scope = typeof process.env.AUTH0_SCOPE === 'string' ? process.env.AUTH0_SCOPE : 'add:books';
+
+  if (!res.locals?.user?.scope || res.locals.user.scope !== scope) {
+    return false;
+  }
+
+  return true;
+};
+
 export const authenticateJWT = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
 
