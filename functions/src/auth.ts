@@ -2,11 +2,16 @@ import * as jwks from 'jwks-rsa';
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
-export const authenticateJWT = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateJWT = (req: Request, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
 
-  if (authHeader) {
+  if (authHeader !== undefined) {
     const token = authHeader.split(' ')[1];
+
+    if (typeof process.env.AUTH0_DOMAIN !== 'string') {
+      console.log('Invalid value provided from Auth0 domain');
+      return undefined;
+    }
 
     const client = jwks({
       cache: true,
@@ -16,17 +21,19 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
     });
 
     const options: jwt.VerifyOptions = {
-      audience: process.env.AUTH0_AUDIENCE_ATTRIBUTE,
+      audience: process.env.AUTH0_AUDIENCE,
       issuer: `https://${process.env.AUTH0_DOMAIN}`,
       algorithms: ['RS256'],
     };
 
-    const getKey = (header, callback) => {
-      client.getSigningKey(header.kid, (err, key) => {
-        const signingKey = key.getPublicKey();
+    const getKey = (header: jwt.JwtHeader, callback: jwt.SigningKeyCallback): void => {
+      if (typeof header.kid === 'string') {
+        client.getSigningKey(header.kid, (err, key) => {
+          const signingKey = key.getPublicKey();
 
-        callback(err, signingKey);
-      });
+          callback(err, signingKey);
+        });
+      }
     };
 
     jwt.verify(token, getKey, options, (err, decoded) => {
@@ -34,6 +41,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
         return res.sendStatus(403);
       }
 
+      // Add the decoded user information to the response.
       res.locals.user = decoded;
       next();
 
