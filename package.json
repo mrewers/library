@@ -1,5 +1,5 @@
 {
-  "name": "library",
+  "name": "@mrewers/library-frontend",
   "version": "0.0.1",
   "description": "Inventory of books",
   "main": "index.js",
