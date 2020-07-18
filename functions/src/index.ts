@@ -9,6 +9,8 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 
+const atob = require('atob');
+
 import { add, deleteOne, getAll, getOne, update } from './utils/route-types';
 import { authenticateJWT } from './auth';
 
@@ -22,7 +24,7 @@ const databaseURL: string =
 
 // Initialize connection to firebase
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(JSON.parse(atob(serviceAccount))),
   databaseURL,
 });
 
