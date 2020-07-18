@@ -21,9 +21,6 @@ jobs:
         with:
           node-version: '12'
 
-      - name: Navigating to functions directory...
-        run: cd functions/
-
       - name: Preparing dependency cache...
         uses: actions/cache@v2
         with:
