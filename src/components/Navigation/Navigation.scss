@@ -3,8 +3,12 @@
 
 .nav {
   align-items: center;
-  display: flex;
+  display: none;
   justify-content: space-between;
+
+  @include breakpoint(tablet) {
+    display: flex;
+  }
 
   &-items {
     @include reset-ul;

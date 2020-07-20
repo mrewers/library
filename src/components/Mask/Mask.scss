@@ -1,10 +1,16 @@
+@import '~/style/breakpoints.scss';
 @import '~/style/colors.scss';
 
 .mask {
+  display: none;
   fill: $white;
   position: absolute;
   height: 60vh;
   width: 100%;
+
+  @include breakpoint(laptop) {
+    display: block;
+  }
 
   &-background {
     background-image: url('~/assets/book-background.jpg');
@@ -16,8 +22,13 @@
   }
 
   &-container {
+    display: none;
     position: sticky;
     top: 0;
+
+    @include breakpoint(tablet) {
+      display: block;
+    }
   }
 
   &-credit {

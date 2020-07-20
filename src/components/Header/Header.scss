@@ -7,9 +7,22 @@ header {
   box-shadow: $boxShadowGreyDark;
   color: $blueDark;
   padding: 0.1rem 0;
-  margin-bottom: 1.5rem;
+
+  @include breakpoint(laptop) {
+    margin-bottom: 1.5rem;
+  }
 }
 
-.head-container {
-  @include page-width;
+.head {
+  &-container {
+    @include page-width;
+  }
+
+  &-title {
+    text-align: center;
+
+    @include breakpoint(tablet) {
+      text-align: left;
+    }
+  }
 }

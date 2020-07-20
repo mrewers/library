@@ -28,7 +28,9 @@
   text-align: center;
 
   &.input-header {
-    margin-left: 5rem;
-    width: calc(70% - 5rem);
+    @include breakpoint(laptop) {
+      margin-left: 5rem;
+      width: calc(70% - 5rem);
+    }
   }
 }

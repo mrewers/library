@@ -17,8 +17,13 @@
 
 .form {
   @include border-light-shadow;
-  @include form-layout;
   background-color: $greyLightest;
+  margin: 0 1rem 1rem;
+  padding: 1rem 0.5rem;
+
+  @include breakpoint(laptop) {
+    @include form-layout;
+  }
 
   &-label {
     @include label-grid;

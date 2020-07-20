@@ -9,15 +9,22 @@
 
   &-prompt {
     @include border-light-shadow;
-    @include form-layout;
     align-items: center;
     background-color: $white;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0 1rem 1rem;
+    padding: 1rem 0.5rem;
+    position: relative;
+
+    @include breakpoint(laptop) {
+      @include form-layout;
+    }
   }
 
   &-heading {
     font-family: $fontFamilyHeadings;
+    text-align: center;
   }
 }

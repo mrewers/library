@@ -1,12 +1,29 @@
+@import '~/style/breakpoints.scss';
 @import '~/style/colors.scss';
 
 .list-item {
   align-items: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: 30px 30px 1fr;
+  column-gap: 0.5rem;
+
+  &-author {
+    display: none;
+
+    @include breakpoint(tablet) {
+      display: inline-block;
+    }
+  }
+
+  &-text {
+    margin: 0 0.5rem;
+    white-space: nowrap;
+  }
 }
 
 @mixin icon {
   background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
   display: block;
   height: 25px;
@@ -16,22 +33,22 @@
 
 .checked {
   &-blue {
-    @include icon;
     background: url('~/assets/icons/check-square-blue.svg');
+    @include icon;
   }
 
   &-pink {
-    @include icon;
     background: url('~/assets/icons/check-square-pink.svg');
+    @include icon;
   }
 
   &-generic {
-    @include icon;
     background: url('~/assets/icons/check-square.svg');
+    @include icon;
   }
 }
 
 .unchecked {
-  @include icon;
   background: url('~/assets/icons/square.svg');
+  @include icon;
 }

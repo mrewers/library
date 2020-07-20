@@ -11,7 +11,7 @@ interface IHeaderProps {
 const Header = ({ title }: IHeaderProps): h.JSX.Element => (
   <header>
     <div class="head-container">
-      <h1>
+      <h1 class="head-title">
         <a href="/">{title}</a>
       </h1>
       <Navigation />

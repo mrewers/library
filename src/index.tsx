@@ -23,11 +23,11 @@ import './style/style.scss';
 dotenv.config();
 
 /* eslint-disable -- dynamic importing of a CommonJS modules causes all sorts of linting issues */
-// if (process.env.NODE_ENV !== 'production') {
-//   const devApiServer = require('./mirage');
+if (process.env.NODE_ENV !== 'production') {
+  const devApiServer = require('./mirage');
 
-//   devApiServer({ environment: 'development' });
-// }
+  devApiServer({ environment: 'development' });
+}
 /* eslint-enable */
 
 const App = (): h.JSX.Element => {

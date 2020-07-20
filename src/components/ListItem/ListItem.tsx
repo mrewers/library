@@ -51,9 +51,9 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
           }
         />
       )}
-      <p>
+      <p class="list-item-text">
         <strong>{item.title}</strong>
-        {item.author && <span>{` - ${item.author}`}</span>}
+        {item.author && <span class="list-item-author">{` - ${item.author}`}</span>}
       </p>
     </article>
   );

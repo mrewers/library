@@ -30,39 +30,45 @@ const Filter = (): h.JSX.Element => {
 
   return (
     <p class="filter-container">
-      Show
-      <label class="dropdown" for="filter-type">
-        <select
-          id="filter-type"
-          name="type"
-          value={status}
-          onBlur={handleChange}
-          onChange={handleChange}
-        >
-          <option value="all">All</option>
-          <option value="read">Read</option>
-          <option value="unread">Unread</option>
-        </select>
-      </label>
-      books for
-      <label class="dropdown" for="filter-reader">
-        <select
-          id="filter-reader"
-          name="reader"
-          value={reader}
-          onBlur={handleChange}
-          onChange={handleChange}
-        >
-          <option value="any">Any Reader</option>
-          <option value="all">All Readers</option>
-          {bookState.readers.map(reader => (
-            <option key={reader} value={reader}>
-              {reader}
-            </option>
-          ))}
-        </select>
-      </label>
-      <strong>{` - ${matches || 0} matches`}</strong>
+      <span>
+        Show
+        <label class="dropdown" for="filter-type">
+          <select
+            id="filter-type"
+            name="type"
+            value={status}
+            onBlur={handleChange}
+            onChange={handleChange}
+          >
+            <option value="all">All Books</option>
+            <option value="read">Read Books</option>
+            <option value="unread">Unread Books</option>
+          </select>
+        </label>
+      </span>
+      <span>
+        For
+        <label class="dropdown" for="filter-reader">
+          <select
+            id="filter-reader"
+            name="reader"
+            value={reader}
+            onBlur={handleChange}
+            onChange={handleChange}
+          >
+            <option value="any">Any Reader</option>
+            <option value="all">All Readers</option>
+            {bookState.readers.map(reader => (
+              <option key={reader} value={reader}>
+                {reader}
+              </option>
+            ))}
+          </select>
+        </label>
+      </span>
+      <span>
+        <strong>{`${matches || 0} matches`}</strong>
+      </span>
     </p>
   );
 };
