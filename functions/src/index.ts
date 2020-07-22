@@ -101,4 +101,4 @@ app.delete('/books/:id', authenticateJWT, (req, res) => {
 
 app.disable('x-powered-by');
 
-exports.app = functions.https.onRequest(app);
+exports.api = functions.https.onRequest(app);
