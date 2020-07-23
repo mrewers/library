@@ -1,0 +1,25 @@
+@import '~/style/colors.scss';
+
+.modal {
+  &-background {
+    background: $gradientPinkBlueLight;
+    height: 100%;
+    opacity: 0.9;
+    position: absolute;
+    width: 100%;
+  }
+
+  &-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    left: 50%;
+    margin: -50vh -50vw;
+    position: fixed;
+    right: 50%;
+    top: 50%;
+    width: 100vw;
+    z-index: 10;
+  }
+}
