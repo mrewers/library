@@ -38,6 +38,18 @@ const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
       this.get('/books', (schema: Schema) => getModels(schema, 'books'), { timing });
       this.get('/readers', (schema: Schema) => getModels(schema, 'readers'), { timing });
 
+      this.get('/books/:id', (schema, request) => {
+        const { id } = request.params;
+
+        return schema.books.find(id);
+      });
+
+      this.get('/readers/:id', (schema, request) => {
+        const { id } = request.params;
+
+        return schema.readers.find(id);
+      });
+
       // Post routes
       this.post('/books', (schema, request) => {
         const attrs = JSON.parse(request.requestBody);

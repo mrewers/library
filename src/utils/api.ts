@@ -1,8 +1,6 @@
 import { getFromStorage } from './auth';
 
-export const fetchData = async (
-  endpoint: TypeAvailableEndpoints
-): Promise<TypeAllowedResponses> => {
+export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses> => {
   try {
     const data = await fetch(`${process.env.API_BASE_URL}/${endpoint}`)
       .then((res: Response) => res.json())
@@ -16,7 +14,7 @@ export const fetchData = async (
 
 export const submitData = async (
   body: IRequestBody,
-  endpoint: TypeAvailableEndpoints
+  endpoint: string
 ): Promise<TypeAllowedResponses> => {
   try {
     const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`, {
@@ -38,6 +36,10 @@ export const submitData = async (
 };
 
 declare global {
+  interface IBookResponse {
+    readonly book: IBook;
+  }
+
   interface IBooksResponse {
     readonly books: TypeBookList;
   }
@@ -50,6 +52,5 @@ declare global {
     readonly book: IBook;
   }
 
-  type TypeAllowedResponses = void | IReadersResponse | IBooksResponse;
-  type TypeAvailableEndpoints = 'books' | 'readers';
+  type TypeAllowedResponses = void | IReadersResponse | IBookResponse | IBooksResponse;
 }

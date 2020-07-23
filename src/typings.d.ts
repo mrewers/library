@@ -9,7 +9,7 @@ declare global {
     readonly id?: string;
     readonly acquired: 'yes' | 'no';
     readonly author?: string;
-    readonly data?: string;
+    readonly date?: string;
     readonly read: readonly string[];
     readonly title: string;
   }
