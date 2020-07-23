@@ -23,7 +23,12 @@ const Modal = ({ children }: IModalProps): h.JSX.Element => {
     return (
       <div class="modal-container">
         <button class="modal-background" type="button" onClick={(): void => closeModal()} />
-        {children}
+        <dialog class="modal-content" open>
+          <button class="modal-close" type="button" onClick={(): void => closeModal()}>
+            <i class="modal-close-icon" />
+          </button>
+          {children}
+        </dialog>
       </div>
     );
   }

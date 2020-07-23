@@ -1,4 +1,6 @@
+@import '~/style/breakpoints.scss';
 @import '~/style/colors.scss';
+@import '~/style/mixins.scss';
 
 .modal {
   &-background {
@@ -7,6 +9,26 @@
     opacity: 0.9;
     position: absolute;
     width: 100%;
+  }
+
+  &-close {
+    @include button-reset;
+    padding: 0;
+    position: absolute;
+    right: 2rem;
+    top: 1rem;
+    z-index: 1;
+
+    &:focus {
+      box-shadow: $focusShadow;
+      outline: none;
+    }
+
+    &-icon {
+      background: url('~/assets/icons/x.svg');
+      @include icon;
+      margin: 0;
+    }
   }
 
   &-container {
@@ -21,5 +43,16 @@
     top: 50%;
     width: 100vw;
     z-index: 10;
+  }
+
+  &-content {
+    display: block;
+    max-width: 700px;
+    position: relative;
+    width: 100%;
+
+    @include breakpoint(tablet) {
+      width: 70%;
+    }
   }
 }

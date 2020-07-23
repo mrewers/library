@@ -27,6 +27,11 @@ button {
   font-weight: 600;
 }
 
+dialog {
+  background: none;
+  border: none;
+}
+
 h1 {
   @include heading-style;
   font-size: $fontSizeXLarge;
