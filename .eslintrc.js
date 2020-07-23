@@ -30,6 +30,7 @@ module.exports = {
       { selector: 'variable', types: ['function'], format: ['camelCase', 'PascalCase'] },
     ],
     '@typescript-eslint/no-type-alias': ['error', { allowAliases: 'in-unions' }],
+    '@typescript-eslint/prefer-readonly-parameter-types': 'warn',
   },
   settings: {
     react: {
