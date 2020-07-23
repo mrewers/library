@@ -18,10 +18,34 @@ const getReadersList = (data: readonly IReader[]): string[] => {
   return data.map(reader => reader.name);
 };
 
+const addBook = (books: readonly IBook[], book: IBook): IBook[] => {
+  return [...books, book];
+};
+
+const updateSingleBook = (books: readonly IBook[], book: IBook, id: string): IBook[] => {
+  return books.map(b => {
+    if (b.id === id) {
+      return book;
+    }
+
+    return b;
+  });
+};
+
 export const bookReducer = (state: IBookState, action: IBookAction): IBookState => {
   const { payload } = action;
 
   switch (action.type) {
+    case 'ADD_BOOK':
+      return {
+        ...state,
+        books: addBook(state.books, payload.book),
+      };
+    case 'UPDATE_BOOK':
+      return {
+        ...state,
+        books: updateSingleBook(state.books, payload.book, payload.id),
+      };
     case 'UPDATE_BOOKS':
       return {
         ...state,
@@ -59,7 +83,9 @@ declare global {
   interface IBookAction {
     readonly payload: {
       readonly books?: readonly IBook[];
+      readonly book?: IBook;
       readonly data?: readonly IReader[];
+      readonly id?: string;
       readonly readers?: readonly string[];
     };
     readonly type: string;

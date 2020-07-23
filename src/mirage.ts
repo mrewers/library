@@ -14,7 +14,7 @@ const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
   const defaultTiming = environment === 'test' ? 0 : 300;
   const timing = delay || defaultTiming;
 
-  const getModels = (schema, endpoint: TypeAvailableEndpoints): TypeAllowedResponses => ({
+  const getModels = (schema, endpoint: string): TypeAllowedResponses => ({
     [endpoint]: schema[endpoint].all().models,
   });
 
@@ -54,8 +54,19 @@ const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
       this.post('/books', (schema, request) => {
         const attrs = JSON.parse(request.requestBody);
 
-        schema.books.create(attrs.book);
-        return getModels(schema, 'books');
+        return schema.books.create(attrs.book);
+      });
+
+      // Put routes
+      this.put('books/:id', (schema, request) => {
+        const attrs = JSON.parse(request.requestBody);
+        const { id } = request.params;
+
+        const book = schema.books.find(id);
+
+        book.update(attrs.book);
+
+        return schema.books.find(id);
       });
     },
   });

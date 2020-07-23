@@ -1,5 +1,11 @@
 import { getFromStorage } from './auth';
 
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': `Bearer ${getFromStorage('access_token')}`,
+  'Content-Type': 'application/json',
+};
+
 export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses> => {
   try {
     const data = await fetch(`${process.env.API_BASE_URL}/${endpoint}`)
@@ -19,11 +25,27 @@ export const submitData = async (
   try {
     const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${getFromStorage('access_token')}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
+      body: JSON.stringify(body),
+    });
+
+    const result = await response.json();
+
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const updateItem = async (
+  body: IRequestBody,
+  endpoint: string,
+  id: string
+): Promise<TypeAllowedResponses> => {
+  try {
+    const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}/${id}`, {
+      method: 'PUT',
+      headers,
       body: JSON.stringify(body),
     });
 
