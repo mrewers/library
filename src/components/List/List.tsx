@@ -15,7 +15,7 @@ const List = ({ list, read }: IListProps): h.JSX.Element => (
     {list.length > 0 && (
       <ul class="book-list">
         {list.map(item => (
-          <li key={item.title} class={read.includes(item) ? 'read' : ''}>
+          <li key={item.id} class={read.includes(item) ? 'read' : ''}>
             <ListItem item={item} />
           </li>
         ))}

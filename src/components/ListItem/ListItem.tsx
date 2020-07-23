@@ -3,6 +3,7 @@ import { useContext } from 'preact/hooks';
 
 import { FilterContext } from '~/context/filterContext';
 import { BookContext } from '~/context/bookContext';
+import { isLoggedIn } from '~/utils/auth';
 
 import './ListItem.scss';
 
@@ -35,26 +36,28 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
 
   return (
     <article class="list-item">
-      {isCollective &&
-        readerData.map(r => (
+      <button class="list-item-trigger" disabled={isLoggedIn()} type="button">
+        {isCollective &&
+          readerData.map(r => (
+            <i
+              key={r.name}
+              class={containsReader(item.read, r.name) ? getCheckMark(r) : 'unchecked'}
+            />
+          ))}
+        {!isCollective && (
           <i
-            key={r.name}
-            class={containsReader(item.read, r.name) ? getCheckMark(r) : 'unchecked'}
+            class={
+              containsReader(item.read, reader)
+                ? getCheckMark(getSelectedReaderData(readerData, reader))
+                : 'unchecked'
+            }
           />
-        ))}
-      {!isCollective && (
-        <i
-          class={
-            containsReader(item.read, reader)
-              ? getCheckMark(getSelectedReaderData(readerData, reader))
-              : 'unchecked'
-          }
-        />
-      )}
-      <p class="list-item-text">
-        <strong>{item.title}</strong>
-        {item.author && <span class="list-item-author">{` - ${item.author}`}</span>}
-      </p>
+        )}
+        <p class="list-item-text" id={item.id}>
+          <strong>{item.title}</strong>
+          {item.author && <span class="list-item-author">{` - ${item.author}`}</span>}
+        </p>
+      </button>
     </article>
   );
 };
