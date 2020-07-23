@@ -2,6 +2,26 @@
 @import './colors.scss';
 @import './typography.scss';
 
+@mixin button-reset {
+  background-color: transparent;
+  border: none;
+  color: unset;
+  font-family: unset;
+  font-size: unset;
+  font-weight: unset;
+  text-align: unset;
+}
+
+@mixin icon {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  height: 25px;
+  margin: 0 0.5rem;
+  width: 25px;
+}
+
 @mixin link-hover {
   background-color: transparent;
   transition: background-size 0.25s ease;
@@ -28,8 +48,6 @@
 @mixin form-layout {
   display: flex;
   flex-direction: column;
-  margin-left: 5rem;
   padding: 1rem;
   position: relative;
-  width: calc(70% - 5rem);
 }

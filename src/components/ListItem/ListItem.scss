@@ -1,5 +1,6 @@
 @import '~/style/breakpoints.scss';
 @import '~/style/colors.scss';
+@import '~/style/mixins.scss';
 
 .list-item {
   &-author {
@@ -16,36 +17,24 @@
   }
 
   &-trigger {
+    @include button-reset;
     align-items: center;
-    background-color: transparent;
-    border: none;
-    color: unset;
     column-gap: 0.5rem;
     display: grid;
-    font-family: unset;
-    font-size: unset;
-    font-weight: unset;
     grid-template-columns: 30px 30px 1fr;
     height: 100%;
     padding: 0.5rem;
-    text-align: unset;
     width: 100%;
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
 
     &:focus {
       background-color: rgba($blueLight, 0.2);
       outline: none;
     }
   }
-}
-
-@mixin icon {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: block;
-  height: 25px;
-  margin: 0 0.5rem;
-  width: 25px;
 }
 
 .checked {

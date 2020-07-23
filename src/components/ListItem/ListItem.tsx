@@ -1,8 +1,9 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
-import { FilterContext } from '~/context/filterContext';
 import { BookContext } from '~/context/bookContext';
+import { FilterContext } from '~/context/filterContext';
+import { ModalContext } from '~/context/modalContext';
 import { isLoggedIn } from '~/utils/auth';
 
 import './ListItem.scss';
@@ -28,20 +29,38 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
   const {
     state: { reader },
   } = useContext(FilterContext);
+
   const {
     state: { readerData },
   } = useContext(BookContext);
 
+  const { dispatch } = useContext(ModalContext);
+
   const isCollective = reader === 'all' || reader === 'any';
+
+  const openModal = (e: h.JSX.TargetedEvent): void => {
+    const { id } = e.target;
+
+    if (typeof id === 'string') {
+      dispatch({ type: 'OPEN_MODAL', payload: { id } });
+    }
+  };
 
   return (
     <article class="list-item">
-      <button class="list-item-trigger" disabled={isLoggedIn()} type="button">
+      <button
+        class="list-item-trigger"
+        disabled={!isLoggedIn()}
+        id={item.id}
+        type="button"
+        onClick={(e): void => openModal(e)}
+      >
         {isCollective &&
           readerData.map(r => (
             <i
               key={r.name}
               class={containsReader(item.read, r.name) ? getCheckMark(r) : 'unchecked'}
+              id={item.id}
             />
           ))}
         {!isCollective && (
@@ -51,11 +70,12 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
                 ? getCheckMark(getSelectedReaderData(readerData, reader))
                 : 'unchecked'
             }
+            id={item.id}
           />
         )}
         <p class="list-item-text" id={item.id}>
-          <strong>{item.title}</strong>
-          {item.author && <span class="list-item-author">{` - ${item.author}`}</span>}
+          <strong id={item.id}>{item.title}</strong>
+          {item.author && <span class="list-item-author" id={item.id}>{` - ${item.author}`}</span>}
         </p>
       </button>
     </article>
