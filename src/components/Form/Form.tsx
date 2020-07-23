@@ -18,7 +18,7 @@ const toggleArrayValues = (arr: readonly string[], value: string): string[] => {
   }
 };
 
-const Form = (): h.JSX.Element => {
+const Form = ({ label }: { label: string }): h.JSX.Element => {
   const [acquired, setAcquired] = useState('no');
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState(getDateString());
@@ -97,6 +97,7 @@ const Form = (): h.JSX.Element => {
 
   return (
     <form class="form" onSubmit={onSubmit}>
+      {label && <h3 class="form-title">{label}</h3>}
       {saving && <Overlay text={overlayText} />}
       <label class="form-label" for="title">
         Title:
