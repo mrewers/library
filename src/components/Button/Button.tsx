@@ -2,6 +2,14 @@ import { h } from 'preact';
 
 import './Button.scss';
 
+interface IButton {
+  readonly classes?: string;
+  readonly color?: 'accent' | 'dark' | 'light' | 'plain' | 'white';
+  readonly label: string;
+  readonly onClick?: (e?: h.JSX.TargetedEvent) => void;
+  readonly type?: 'button' | 'submit';
+}
+
 const Button = ({
   classes = '',
   color = 'light',

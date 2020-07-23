@@ -20,13 +20,6 @@ declare global {
     readonly unread: number;
   }
 
-  interface IButton {
-    readonly classes?: string;
-    readonly color: 'accent' | 'dark' | 'light' | 'plain' | 'white';
-    readonly label: string;
-    readonly type: 'button' | 'submit';
-  }
-
   /* eslint-disable @typescript-eslint/no-type-alias */
   type TypeEventInput = JSX.TargetedEvent<HTMLInputElement>;
   type TypeEventSelect = JSX.TargetedEvent<HTMLSelectElement>;
