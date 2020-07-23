@@ -20,6 +20,8 @@
 
     @include breakpoint(laptop) {
       @include form-layout;
+      margin-left: 5rem;
+      width: calc(70% - 5rem);
     }
   }
 
