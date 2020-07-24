@@ -22,6 +22,10 @@ const addBook = (books: readonly IBook[], book: IBook): IBook[] => {
   return [...books, book];
 };
 
+const removeBook = (books: readonly IBook[], id: string): IBook[] => {
+  return books.filter(book => book.id !== id);
+};
+
 const updateSingleBook = (books: readonly IBook[], book: IBook, id: string): IBook[] => {
   return books.map(b => {
     if (b.id === id) {
@@ -40,6 +44,11 @@ export const bookReducer = (state: IBookState, action: IBookAction): IBookState 
       return {
         ...state,
         books: addBook(state.books, payload.book),
+      };
+    case 'DELETE_BOOK':
+      return {
+        ...state,
+        books: removeBook(state.books, payload.id),
       };
     case 'UPDATE_BOOK':
       return {

@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'preact/hooks';
 
 import BookBase from './BookBase';
 
-import { fetchData, updateItem } from '~/utils/api';
+import { fetchData, updateItem, deleteItem } from '~/utils/api';
 import { getDateString } from '~/utils/dates';
 import { toggleArrayValues } from '~/utils/form-helpers';
 import { BookContext } from '~/context/bookContext';
@@ -77,6 +77,14 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
     });
   };
 
+  const onDelete = async (): Promise<void> => {
+    await deleteItem('books', id).catch(err => console.error(err));
+
+    bookDispatch({ type: 'DELETE_BOOK', payload: { id } });
+    resetOverlay('Successfully Deleted!');
+    dispatch({ type: 'CLOSE_MODAL' });
+  };
+
   const onSubmit = (e: Event): void => {
     setSaving(true);
     updateItem({ book }, 'books', id)
@@ -106,6 +114,7 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
       overlayText={overlayText}
       saving={saving}
       onCancel={closeModal}
+      onDelete={onDelete}
       onInput={onInput}
       onSubmit={onSubmit}
     />

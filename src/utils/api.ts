@@ -57,6 +57,21 @@ export const updateItem = async (
   }
 };
 
+export const deleteItem = async (endpoint: string, id: string): Promise<TypeAllowedResponses> => {
+  try {
+    const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}/${id}`, {
+      method: 'DELETE',
+      headers,
+    });
+
+    const result = await response.json();
+
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 declare global {
   interface IBookResponse {
     readonly book: IBook;

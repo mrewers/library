@@ -68,6 +68,18 @@ const devApiServer = ({ environment, delay }: IMirageServerConfigs): Server => {
 
         return schema.books.find(id);
       });
+
+      // Delete routes
+      this.put('books/:id', (schema, request) => {
+        const { id } = request.params;
+
+        schema.books.find(id).destroy();
+
+        return {
+          id,
+          message: `Successfully delete document with id: ${id}`,
+        };
+      });
     },
   });
 };
