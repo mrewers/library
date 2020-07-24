@@ -82,7 +82,7 @@ app.post('/books', authenticateJWT, (req, res) => {
 });
 
 /* PUT Routes - Used to add data to the database */
-app.put('/books', authenticateJWT, (req, res) => {
+app.put('/books/:id', authenticateJWT, (req, res) => {
   try {
     return update('books', db, req, res);
   } catch (err) {

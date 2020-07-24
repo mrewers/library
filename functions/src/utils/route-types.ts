@@ -16,14 +16,11 @@ export const add = async (
 
     const { book } = req.body;
 
-    await db.collection('books').add(structureBook(book));
+    const docRef = await db.collection(collection).add(structureBook(book));
 
-    const data = await db
-      .collection('books')
-      .get()
-      .then(snapshot => getCollection(snapshot));
+    const data = await docRef.get().then(snapshot => snapshot.data());
 
-    return res.status(200).send({ books: data });
+    return res.status(200).send({ book: data });
   } catch (err) {
     return res.status(500).send(err);
   }
@@ -57,7 +54,7 @@ export const getOne = async (
       .collection(collection)
       .doc(req.params.id)
       .get()
-      .then(result => result);
+      .then(result => result.data());
 
     const singular = collection.slice(0, -1);
 
@@ -78,7 +75,7 @@ export const deleteOne = async (
 
     await db.collection(collection).doc(id).delete();
 
-    return res.status(200).send({ id, message: 'Successfully delete document' });
+    return res.status(200).send({ id, message: `Successfully delete document with id: ${id}` });
   } catch (err) {
     return res.status(500).send(err);
   }
@@ -95,16 +92,18 @@ export const update = async (
       return res.sendStatus(403);
     }
 
+    const { id } = req.params;
     const { book } = req.body;
 
-    await db.collection('books').doc(req.params.id).update(structureBook(book));
+    await db.collection(collection).doc(id).update(structureBook(book));
 
     const data = await db
-      .collection('books')
+      .collection(collection)
+      .doc(id)
       .get()
-      .then(snapshot => getCollection(snapshot));
+      .then(snapshot => snapshot.data());
 
-    return res.status(200).send({ books: data });
+    return res.status(200).send({ book: data });
   } catch (err) {
     return res.status(500).send(err);
   }
