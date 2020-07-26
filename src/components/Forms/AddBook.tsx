@@ -47,7 +47,12 @@ const Form = ({ label }: IFormProps): h.JSX.Element => {
     addItem({ book }, 'books')
       .then((data: IBookResponse) => {
         if (data !== undefined) {
-          dispatch({ type: 'ADD_BOOK', payload: { book: data.book } });
+          const added = {
+            ...data.book,
+            id: data.id,
+          };
+
+          dispatch({ type: 'ADD_BOOK', payload: { book: added } });
           resetForm();
         } else {
           resetOverlay('We encountered an error while saving :(');

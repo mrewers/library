@@ -16,6 +16,7 @@ import FourOhFour from '~/components/Pages/FourOhFour';
 import Input from '~/components/Pages/Input';
 import Login from '~/components/Pages/Login';
 import Privacy from '~/components/Pages/Privacy';
+import Retired from '~/components/Pages/Retired';
 
 import { BookContext, bookReducer, initialBookState } from '~/context/bookContext';
 import { FilterContext, filterReducer, initialFilterState } from '~/context/filterContext';
@@ -77,6 +78,7 @@ const App = (): h.JSX.Element => {
                   <Route component={Auth} path="/auth/:path" />
                   <Route component={Input} path="/add" />
                   <Route component={Login} path="/login" />
+                  <Route component={Retired} path="/retired" />
                   <Route component={Privacy} path="/privacy" />
                   <Route component={FourOhFour} default type="404" />
                 </Router>

@@ -20,7 +20,7 @@ export const add = async (
 
     const data = await docRef.get().then(snapshot => snapshot.data());
 
-    return res.status(200).send({ book: data });
+    return res.status(200).send({ book: data, id: docRef.id });
   } catch (err) {
     return res.status(500).send(err);
   }

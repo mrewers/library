@@ -75,6 +75,7 @@ export const deleteItem = async (endpoint: string, id: string): Promise<TypeAllo
 declare global {
   interface IBookResponse {
     readonly book: IBook;
+    readonly id?: string;
   }
 
   interface IBooksResponse {
