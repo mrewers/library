@@ -10,7 +10,7 @@
     "encode": "node ./utils/encode-key.js"
   },
   "engines": {
-    "node": "12"
+    "node": "10"
   },
   "main": "lib/index.js",
   "dependencies": {
