@@ -4,6 +4,7 @@ export const initialBookState: IBookState = {
   books: [],
   readerData: [],
   readers: [],
+  retired: [],
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -45,10 +46,19 @@ export const bookReducer = (state: IBookState, action: IBookAction): IBookState 
         ...state,
         books: addBook(state.books, payload.book),
       };
+    case 'ADD_RETIRED':
+      return {
+        ...state,
+        retired: addBook(state.retired, payload.book),
+      };
     case 'DELETE_BOOK':
       return {
         ...state,
         books: removeBook(state.books, payload.id),
+      };
+    case 'RETIRE_BOOK':
+      return {
+        ...state,
       };
     case 'UPDATE_BOOK':
       return {
@@ -71,6 +81,11 @@ export const bookReducer = (state: IBookState, action: IBookAction): IBookState 
         ...state,
         readers: payload.readers,
       };
+    case 'UPDATE_RETIRED':
+      return {
+        ...state,
+        retired: payload.retired,
+      };
     default:
       return state;
   }
@@ -87,6 +102,7 @@ declare global {
     readonly books: readonly IBook[];
     readonly readerData: readonly IReader[];
     readonly readers: readonly string[];
+    readonly retired: readonly IBook[];
   }
 
   interface IBookAction {
@@ -96,6 +112,7 @@ declare global {
       readonly data?: readonly IReader[];
       readonly id?: string;
       readonly readers?: readonly string[];
+      readonly retired?: readonly IBook[];
     };
     readonly type: string;
   }

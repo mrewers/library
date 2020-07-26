@@ -18,7 +18,7 @@ export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses>
   }
 };
 
-export const submitData = async (
+export const addItem = async (
   body: IRequestBody,
   endpoint: string
 ): Promise<TypeAllowedResponses> => {
@@ -85,9 +85,18 @@ declare global {
     readonly readers: readonly IReader[];
   }
 
+  interface IRetiredResponse {
+    readonly retired: readonly IBook[];
+  }
+
   interface IRequestBody {
     readonly book: IBook;
   }
 
-  type TypeAllowedResponses = void | IReadersResponse | IBookResponse | IBooksResponse;
+  type TypeAllowedResponses =
+    | void
+    | IReadersResponse
+    | IBookResponse
+    | IBooksResponse
+    | IRetiredResponse;
 }

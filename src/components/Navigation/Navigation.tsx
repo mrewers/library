@@ -19,6 +19,11 @@ const Navigation = (): h.JSX.Element => (
           Add New
         </a>
       </li>
+      <li>
+        <a class="nav-link" href="/retired">
+          Jettisoned
+        </a>
+      </li>
     </ul>
     {isLoggedIn() && (
       <Button color="plain" label="Log Out" type="button" onClick={(): void => logout()} />

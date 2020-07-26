@@ -5,7 +5,7 @@ import BookBase from './BookBase';
 
 import { BookContext } from '~/context/bookContext';
 import { getDateString } from '~/utils/dates';
-import { submitData } from '~/utils/api';
+import { addItem } from '~/utils/api';
 import { toggleArrayValues } from '~/utils/form-helpers';
 
 import './Form.scss';
@@ -44,7 +44,7 @@ const Form = ({ label }: IFormProps): h.JSX.Element => {
 
   const onSubmit = (e: Event): void => {
     setSaving(true);
-    submitData({ book }, 'books')
+    addItem({ book }, 'books')
       .then((data: IBookResponse) => {
         if (data !== undefined) {
           dispatch({ type: 'ADD_BOOK', payload: { book: data.book } });

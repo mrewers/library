@@ -14,6 +14,7 @@ const Books = (): h.JSX.Element => {
   const {
     state: { status, reader },
   } = useContext(FilterContext);
+
   const {
     state: { books, readers },
   } = useContext(BookContext);

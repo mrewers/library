@@ -8,8 +8,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 
-import { bookRoutes } from './routes/books';
-import { readerRoutes } from './routes/readers';
+import { routes } from './routes';
 
 // Initialize the Express server
 const app = express();
@@ -23,8 +22,9 @@ app.use(cors({ origin: process.env.API_ALLOWED_ORIGIN }));
 // Set API endpoints
 const router = express.Router();
 
-router.use('/books', bookRoutes());
-router.use('/readers', readerRoutes());
+router.use('/books', routes.bookRoutes());
+router.use('/readers', routes.readerRoutes());
+router.use('/retired', routes.retiredRoutes());
 
 app.use('/', router);
 

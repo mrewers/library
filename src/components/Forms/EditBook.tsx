@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'preact/hooks';
 
 import BookBase from './BookBase';
 
-import { fetchData, updateItem, deleteItem } from '~/utils/api';
+import { addItem, fetchData, updateItem, deleteItem } from '~/utils/api';
 import { getDateString } from '~/utils/dates';
 import { toggleArrayValues } from '~/utils/form-helpers';
 import { BookContext } from '~/context/bookContext';
@@ -40,11 +40,14 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
   const [overlayText, setOverlayText] = useState('Saving..');
   const [saving, setSaving] = useState(false);
 
-  const resetOverlay = (msg: string): void => {
+  const resetOverlay = (msg: string, close = false): void => {
     setOverlayText(msg);
     setTimeout((): void => {
       setSaving(false);
       setOverlayText('Saving...');
+      if (close) {
+        dispatch({ type: 'CLOSE_MODAL' });
+      }
     }, 1000);
   };
 
@@ -78,11 +81,24 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
   };
 
   const onDelete = async (): Promise<void> => {
+    setSaving(true);
+
     await deleteItem('books', id).catch(err => console.error(err));
 
     bookDispatch({ type: 'DELETE_BOOK', payload: { id } });
-    resetOverlay('Successfully Deleted!');
-    dispatch({ type: 'CLOSE_MODAL' });
+    resetOverlay('Successfully Deleted!', true);
+  };
+
+  const onRetire = async (): Promise<void> => {
+    setSaving(true);
+
+    await addItem({ book }, 'retired').catch(err => console.error(err));
+    bookDispatch({ type: 'ADD_RETIRED', payload: { book } });
+
+    await deleteItem('books', id).catch(err => console.error(err));
+    bookDispatch({ type: 'DELETE_BOOK', payload: { id } });
+
+    resetOverlay('Successfully Jettisoned!', true);
   };
 
   const onSubmit = (e: Event): void => {
@@ -109,6 +125,7 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
       book={book}
       hasCancel
       hasDelete
+      hasRetire
       label={label}
       loading={loading}
       overlayText={overlayText}
@@ -116,6 +133,7 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
       onCancel={closeModal}
       onDelete={onDelete}
       onInput={onInput}
+      onRetire={onRetire}
       onSubmit={onSubmit}
     />
   );

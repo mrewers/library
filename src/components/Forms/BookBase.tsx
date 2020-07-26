@@ -17,11 +17,13 @@ interface IBookBaseProps {
   readonly classes?: string;
   readonly hasCancel?: boolean;
   readonly hasDelete?: boolean;
+  readonly hasRetire?: boolean;
   readonly label?: string;
   readonly loading?: boolean;
   readonly onCancel?: () => void;
   readonly onDelete?: (e: TypeEventInput) => void;
   readonly onInput: (e: TypeEventInput) => void;
+  readonly onRetire?: (e: TypeEventInput) => void;
   readonly onSubmit: (e: Event) => void;
   readonly overlayText?: string;
   readonly saving?: boolean;
@@ -30,13 +32,15 @@ interface IBookBaseProps {
 const BookBase = ({
   book,
   classes,
-  hasDelete,
   hasCancel,
+  hasDelete,
+  hasRetire,
   label,
   loading,
   onCancel,
   onDelete,
   onInput,
+  onRetire,
   onSubmit,
   overlayText,
   saving,
@@ -119,25 +123,38 @@ const BookBase = ({
         </div>
       </div>
       <div class="form-button-container">
-        {hasDelete && (
-          <Button
-            classes="form-button"
-            color="plain"
-            label="Delete"
-            type="button"
-            onClick={onDelete}
-          />
-        )}
-        {hasCancel && (
-          <Button
-            classes="form-button"
-            color="plain"
-            label="Cancel"
-            type="button"
-            onClick={onCancel}
-          />
-        )}
-        <Button classes="form-button" color="light" label="Submit" type="submit" />
+        <div>
+          {hasDelete && (
+            <Button
+              classes="form-button"
+              color="plain"
+              label="Delete"
+              type="button"
+              onClick={onDelete}
+            />
+          )}
+          {hasRetire && (
+            <Button
+              classes="form-button"
+              color="plain"
+              label="Jettison"
+              type="button"
+              onClick={onRetire}
+            />
+          )}
+        </div>
+        <div>
+          {hasCancel && (
+            <Button
+              classes="form-button"
+              color="plain"
+              label="Cancel"
+              type="button"
+              onClick={onCancel}
+            />
+          )}
+          <Button classes="form-button" color="light" label="Submit" type="submit" />
+        </div>
       </div>
     </form>
   );
