@@ -1,6 +1,6 @@
 {
   "hosting": {
     "public": "public",
-    "rewrites": [{ "source": "/library/**", "function": "api" }]
+    "rewrites": [{ "source": "**", "function": "api" }]
   }
 }

@@ -5,24 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/mrewers/library/compare/v0.1.0...HEAD)
+## [Unreleased](https://github.com/mrewers/library/compare/v0.2.0...HEAD)
 
 _This sections lists changes committed since most recent release_
 
+## [v0.2.0](https://github.com/mrewers/library/compare/v0.1.0...v0.2.0) - (2020-07-26)
+
 **Added:**
 
-- API routes to update and delete books
+- API routes to update, delete, and retire books
 - Edit book form accessible by clicking on a book list item
 - CSS breakpoints with mobile-first styling
 - A modal component that accepts a child component
 - Firebase hosting configuration for the API
+- A page to view retired books
 
 **Changed:**
 
-- Push book into context rather than pulling full collection from database (to limit Firebase reads)
+- Push book into context rather than pulling full collection from database (to reduce Firebase reads)
 - Fetch books and readers in separate useEffect hooks
 - Expect Firebase key to the base64 encoded rather than stringified
-- Switch engine for API serverless function to Node 12
+- Break out routes and database connection to improve readability
 
 **Fixed:**
 
