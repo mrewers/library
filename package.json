@@ -1,6 +1,6 @@
 {
   "name": "@mrewers/library-frontend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Inventory of books",
   "main": "index.js",
   "author": "Marek Rewers",
