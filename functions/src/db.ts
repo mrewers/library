@@ -1,9 +1,12 @@
 import * as admin from 'firebase-admin';
 
-const atob = require('atob');
+const encoded = process.env.FIRESTORE_SA;
 
-const serviceAccount: string =
-  typeof process.env.FIRESTORE_SA === 'string' ? process.env.FIRESTORE_SA : '';
+let serviceAccount = null;
+
+if (encoded) {
+  serviceAccount = JSON.parse(Buffer.from(encoded, 'base64').toString('ascii'));
+}
 
 const databaseURL: string =
   typeof process.env.FIRESTORE_DB_NAME === 'string'
@@ -11,9 +14,11 @@ const databaseURL: string =
     : '';
 
 // Initialize connection to firebase
-admin.initializeApp({
-  credential: admin.credential.cert(JSON.parse(atob(serviceAccount))),
-  databaseURL,
-});
+if (serviceAccount) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL,
+  });
+}
 
 export const db = admin.firestore();
