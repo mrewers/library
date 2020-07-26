@@ -4,16 +4,17 @@ import { Fragment, h, render } from 'preact';
 import { useReducer, useEffect } from 'preact/hooks';
 import { Router, Route } from 'preact-router';
 
-import Auth from '~/components/Auth/Auth';
 import Header from '~/components/Header/Header';
 import EditBook from '~/components/Forms/EditBook';
 import Mask from '~/components/Mask/Mask';
 import Modal from '~/components/Modal/Modal';
 import Stats from '~/components/Stats/Stats';
 
+import Auth from '~/components/Pages/Auth';
 import Books from '~/components/Pages/Books';
 import FourOhFour from '~/components/Pages/FourOhFour';
 import Input from '~/components/Pages/Input';
+import Login from '~/components/Pages/Login';
 import Privacy from '~/components/Pages/Privacy';
 
 import { BookContext, bookReducer, initialBookState } from '~/context/bookContext';
@@ -72,8 +73,10 @@ const App = (): h.JSX.Element => {
               <main>
                 <Router>
                   <Route component={Books} path="/" />
+                  <Route component={Books} path="/home" />
+                  <Route component={Auth} path="/auth/:path" />
                   <Route component={Input} path="/add" />
-                  <Route component={Auth} path="/auth" />
+                  <Route component={Login} path="/login" />
                   <Route component={Privacy} path="/privacy" />
                   <Route component={FourOhFour} default type="404" />
                 </Router>

@@ -16,7 +16,7 @@ const LoginPrompt = ({ error }: ILoginPromptProps): h.JSX.Element => (
     {error && <Overlay text="Sorry, you are not authorized to add content." />}
     <strong class="login-content login-heading">You Must Be An Approved User to Add Books</strong>
     <p class="login-content">Please log in to continue</p>
-    <Button color="plain" label="Log In" type="button" onClick={(): void => login()} />
+    <Button color="plain" label="Log In" type="button" onClick={(): void => login('add')} />
   </div>
 );
 

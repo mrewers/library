@@ -10,10 +10,10 @@ const auth = new auth0.WebAuth({
 /**
  * Initiate a login.
  */
-export const login = (): void => {
+export const login = (path?: string): void => {
   auth.authorize({
     responseType: 'token id_token',
-    redirectUri: process.env.AUTH0_REDIRECT,
+    redirectUri: path ? `${process.env.AUTH0_REDIRECT}/${path}` : process.env.AUTH0_REDIRECT,
     audience: process.env.AUTH0_AUDIENCE,
     scope: process.env.AUTH0_SCOPE,
   });
