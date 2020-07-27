@@ -1,9 +1,8 @@
 import { Router } from 'express';
 
-import { db } from '../db';
 import { getAll, getOne } from '../utils/route-types';
 
-export const readerRoutes = () => {
+export const readerRoutes = (db: FirebaseFirestore.Firestore): Router => {
   const router = Router();
 
   /* GET Routes - Used to retrieve data from the database */

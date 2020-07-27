@@ -2,9 +2,8 @@ import { Router } from 'express';
 
 import { add, getAll, getOne } from '../utils/route-types';
 import { authenticateJWT } from '../auth';
-import { db } from '../db';
 
-export const retiredRoutes = () => {
+export const retiredRoutes = (db: FirebaseFirestore.Firestore): Router => {
   const router = Router();
 
   /* GET Routes - Used to retrieve data from the database */
