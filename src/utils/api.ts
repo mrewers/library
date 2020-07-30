@@ -8,9 +8,9 @@ const headers = {
 
 export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses> => {
   try {
-    const data = await fetch(`${process.env.API_BASE_URL}/${endpoint}`)
-      .then((res: Response) => res.json())
-      .then((d: TypeAllowedResponses) => d);
+    const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`);
+
+    const data = (await response.json()) as TypeAllowedResponses;
 
     return data;
   } catch (err) {
@@ -23,15 +23,15 @@ export const addItem = async (
   endpoint: string
 ): Promise<TypeAllowedResponses> => {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`, {
+    const response: Response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`, {
       method: 'POST',
       headers,
       body: JSON.stringify(body),
     });
 
-    const result = await response.json();
+    const data = (await response.json()) as TypeAllowedResponses;
 
-    return result;
+    return data;
   } catch (err) {
     console.error(err);
   }
@@ -49,9 +49,9 @@ export const updateItem = async (
       body: JSON.stringify(body),
     });
 
-    const result = await response.json();
+    const data = (await response.json()) as TypeAllowedResponses;
 
-    return result;
+    return data;
   } catch (err) {
     console.error(err);
   }
@@ -64,9 +64,9 @@ export const deleteItem = async (endpoint: string, id: string): Promise<TypeAllo
       headers,
     });
 
-    const result = await response.json();
+    const data = (await response.json()) as TypeAllowedResponses;
 
-    return result;
+    return data;
   } catch (err) {
     console.error(err);
   }
