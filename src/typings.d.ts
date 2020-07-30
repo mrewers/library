@@ -14,6 +14,10 @@ declare global {
     readonly title: string;
   }
 
+  interface IRetired extends IBook {
+    readonly dateRetired?: string;
+  }
+
   interface IStats {
     readonly all: number;
     readonly read: number;

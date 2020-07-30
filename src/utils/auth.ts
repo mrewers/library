@@ -1,6 +1,5 @@
-const decode = require('jwt-decode'); // eslint-disable-line -- Does not work using ES6 imports
-
 import * as auth0 from 'auth0-js';
+import * as jsonwebtoken from 'jsonwebtoken';
 
 const auth = new auth0.WebAuth({
   clientID: process.env.AUTH0_CLIENT_ID,
@@ -74,9 +73,21 @@ export const setToken = (tokenName: 'access_token' | 'id_token'): void => {
  * @param encodedToken Token
  */
 const getTokenExpirationDate = (encodedToken: string): Date | null => {
-  const token: TTokenDto = decode(encodedToken);
+  interface IToken {
+    at_hash?: string;
+    aud?: string;
+    exp?: number;
+    iat?: number;
+    iss?: string;
+    nonce?: string;
+    sub?: string;
+  }
 
-  if (!token || !token.exp) {
+  if (!encodedToken) return null;
+
+  const token = jsonwebtoken.decode(encodedToken) as IToken;
+
+  if (!token.exp) {
     return null;
   }
 
@@ -104,12 +115,6 @@ export const isLoggedIn = (): boolean => {
   const idToken = getFromStorage('id_token');
 
   return !!idToken && !isTokenExpired(idToken);
-};
-
-export const requireAuth = (nextState, replace): void => {
-  if (!isLoggedIn()) {
-    replace({ pathname: '/' });
-  }
 };
 
 /**
