@@ -20,6 +20,13 @@ module.exports = {
       },
     ],
     // typescript
+    '@typescript-eslint/consistent-type-assertions': [
+      'error',
+      {
+        assertionStyle: 'as',
+        objectLiteralTypeAssertions: 'never',
+      },
+    ],
     '@typescript-eslint/strict-boolean-expressions': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
