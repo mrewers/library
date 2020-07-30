@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
 import { hasScope } from '../auth';
-import { getCollection, structureBook } from './firestore-queries';
+import { getCollection, structureData } from './firestore-queries';
 
 export const add = async (
-  collection: string,
+  collection: 'books' | 'retired',
   db: FirebaseFirestore.Firestore,
   req: Request,
   res: Response
@@ -14,9 +14,9 @@ export const add = async (
       return res.sendStatus(403);
     }
 
-    const { book } = req.body;
+    const { book } = req.body as IRequestBody;
 
-    const docRef = await db.collection(collection).add(structureBook(book));
+    const docRef = await db.collection(collection).add(structureData(book, collection));
 
     const data = await docRef.get().then(snapshot => snapshot.data());
 
@@ -82,7 +82,7 @@ export const deleteOne = async (
 };
 
 export const update = async (
-  collection: string,
+  collection: 'books' | 'retired',
   db: FirebaseFirestore.Firestore,
   req: Request,
   res: Response
@@ -93,9 +93,9 @@ export const update = async (
     }
 
     const { id } = req.params;
-    const { book } = req.body;
+    const { book } = req.body as IRequestBody;
 
-    await db.collection(collection).doc(id).update(structureBook(book));
+    await db.collection(collection).doc(id).update(structureData(book, collection));
 
     const data = await db
       .collection(collection)
@@ -108,3 +108,7 @@ export const update = async (
     return res.status(500).send(err);
   }
 };
+
+interface IRequestBody {
+  readonly book: IBook | IRetired;
+}

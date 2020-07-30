@@ -92,8 +92,11 @@ const EditBook = ({ label }: IEditBookProps): h.JSX.Element => {
   const onRetire = async (): Promise<void> => {
     setSaving(true);
 
-    await addItem({ book }, 'retired').catch(err => console.error(err));
-    bookDispatch({ type: 'ADD_RETIRED', payload: { book } });
+    const date = getDateString();
+    const retired = { ...book, dateRetired: date };
+
+    await addItem({ book: retired }, 'retired').catch(err => console.error(err));
+    bookDispatch({ type: 'ADD_RETIRED', payload: { book: retired } });
 
     await deleteItem('books', id).catch(err => console.error(err));
     bookDispatch({ type: 'DELETE_BOOK', payload: { id } });

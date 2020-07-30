@@ -91,7 +91,7 @@ declare global {
   }
 
   interface IRequestBody {
-    readonly book: IBook;
+    readonly book: IBook | IRetired;
   }
 
   type TypeAllowedResponses =

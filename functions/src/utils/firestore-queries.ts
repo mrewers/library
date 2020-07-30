@@ -8,16 +8,43 @@ export const getCollection = (snapshot: FirebaseFirestore.QuerySnapshot) => {
 
 export const structureBook = (book: IBook): IBook => ({
   acquired: book.acquired,
+  author: book.author,
   date: book.date,
   read: book.read,
-  author: book.author,
   title: book.title,
 });
 
-interface IBook {
-  readonly acquired?: boolean;
-  readonly date?: string;
-  readonly read?: readonly string[];
-  readonly author?: string;
-  readonly title?: string;
+export const structureRetired = (book: IRetired): IRetired => ({
+  acquired: book.acquired,
+  author: book.author,
+  date: book.date,
+  dateRetired: book.dateRetired,
+  read: book.read,
+  title: book.title,
+});
+
+export const structureData = (
+  data: IBook | IRetired,
+  type: 'books' | 'retired'
+): IBook | IRetired => {
+  switch (type) {
+    case 'books':
+      return structureBook(data);
+    case 'retired':
+      return structureRetired(data);
+  }
+};
+
+declare global {
+  interface IBook {
+    readonly acquired?: boolean;
+    readonly date?: string;
+    readonly read?: readonly string[];
+    readonly author?: string;
+    readonly title?: string;
+  }
+
+  interface IRetired extends IBook {
+    readonly dateRetired?: string;
+  }
 }

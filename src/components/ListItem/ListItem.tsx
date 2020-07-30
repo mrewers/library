@@ -9,7 +9,7 @@ import { isLoggedIn } from '~/utils/auth';
 import './ListItem.scss';
 
 interface IListItemProps {
-  readonly item: IBook;
+  readonly item: IBook | IRetired;
 }
 
 const containsReader = (readers: readonly string[], name: string): boolean =>
@@ -39,7 +39,7 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
   const isCollective = reader === 'all' || reader === 'any';
 
   const openModal = (e: h.JSX.TargetedEvent): void => {
-    const { id } = e.target;
+    const { id } = e.target as HTMLElement;
 
     if (typeof id === 'string') {
       dispatch({ type: 'OPEN_MODAL', payload: { id } });
