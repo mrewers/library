@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _This sections lists changes committed since most recent release_
 
+**Added:**
+
+- Image optimization as part of build process
+
 ## [v0.2.0](https://github.com/mrewers/library/compare/v0.1.0...v0.2.0) - (2020-07-26)
 
 **Added:**
