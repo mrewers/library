@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build Serverless API
+    name: Deploy Serverless API
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository...
@@ -29,9 +29,10 @@ jobs:
         run: npm install
         working-directory: functions
 
-      - name: Building...
-        run: npm run build
-        working-directory: functions
+      - name: Deploying to Firebase...
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions --project ${{ secrets.FIRESTORE_PROJECT }}
         env:
           API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
@@ -40,30 +41,4 @@ jobs:
           FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
           FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
           FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
-
-      - name: Archiving production artifact...
-        uses: actions/upload-artifact@master
-        with:
-          name: lib
-          path: functions/lib
-
-  deploy:
-    name: Deploy to Firebase
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checking out repository...
-        uses: actions/checkout@v2
-
-      - name: Downloading artifact...
-        uses: actions/download-artifact@master
-        with:
-          name: lib
-          path: functions/lib
-
-      - name: Deploying to Firebase...
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only functions --project ${{ secrets.FIRESTORE_PROJECT }}
-        env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
