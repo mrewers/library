@@ -3,15 +3,30 @@ import * as dotEnv from 'dotenv';
 // Load environmental variables
 dotEnv.config();
 
+import * as admin from 'firebase-admin';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 
-import { initAdmin } from './admin';
 import { routes } from './routes';
 
-const admin = initAdmin();
+const encoded = process.env.FIRESTORE_SA as string;
+
+const serviceAccount = JSON.parse(
+  Buffer.from(encoded, 'base64').toString('ascii')
+) as admin.ServiceAccount;
+
+const databaseURL: string =
+  typeof process.env.FIRESTORE_DB_NAME === 'string'
+    ? `https://${process.env.FIRESTORE_DB_NAME}.firebaseio.com`
+    : '';
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL,
+});
+
 const db = admin.firestore();
 
 // Initialize the Express server
