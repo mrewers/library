@@ -27,7 +27,17 @@ jobs:
 
       - name: Installing dependencies...
         run: npm install
-        working-directory: functions
+
+      - name: Building...
+        run: npm run build
+        env:
+          API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
+          FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
+          FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
+          FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
 
       - name: Building...
         run: npm run build
