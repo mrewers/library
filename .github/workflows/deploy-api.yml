@@ -15,7 +15,7 @@ jobs:
       - name: Setting up environment...
         uses: actions/setup-node@v1
         with:
-          node-version: '10'
+          node-version: '12'
 
       - name: Preparing dependency cache...
         uses: actions/cache@v2
@@ -27,17 +27,7 @@ jobs:
 
       - name: Installing dependencies...
         run: npm install
-
-      - name: Building...
-        run: npm run build
-        env:
-          API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
-          FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
-          FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
-          FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
+        working-directory: functions
 
       - name: Building...
         run: npm run build
