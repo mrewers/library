@@ -9,9 +9,15 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as functions from 'firebase-functions';
 
+import 'firebase-functions';
+
 import { routes } from './routes';
 
-const encoded = process.env.FIRESTORE_SA as string;
+const encoded: string | undefined = process.env.FIRESTORE_SA;
+
+if (encoded === undefined) {
+  throw new Error('Missing service account credentials.');
+}
 
 const serviceAccount = JSON.parse(
   Buffer.from(encoded, 'base64').toString('ascii')
