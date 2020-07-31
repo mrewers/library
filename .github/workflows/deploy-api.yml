@@ -9,8 +9,8 @@ defaults:
     working-directory: functions
 
 jobs:
-  build_and_deploy:
-    name: Build & Deploy
+  build:
+    name: Build Serverless API
     runs-on: ubuntu-latest
     steps:
       - name: Checking out repository...
@@ -19,7 +19,7 @@ jobs:
       - name: Setting up environment...
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '10'
 
       - name: Preparing dependency cache...
         uses: actions/cache@v2
@@ -32,8 +32,6 @@ jobs:
       - name: Installing dependencies...
         run: npm install
 
-      - run: npm install -g firebase-tools@latest
-
       - name: Building...
         run: npm run build
         env:
@@ -44,7 +42,30 @@ jobs:
           FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
           FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
           FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+      - name: Archiving production artifact...
+        uses: actions/upload-artifact@master
+        with:
+          name: lib
+          path: lib
+
+  deploy:
+    name: Deploy to Firebase
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repository...
+        uses: actions/checkout@v2
+
+      - name: Downloading artifact...
+        uses: actions/download-artifact@master
+        with:
+          name: lib
+          path: lib
 
       - name: Deploying to Firebase...
-        run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --project ${{ secrets.FIRESTORE_PROJECT }}
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only --project ${{ secrets.FIRESTORE_PROJECT }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
