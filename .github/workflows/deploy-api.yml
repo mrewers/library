@@ -42,7 +42,7 @@ jobs:
           file_name: .env
 
       - name: Duplicating env file...
-        run: cp .env /functions
+        run: sudo cp .env functions/.env
 
       - name: Building...
         run: npm run build
