@@ -11,37 +11,37 @@ import * as functions from 'firebase-functions';
 
 import 'firebase-functions';
 
+import { decodeSA } from './utils/decode';
 import { routes } from './routes';
 
+const dbName: string | undefined = process.env.FIRESTORE_DB_NAME;
 const encoded: string | undefined = process.env.FIRESTORE_SA;
 
+// Check for required envvars
 if (encoded === undefined) {
   throw new Error('Missing service account credentials.');
 }
 
-const serviceAccount = JSON.parse(
-  Buffer.from(encoded, 'base64').toString('ascii')
-) as admin.ServiceAccount;
+if (dbName === undefined) {
+  throw new Error('Database name not specified.');
+}
 
-const databaseURL: string =
-  typeof process.env.FIRESTORE_DB_NAME === 'string'
-    ? `https://${process.env.FIRESTORE_DB_NAME}.firebaseio.com`
-    : '';
-
+// Initialize app
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL,
+  credential: admin.credential.cert(decodeSA(encoded)),
+  databaseURL: `https://${dbName}.firebaseio.com`,
 });
 
+// Initialize the Firestore connection
 const db = admin.firestore();
 
 // Initialize the Express server
 const app = express();
 
+// Set middleware for Express server
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Set middleware for Express server
 app.use(cors({ origin: process.env.API_ALLOWED_ORIGIN }));
 
 // Set API endpoints
