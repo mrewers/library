@@ -29,28 +29,24 @@ jobs:
         run: npm install
         working-directory: functions
 
+      - name: Writing .env file...
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
+          envkey_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          envkey_AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+          envkey_AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
+          envkey_FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
+          envkey_FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
+          envkey_FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
+
       - name: Building...
         run: npm run build
         working-directory: functions
-        env:
-          API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
-          FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
-          FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
-          FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
 
       - name: Deploying to Firebase...
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions --project ${{ secrets.FIRESTORE_PROJECT }}
         env:
-          API_ALLOWED_ORIGIN: ${{ secrets.API_ALLOWED_ORIGIN }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-          AUTH0_SCOPE: ${{ secrets.AUTH0_SCOPE }}
-          FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
-          FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
-          FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
