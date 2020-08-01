@@ -39,6 +39,7 @@ jobs:
           envkey_FIRESTORE_DB_NAME: ${{ secrets.FIRESTORE_DB_NAME }}
           envkey_FIRESTORE_PROJECT: ${{ secrets.FIRESTORE_PROJECT }}
           envkey_FIRESTORE_SA: ${{ secrets.FIRESTORE_SA }}
+          file_name: functions/.env
 
       - name: Building...
         run: npm run build
