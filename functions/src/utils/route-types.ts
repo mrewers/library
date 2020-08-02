@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { hasScope } from '../auth';
-import { getCollection, structureData } from './firestore-queries';
+import { getCollection, getOrderField, structureData } from './firestore-queries';
 
 export const add = async (
   collection: 'books' | 'retired',
@@ -27,13 +27,14 @@ export const add = async (
 };
 
 export const getAll = async (
-  collection: string,
+  collection: 'books' | 'readers' | 'retired',
   db: FirebaseFirestore.Firestore,
   res: Response
 ): Promise<Response> => {
   try {
     const data = await db
       .collection(collection)
+      .orderBy(getOrderField(collection))
       .get()
       .then(snapshot => getCollection(snapshot));
 
@@ -44,7 +45,7 @@ export const getAll = async (
 };
 
 export const getOne = async (
-  collection: string,
+  collection: 'books' | 'readers' | 'retired',
   db: FirebaseFirestore.Firestore,
   req: Request,
   res: Response
@@ -65,7 +66,7 @@ export const getOne = async (
 };
 
 export const deleteOne = async (
-  collection: string,
+  collection: 'books' | 'readers' | 'retired',
   db: FirebaseFirestore.Firestore,
   req: Request,
   res: Response

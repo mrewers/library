@@ -11,7 +11,20 @@ _This sections lists changes committed since most recent release_
 
 **Added:**
 
+- Automatically save the date on which books are retired
 - Image optimization as part of build process
+- Errors that throw when crucial environmental variables are not present
+
+**Changed:**
+
+- Order data retrieved from Firebase (by title for books, by name for readers)
+- Generalized the function used to decode base64 encoded variables
+- Replace `jwt-decode` with `jsonwebtoken` for handling web tokens on the frontend
+
+**Fixed:**
+
+- Rewrote broken GitHub Action to deploy serverless API to Firebase functions
+- Add missing whitespace between book title and author name
 
 ## [v0.2.0](https://github.com/mrewers/library/compare/v0.1.0...v0.2.0) - (2020-07-26)
 

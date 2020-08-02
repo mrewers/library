@@ -6,7 +6,7 @@ export const getCollection = (snapshot: FirebaseFirestore.QuerySnapshot) => {
   return col;
 };
 
-export const structureBook = (book: IBook): IBook => ({
+const structureBook = (book: IBook): IBook => ({
   acquired: book.acquired,
   author: book.author,
   date: book.date,
@@ -14,7 +14,7 @@ export const structureBook = (book: IBook): IBook => ({
   title: book.title,
 });
 
-export const structureRetired = (book: IRetired): IRetired => ({
+const structureRetired = (book: IRetired): IRetired => ({
   acquired: book.acquired,
   author: book.author,
   date: book.date,
@@ -32,6 +32,20 @@ export const structureData = (
       return structureBook(data);
     case 'retired':
       return structureRetired(data);
+    default:
+      return data;
+  }
+};
+
+export const getOrderField = (collection: 'books' | 'readers' | 'retired'): string => {
+  switch (collection) {
+    case 'books':
+    case 'retired':
+      return 'title';
+    case 'readers':
+      return 'name';
+    default:
+      return '';
   }
 };
 
