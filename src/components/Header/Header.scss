@@ -13,16 +13,14 @@ header {
   }
 }
 
-.head {
-  &-container {
-    @include page-width;
-  }
+.container {
+  @include page-width;
+}
 
-  &-title {
-    text-align: center;
+.title {
+  text-align: center;
 
-    @include breakpoint(tablet) {
-      text-align: left;
-    }
+  @include breakpoint(tablet) {
+    text-align: left;
   }
 }

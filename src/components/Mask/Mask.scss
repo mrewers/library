@@ -11,31 +11,31 @@
   @include breakpoint(laptop) {
     display: block;
   }
+}
 
-  &-background {
-    background-image: url('~/assets/book-background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    position: absolute;
-    width: 100%;
+.background {
+  background-image: url('~/assets/book-background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  position: absolute;
+  width: 100%;
+}
+
+.container {
+  display: none;
+  position: sticky;
+  top: 0;
+
+  @include breakpoint(tablet) {
+    display: block;
   }
+}
 
-  &-container {
-    display: none;
-    position: sticky;
-    top: 0;
+.credit {
+  visibility: hidden;
+}
 
-    @include breakpoint(tablet) {
-      display: block;
-    }
-  }
-
-  &-credit {
-    visibility: hidden;
-  }
-
-  &-bottom {
-    margin-top: calc(100vh - 60vh);
-  }
+.bottom {
+  margin-top: calc(100vh - 60vh);
 }

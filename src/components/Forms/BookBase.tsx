@@ -6,6 +6,8 @@ import Overlay from '~/components/Overlay/Overlay';
 
 import { BookContext } from '~/context/bookContext';
 
+import s from './Form.scss';
+
 interface IBookBaseProps {
   readonly book: {
     readonly acquired: 'yes' | 'no';
@@ -59,22 +61,22 @@ const BookBase = ({
   }, [input]);
 
   return (
-    <form class={classes ? `form ${classes}` : 'form'} onSubmit={onSubmit}>
+    <form class={classes ? `${s.form} ${s[classes]}` : s.form} onSubmit={onSubmit}>
       {loading && <Overlay text="Loading Book Data..." />}
       {saving && <Overlay text={overlayText} />}
-      {label && <h3 class="form-title">{label}</h3>}
-      <label class="form-label" for="title">
+      {label && <h3 class={s.title}>{label}</h3>}
+      <label class={s.label} for="title">
         Title:
         <input ref={input} id="title" name="title" type="text" value={title} onInput={onInput} />
       </label>
-      <label class="form-label" for="author">
+      <label class={s.label} for="author">
         Author:
         <input id="author" name="author" type="text" value={author} onInput={onInput} />
       </label>
-      <div class="form-meta-label">
-        <span class="form-meta-label-text">Newly Acquired:</span>
-        <div class="form-sub-label-container">
-          <label class="form-sub-label" for="acquired-yes">
+      <div class={s['meta-label']}>
+        <span class={s['meta-label-text']}>Newly Acquired:</span>
+        <div class={s['sub-label-container']}>
+          <label class={s['sub-label']} for="acquired-yes">
             Yes:
             <input
               checked={acquired === 'yes'}
@@ -85,7 +87,7 @@ const BookBase = ({
               onInput={onInput}
             />
           </label>
-          <label class="form-sub-label" for="acquired-no">
+          <label class={s['sub-label']} for="acquired-no">
             No:
             <input
               checked={acquired === 'no'}
@@ -99,16 +101,16 @@ const BookBase = ({
         </div>
       </div>
       {acquired === 'yes' && (
-        <label class="form-label" for="date-acquired">
+        <label class={s.label} for="date-acquired">
           Date Acquired:
           <input id="date-acquired" name="date" type="date" value={date} onInput={onInput} />
         </label>
       )}
-      <div class="form-meta-label">
-        <span class="form-meta-label-text">Read By:</span>
-        <div class="form-sub-label-column">
+      <div class={s['meta-label']}>
+        <span class={s['meta-label-text']}>Read By:</span>
+        <div class={s['sub-label-column']}>
           {readers.map(reader => (
-            <label key={reader} class="form-sub-label" for={`reader-${reader}`}>
+            <label key={reader} class={s['sub-label']} for={`reader-${reader}`}>
               <input
                 checked={read.includes(reader)}
                 id={`reader-${reader}`}
@@ -122,11 +124,11 @@ const BookBase = ({
           ))}
         </div>
       </div>
-      <div class="form-button-container">
+      <div class={s['button-container']}>
         <div>
           {hasDelete && (
             <Button
-              classes="form-button"
+              classes={s.button}
               color="plain"
               label="Delete"
               type="button"
@@ -135,7 +137,7 @@ const BookBase = ({
           )}
           {hasRetire && (
             <Button
-              classes="form-button"
+              classes={s.button}
               color="plain"
               label="Jettison"
               type="button"
@@ -146,14 +148,14 @@ const BookBase = ({
         <div>
           {hasCancel && (
             <Button
-              classes="form-button"
+              classes={s.button}
               color="plain"
               label="Cancel"
               type="button"
               onClick={onCancel}
             />
           )}
-          <Button classes="form-button" color="light" label="Submit" type="submit" />
+          <Button classes={s.button} color="light" label="Submit" type="submit" />
         </div>
       </div>
     </form>

@@ -5,7 +5,7 @@ import { BookContext } from '~/context/bookContext';
 import { FilterContext } from '~/context/filterContext';
 import { filterList } from '~/utils/list-filters';
 
-import './Filter.scss';
+import s from './Filter.scss';
 
 const Filter = (): h.JSX.Element => {
   const { state: bookState } = useContext(BookContext);
@@ -29,10 +29,10 @@ const Filter = (): h.JSX.Element => {
   const matches = filterList(status, reader, bookState.readers.length, bookState.books).length;
 
   return (
-    <p class="filter-container">
+    <p class={s.container}>
       <span>
         Show
-        <label class="dropdown" for="filter-type">
+        <label class={s.dropdown} for="filter-type">
           <select
             id="filter-type"
             name="type"
@@ -48,7 +48,7 @@ const Filter = (): h.JSX.Element => {
       </span>
       <span>
         For
-        <label class="dropdown" for="filter-reader">
+        <label class={s.dropdown} for="filter-reader">
           <select
             id="filter-reader"
             name="reader"

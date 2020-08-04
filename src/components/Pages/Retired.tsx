@@ -9,7 +9,7 @@ import { fetchData } from '~/utils/api';
 import { FilterContext } from '~/context/filterContext';
 import { filterList, getRead } from '~/utils/list-filters';
 
-import './Pages.scss';
+import s from './Pages.scss';
 
 const Retired = (): h.JSX.Element => {
   const {
@@ -34,7 +34,7 @@ const Retired = (): h.JSX.Element => {
 
   return (
     <Fragment>
-      <h2 class="sub-head">Jettisoned Books</h2>
+      <h2 class={s.subhead}>Jettisoned Books</h2>
       <Filter />
       <List
         list={filterList(status, reader, count, retired)}

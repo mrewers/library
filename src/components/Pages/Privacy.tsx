@@ -1,10 +1,10 @@
 import { h, Fragment } from 'preact';
 
-import './Pages.scss';
+import s from './Pages.scss';
 
 const Privacy = (): h.JSX.Element => (
   <Fragment>
-    <h2 class="sub-head input-header">Privacy Policy</h2>
+    <h2 class={`${s['input-header']} ${s.subhead}`}>Privacy Policy</h2>
     <div class="page-wrapper">
       <p>Last updated: July 16, 2020</p>
       <p>

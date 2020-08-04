@@ -6,7 +6,7 @@ import { FilterContext } from '~/context/filterContext';
 import { ModalContext } from '~/context/modalContext';
 import { isLoggedIn } from '~/utils/auth';
 
-import './ListItem.scss';
+import s from './ListItem.scss';
 
 interface IListItemProps {
   readonly item: IBook | IRetired;
@@ -47,9 +47,9 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
   };
 
   return (
-    <article class="list-item">
+    <article>
       <button
-        class="list-item-trigger"
+        class={s.trigger}
         disabled={!isLoggedIn()}
         id={item.id}
         type="button"

@@ -8,7 +8,7 @@ import { BookContext } from '~/context/bookContext';
 import { FilterContext } from '~/context/filterContext';
 import { filterList, getRead } from '~/utils/list-filters';
 
-import './Pages.scss';
+import s from './Pages.scss';
 
 const Books = (): h.JSX.Element => {
   const {
@@ -23,7 +23,7 @@ const Books = (): h.JSX.Element => {
 
   return (
     <Fragment>
-      <h2 class="sub-head">Inventory</h2>
+      <h2 class={s.subhead}>Inventory</h2>
       <Filter />
       <List list={filterList(status, reader, count, books)} read={getRead(books, reader, count)} />
     </Fragment>

@@ -9,8 +9,6 @@ import { toggleArrayValues } from '~/utils/form-helpers';
 import { BookContext } from '~/context/bookContext';
 import { ModalContext } from '~/context/modalContext';
 
-import './Form.scss';
-
 interface IEditBookProps {
   readonly label?: string;
 }

@@ -2,45 +2,48 @@
 @import '~/style/colors.scss';
 @import '~/style/mixins.scss';
 
-.list-item {
-  &-author {
-    display: none;
+.author {
+  display: none;
 
-    @include breakpoint(tablet) {
-      display: inline-block;
-      margin-left: 0.2rem;
-    }
+  @include breakpoint(tablet) {
+    display: inline-block;
+    margin-left: 0.2rem;
+  }
+}
+
+.text {
+  margin: 0 0.5rem;
+  white-space: nowrap;
+}
+
+.trigger {
+  @include button-reset;
+  align-items: center;
+  column-gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 30px 30px 1fr;
+  height: 100%;
+  padding: 0.5rem;
+  width: 100%;
+
+  &:not(:disabled) {
+    cursor: pointer;
   }
 
-  &-text {
-    margin: 0 0.5rem;
-    white-space: nowrap;
-  }
-
-  &-trigger {
-    @include button-reset;
-    align-items: center;
-    column-gap: 0.5rem;
-    display: grid;
-    grid-template-columns: 30px 30px 1fr;
-    height: 100%;
-    padding: 0.5rem;
-    width: 100%;
-
-    &:not(:disabled) {
-      cursor: pointer;
-    }
-
-    &:focus {
-      background-color: rgba($blueLight, 0.2);
-      outline: none;
-    }
+  &:focus {
+    background-color: rgba($blueLight, 0.2);
+    outline: none;
   }
 }
 
 .checked {
   &-blue {
     background: url('~/assets/icons/check-square-blue.svg');
+    @include icon;
+  }
+
+  &-green {
+    background: url('~/assets/icons/check-square-green.svg');
     @include icon;
   }
 

@@ -1,12 +1,12 @@
 import { h } from 'preact';
 
-import './Overlay.scss';
+import s from './Overlay.scss';
 
 interface IOverlayProps {
   readonly text: string;
 }
 
-const Overlay = ({ text }: IOverlayProps): h.JSX.Element => <div class="overlay">{text}</div>;
+const Overlay = ({ text }: IOverlayProps): h.JSX.Element => <div class={s.overlay}>{text}</div>;
 
 Overlay.displayName = 'Overlay';
 

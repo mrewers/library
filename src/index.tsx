@@ -23,7 +23,7 @@ import { FilterContext, filterReducer, initialFilterState } from '~/context/filt
 import { ModalContext, modalReducer, initialModalState } from '~/context/modalContext';
 import { fetchData } from '~/utils/api';
 
-import './style/style.scss';
+import s from '~/style/style.scss';
 
 // Load environmental variables
 dotenv.config();
@@ -62,7 +62,7 @@ const App = (): h.JSX.Element => {
   return (
     <Fragment>
       <Header title="Library" />
-      <div class="page-container">
+      <div class={s['page-container']}>
         <Mask />
         <BookContext.Provider value={{ dispatch: bookDispatch, state: bookState }}>
           <FilterContext.Provider value={{ dispatch: filterDispatch, state: filterState }}>

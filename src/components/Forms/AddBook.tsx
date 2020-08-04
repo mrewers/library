@@ -8,8 +8,6 @@ import { getDateString } from '~/utils/dates';
 import { addItem } from '~/utils/api';
 import { toggleArrayValues } from '~/utils/form-helpers';
 
-import './Form.scss';
-
 interface IFormProps {
   readonly label?: string;
 }
@@ -77,7 +75,7 @@ const Form = ({ label }: IFormProps): h.JSX.Element => {
   return (
     <BookBase
       book={book}
-      classes="form-add"
+      classes="add"
       label={label}
       overlayText={overlayText}
       saving={saving}

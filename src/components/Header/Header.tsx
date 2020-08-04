@@ -2,7 +2,7 @@ import { h } from 'preact';
 
 import Navigation from '~/components/Navigation/Navigation';
 
-import './Header.scss';
+import s from './Header.scss';
 
 interface IHeaderProps {
   readonly title: string;
@@ -10,8 +10,8 @@ interface IHeaderProps {
 
 const Header = ({ title }: IHeaderProps): h.JSX.Element => (
   <header>
-    <div class="head-container">
-      <h1 class="head-title">
+    <div class={s.container}>
+      <h1 class={s.title}>
         <a href="/">{title}</a>
       </h1>
       <Navigation />

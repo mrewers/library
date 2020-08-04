@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-import './Button.scss';
+import s from './Button.scss';
 
 interface IButton {
   readonly classes?: string;
@@ -18,7 +18,7 @@ const Button = ({
   type = 'button',
 }: IButton): h.JSX.Element => (
   // eslint-disable-next-line react/button-has-type -- make type configurable
-  <button class={`button ${color} ${classes}`} type={type} onClick={onClick}>
+  <button class={`${s.button} ${s[color]} ${classes}`} type={type} onClick={onClick}>
     {label}
   </button>
 );

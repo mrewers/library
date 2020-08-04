@@ -25,61 +25,61 @@
   @include breakpoint(laptop) {
     @include form-layout;
   }
+}
 
-  &-add {
-    @include breakpoint(laptop) {
-      margin-left: 5rem;
-      width: calc(70% - 5rem);
-    }
+.add {
+  @include breakpoint(laptop) {
+    margin-left: 5rem;
+    width: calc(70% - 5rem);
   }
+}
 
-  &-button {
-    margin: 1rem 0.5rem 0;
+.button {
+  margin: 1rem 0.5rem 0;
 
-    &-container {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-  &-label {
-    @include label-grid;
-    @include label-text;
-
-    > input {
-      margin: 0 0.5rem;
-    }
-  }
-
-  &-meta-label {
-    @include label-grid;
-
-    &-text {
-      @include label-text;
-    }
-  }
-
-  &-sub-label {
-    @include label-text;
+  &-container {
     display: flex;
-    margin: 0 1rem;
+    justify-content: space-between;
+  }
+}
 
-    > input {
-      margin: 0 0.5rem;
-    }
+.label {
+  @include label-grid;
+  @include label-text;
 
-    &-column {
-      display: flex;
-      flex-direction: column;
-    }
+  > input {
+    margin: 0 0.5rem;
+  }
+}
 
-    &-container {
-      display: flex;
-    }
+.meta-label {
+  @include label-grid;
+
+  &-text {
+    @include label-text;
+  }
+}
+
+.sub-label {
+  @include label-text;
+  display: flex;
+  margin: 0 1rem;
+
+  > input {
+    margin: 0 0.5rem;
   }
 
-  &-title {
-    margin: 0.5rem 0;
-    text-align: center;
+  &-column {
+    display: flex;
+    flex-direction: column;
   }
+
+  &-container {
+    display: flex;
+  }
+}
+
+.title {
+  margin: 0.5rem 0;
+  text-align: center;
 }

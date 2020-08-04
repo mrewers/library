@@ -6,7 +6,7 @@ import { getListStats } from '~/utils/list-filters';
 import { FilterContext } from '~/context/filterContext';
 import { BookContext } from '~/context/bookContext';
 
-import './Stats.scss';
+import s from './Stats.scss';
 
 const Stats = (): h.JSX.Element => {
   const {
@@ -19,19 +19,19 @@ const Stats = (): h.JSX.Element => {
   const { all = 0, read = 0, unread = 0 } = getListStats(books, reader, readers.length);
 
   return (
-    <aside class="stats-container">
-      <div class="stats">
-        <div class="stats-topline">
-          <span class="stats-principal">{`${calcPercentOf(read, all)}%`}</span>
+    <aside class={s.container}>
+      <div class={s.stats}>
+        <div class={s.topline}>
+          <span class={s.principal}>{`${calcPercentOf(read, all)}%`}</span>
           <span>{`Read by ${
             reader === 'all' || reader === 'any' ? getReaders(readers, operator) : reader
           }`}</span>
         </div>
-        <div class="stats-pair">
-          <span class="stats-secondary">{`Read: ${read}`}</span>
-          <span class="stats-secondary">{`Unread: ${unread}`}</span>
+        <div class={s.pair}>
+          <span class={s.secondary}>{`Read: ${read}`}</span>
+          <span class={s.secondary}>{`Unread: ${unread}`}</span>
         </div>
-        <span class="stats-secondary">{`Total: ${all}`}</span>
+        <span class={s.secondary}>{`Total: ${all}`}</span>
       </div>
     </aside>
   );
