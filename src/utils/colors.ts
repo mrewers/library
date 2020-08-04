@@ -1,7 +1,6 @@
 import colors from '~/style/exports.scss';
 
 export const getColor = (color: string): string => {
-  console.log(colors);
   switch (color) {
     case 'blue':
       return colors.blueLight;
