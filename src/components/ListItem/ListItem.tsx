@@ -1,9 +1,12 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
+import Checkmark from '~/components/Checkmark/Checkmark';
+
 import { BookContext } from '~/context/bookContext';
 import { FilterContext } from '~/context/filterContext';
 import { ModalContext } from '~/context/modalContext';
+import { containsReader, getSelectedReaderData } from '~/utils/readers';
 import { isLoggedIn } from '~/utils/auth';
 
 import s from './ListItem.scss';
@@ -11,19 +14,6 @@ import s from './ListItem.scss';
 interface IListItemProps {
   readonly item: IBook | IRetired;
 }
-
-const containsReader = (readers: readonly string[], name: string): boolean =>
-  readers.includes(name);
-
-const getSelectedReaderData = (readers: readonly IReader[], name: string): IReader => {
-  const reader = readers.filter(reader => reader.name === name);
-
-  return reader[0];
-};
-
-const getCheckMark = (reader: IReader): string => {
-  return reader.color ? `checked-${reader.color}` : 'checked-generic';
-};
 
 const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
   const {
@@ -57,25 +47,23 @@ const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
       >
         {isCollective &&
           readerData.map(r => (
-            <i
+            <Checkmark
               key={r.name}
-              class={containsReader(item.read, r.name) ? getCheckMark(r) : 'unchecked'}
+              checked={containsReader(item.read, r.name)}
+              color={r.color}
               id={item.id}
             />
           ))}
         {!isCollective && (
-          <i
-            class={
-              containsReader(item.read, reader)
-                ? getCheckMark(getSelectedReaderData(readerData, reader))
-                : 'unchecked'
-            }
+          <Checkmark
+            checked={containsReader(item.read, reader)}
+            color={getSelectedReaderData(readerData, reader).color}
             id={item.id}
           />
         )}
-        <p class="list-item-text" id={item.id}>
+        <p class={s.text} id={item.id}>
           <strong id={item.id}>{item.title}</strong>
-          {item.author && <span class="list-item-author" id={item.id}>{` - ${item.author}`}</span>}
+          {item.author && <span class={s.author} id={item.id}>{` - ${item.author}`}</span>}
         </p>
       </button>
     </article>

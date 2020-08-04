@@ -35,30 +35,3 @@
     outline: none;
   }
 }
-
-.checked {
-  &-blue {
-    background: url('~/assets/icons/check-square-blue.svg');
-    @include icon;
-  }
-
-  &-green {
-    background: url('~/assets/icons/check-square-green.svg');
-    @include icon;
-  }
-
-  &-pink {
-    background: url('~/assets/icons/check-square-pink.svg');
-    @include icon;
-  }
-
-  &-generic {
-    background: url('~/assets/icons/check-square.svg');
-    @include icon;
-  }
-}
-
-.unchecked {
-  background: url('~/assets/icons/square.svg');
-  @include icon;
-}

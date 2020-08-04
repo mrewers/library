@@ -12,12 +12,15 @@ _This sections lists changes committed since most recent release_
 **Added:**
 
 - Automatically save the date on which books are retired
+- Support and automatic typing for CSS modules
+- Additional options for reader color (green, orange) and a fallback color (dark blue)
 - Image optimization as part of build process
 - Errors that throw when crucial environmental variables are not present
 
 **Changed:**
 
 - Order data retrieved from Firebase (by title for books, by name for readers)
+- Replace checkmark SVG assets with a checkmark component
 - Generalized the function used to decode base64 encoded variables
 - Replace `jwt-decode` with `jsonwebtoken` for handling web tokens on the frontend
 

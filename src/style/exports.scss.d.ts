@@ -1,7 +1,9 @@
 export type Styles = {
-  'author': string;
-  'text': string;
-  'trigger': string;
+  'blueDark': string;
+  'blueLight': string;
+  'green': string;
+  'orange': string;
+  'pink': string;
 }
 
 export type ClassNames = keyof Styles;

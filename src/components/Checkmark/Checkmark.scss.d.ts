@@ -1,7 +1,8 @@
 export type Styles = {
-  'author': string;
-  'text': string;
-  'trigger': string;
+  'checkmark': string;
+  'feather': string;
+  'feather-square': string;
+  'feather-check-square': string;
 }
 
 export type ClassNames = keyof Styles;

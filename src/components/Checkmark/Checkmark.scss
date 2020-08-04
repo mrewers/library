@@ -1,0 +1,24 @@
+@import '~/style/colors.scss';
+@import '~/style/mixins.scss';
+
+.checkmark {
+  @include icon;
+}
+
+.feather {
+  fill: none;
+}
+
+.feather-square,
+.feather-check-square {
+  stroke: $blueDark;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+
+  > polyline {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+  }
+}
