@@ -9,7 +9,7 @@
     "dev": "npm run types:CSS -- -w & parcel src/index.html",
     "build": "parcel build src/index.html",
     "lint": "eslint --ext .js,.ts,.tsx ./",
-    "types:CSS": "tsm ./src -p.~ src/ -n none -e default"
+    "types:CSS": "tsm ./src -p.~ src/ -n kebab -e default --exportTypeInterface TypeStyles --exportTypeName TypeClassName"
   },
   "devDependencies": {
     "@cryptopapers/eslint-config": "^1.0.1",

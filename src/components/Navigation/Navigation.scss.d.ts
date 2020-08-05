@@ -1,11 +1,11 @@
-export type Styles = {
+export type TypeStyles = {
   'nav': string;
   'items': string;
   'link': string;
 }
 
-export type ClassNames = keyof Styles;
+export type TypeClassName = keyof TypeStyles;
 
-declare const styles: Styles;
+declare const styles: TypeStyles;
 
 export default styles;

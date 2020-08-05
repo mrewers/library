@@ -1,9 +1,9 @@
-export type Styles = {
+export type TypeStyles = {
   'overlay': string;
 }
 
-export type ClassNames = keyof Styles;
+export type TypeClassName = keyof TypeStyles;
 
-declare const styles: Styles;
+declare const styles: TypeStyles;
 
 export default styles;

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _This sections lists changes committed since most recent release_
 
+**Changed:**
+
+- Adjust CSS module type names to better match project conventions
+
 ## [v1.0.0](https://github.com/mrewers/library/compare/v0.2.0...v1.0.0) - (2020-08-04)
 
 **Added:**

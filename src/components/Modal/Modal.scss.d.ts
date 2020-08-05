@@ -1,4 +1,4 @@
-export type Styles = {
+export type TypeStyles = {
   'background': string;
   'close': string;
   'close-icon': string;
@@ -6,8 +6,8 @@ export type Styles = {
   'content': string;
 }
 
-export type ClassNames = keyof Styles;
+export type TypeClassName = keyof TypeStyles;
 
-declare const styles: Styles;
+declare const styles: TypeStyles;
 
 export default styles;

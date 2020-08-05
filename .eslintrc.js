@@ -4,7 +4,7 @@ module.exports = {
     '@cryptopapers/eslint-config/react',
     '@cryptopapers/eslint-config/typescript',
   ],
-  ignorePatterns: ['dist/**/*', '/node_modules/**/*'],
+  ignorePatterns: ['dist/**/*', '/node_modules/**/*', '**/*.scss.d.ts'],
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: './',
