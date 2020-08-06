@@ -9,13 +9,17 @@
     "dev": "npm run types:CSS -- -w & parcel src/index.html",
     "build": "parcel build src/index.html",
     "lint": "eslint --ext .js,.ts,.tsx ./",
-    "types:CSS": "tsm ./src -p.~ src/ -n kebab -e default --exportTypeInterface TypeStyles --exportTypeName TypeClassName"
+    "test": "jest",
+    "types:CSS": "tsm ./src -p.~ src/ -n kebab -e default --exportTypeInterface TypeStyles --exportTypeName TypeClassName --ignore **/exports.scss"
   },
   "devDependencies": {
     "@cryptopapers/eslint-config": "^1.0.1",
     "@cryptopapers/prettier-config": "^1.0.0",
+    "@testing-library/jest-dom": "^5.11.2",
+    "@testing-library/preact": "^2.0.0",
     "@types/auth0-js": "^9.13.4",
     "@types/dotenv": "^8.2.0",
+    "@types/jest": "^26.0.8",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.0.27",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
@@ -29,6 +33,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "jest": "^26.2.2",
     "miragejs": "^0.1.40",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
@@ -37,6 +42,7 @@
     "postcss-modules": "^3.2.0",
     "prettier": "^2.0.5",
     "sass": "^1.26.10",
+    "ts-jest": "^26.1.4",
     "typed-scss-modules": "^2.0.1",
     "typescript": "^3.9.7"
   },
@@ -57,6 +63,19 @@
   "browserslist": [
     "last 2 Chrome versions"
   ],
+  "jest": {
+    "preset": "ts-jest",
+    "moduleNameMapper": {
+      "\\exports.scss": "<rootDir>/mocks/exports.ts",
+      "\\.scss": "<rootDir>/mocks/style.ts",
+      "~/(.*)": "<rootDir>/$1"
+    },
+    "rootDir": "./src",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
+    ],
+    "verbose": true
+  },
   "postcss": {
     "modules": true,
     "plugins": {

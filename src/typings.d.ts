@@ -1,5 +1,7 @@
 import { JSX } from 'preact';
 
+declare module '*.scss';
+
 declare module '*.svg';
 
 declare global {
