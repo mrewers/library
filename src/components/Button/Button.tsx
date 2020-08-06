@@ -13,7 +13,7 @@ interface IButton {
 const Button = ({
   classes = '',
   color = 'light',
-  label = '',
+  label,
   onClick,
   type = 'button',
 }: IButton): h.JSX.Element => (

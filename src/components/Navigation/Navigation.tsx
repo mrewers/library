@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-import Button from '~components/Button/Button';
+import Button from '~/components/Button/Button';
 
 import { logout, isLoggedIn } from '~/utils/auth';
 

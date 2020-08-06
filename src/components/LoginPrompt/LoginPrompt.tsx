@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import Button from '~components/Button/Button';
-import Overlay from '~components/Overlay/Overlay';
+import Button from '~/components/Button/Button';
+import Overlay from '~/components/Overlay/Overlay';
 
 import { login } from '~/utils/auth';
 

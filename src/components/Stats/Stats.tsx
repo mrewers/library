@@ -12,6 +12,7 @@ const Stats = (): h.JSX.Element => {
   const {
     state: { operator, reader },
   } = useContext(FilterContext);
+
   const {
     state: { books, readers },
   } = useContext(BookContext);

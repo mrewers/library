@@ -8,7 +8,10 @@ import { filterList } from '~/utils/list-filters';
 import s from './Filter.scss';
 
 const Filter = (): h.JSX.Element => {
-  const { state: bookState } = useContext(BookContext);
+  const {
+    state: { books, readers },
+  } = useContext(BookContext);
+
   const {
     state: { reader, status },
     dispatch,
@@ -26,7 +29,7 @@ const Filter = (): h.JSX.Element => {
     }
   };
 
-  const matches = filterList(status, reader, bookState.readers.length, bookState.books).length;
+  const matches = filterList(status, reader, readers.length, books).length;
 
   return (
     <p class={s.container}>
@@ -58,9 +61,9 @@ const Filter = (): h.JSX.Element => {
           >
             <option value="any">Any Reader</option>
             <option value="all">All Readers</option>
-            {bookState.readers.map(reader => (
-              <option key={reader} value={reader}>
-                {reader}
+            {readers.map(r => (
+              <option key={r} value={r}>
+                {r}
               </option>
             ))}
           </select>
