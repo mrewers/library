@@ -1,8 +1,13 @@
 {
   "short_name": "Library",
-  "name": "Our Library",
+  "name": "Library",
   "description": "An inventory of books",
   "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150"
+    },
     {
       "src": "/assets/public/logo-192.png",
       "type": "image/png",
