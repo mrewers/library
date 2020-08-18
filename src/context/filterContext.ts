@@ -14,18 +14,20 @@ export const FilterContext = createContext({
   state: initialFilterState,
 });
 
-interface IFilterState {
-  readonly operator: string;
-  readonly reader: string;
-  readonly status: string;
-}
+declare global {
+  interface IFilterState {
+    readonly operator: string;
+    readonly reader: string;
+    readonly status: string;
+  }
 
-interface IFilterAction {
-  readonly payload: {
-    readonly reader?: string;
-    readonly status?: string;
-  };
-  readonly type: string;
+  interface IFilterAction {
+    readonly payload: {
+      readonly reader?: string;
+      readonly status?: string;
+    };
+    readonly type: 'UPDATE_READER' | 'UPDATE_TYPE';
+  }
 }
 
 const setOperator = (reader: string): string => (reader === 'all' ? 'and' : 'or');

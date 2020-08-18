@@ -13,16 +13,18 @@ export const ModalContext = createContext({
   state: initialModalState,
 });
 
-interface IModalState {
-  readonly id?: string | null;
-  readonly open: boolean;
-}
-
-interface IModalAction {
-  readonly payload?: {
+declare global {
+  interface IModalState {
     readonly id?: string | null;
-  };
-  readonly type: 'OPEN_MODAL' | 'CLOSE_MODAL';
+    readonly open: boolean;
+  }
+
+  interface IModalAction {
+    readonly payload?: {
+      readonly id?: string | null;
+    };
+    readonly type: 'OPEN_MODAL' | 'CLOSE_MODAL';
+  }
 }
 
 export const modalReducer = (state: IModalState, action: IModalAction): IModalState => {

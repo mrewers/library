@@ -59,10 +59,6 @@ export const bookReducer = (state: IBookState, action: IBookAction): IBookState 
         ...state,
         books: removeBook(state.books, payload.id),
       };
-    case 'RETIRE_BOOK':
-      return {
-        ...state,
-      };
     case 'UPDATE_BOOK':
       return {
         ...state,

@@ -7,7 +7,7 @@ export const bookOne: IBook = {
   title: 'Coding for Dummies',
 };
 
-const bookTwo: IBook = {
+export const bookTwo: IBook = {
   id: 'efgh',
   acquired: 'no',
   author: 'Ms. Harvard',
@@ -16,7 +16,7 @@ const bookTwo: IBook = {
   title: 'JavaScript for Dummies',
 };
 
-const bookThree: IBook = {
+export const bookThree: IBook = {
   id: 'ijkl',
   acquired: 'no',
   author: 'Mrs. Yale',
