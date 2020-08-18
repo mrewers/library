@@ -1,0 +1,22 @@
+{
+  "short_name": "Library",
+  "name": "Our Library",
+  "description": "An inventory of books",
+  "icons": [
+    {
+      "src": "/assets/public/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/public/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#7ac0ff",
+  "theme_color": "#7ac0ff",
+  "display": "standalone",
+  "scope": "/"
+}
