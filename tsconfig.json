@@ -16,5 +16,11 @@
     "target": "es6"
   },
   "exclude": ["dist", "node_modules"],
-  "include": [".eslintrc.js", "./config/**/*", "./src/**/*", "src/__mocks__/**/*.ts"]
+  "include": [
+    ".eslintrc.js",
+    "./config/**/*",
+    "./packages/**/*",
+    "./src/**/*",
+    "src/__mocks__/**/*.ts"
+  ]
 }
