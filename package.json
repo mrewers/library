@@ -15,6 +15,7 @@
   "devDependencies": {
     "@cryptopapers/eslint-config": "^1.0.1",
     "@cryptopapers/prettier-config": "^1.0.0",
+    "@mrewers/parcel-plugin-service-worker": "file:packages/parcel-plugin-service-worker",
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/preact": "^2.0.0",
     "@types/auth0-js": "^9.13.4",
