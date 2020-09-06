@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "esModuleInterop": true,
     "lib": ["esnext"],
-    "module": "CommonJS",
+    "module": "UMD",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./lib",

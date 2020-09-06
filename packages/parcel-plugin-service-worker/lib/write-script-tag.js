@@ -1,4 +1,3 @@
-"use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -18,14 +17,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const fs = __importStar(require("fs"));
-const addScriptTag = (index) => {
-    fs.readFile(index, 'utf-8', (err, data) => {
-        if (err !== undefined)
-            console.error(err);
-        if (!data.includes('serviceWorker.register')) {
-            const swTag = `
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "fs"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    const fs = __importStar(require("fs"));
+    const addScriptTag = (index) => {
+        fs.readFile(index, 'utf-8', (err, data) => {
+            if (err !== undefined)
+                console.error(err);
+            if (!data.includes('serviceWorker.register')) {
+                const swTag = `
         <script>
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -35,10 +44,11 @@ const addScriptTag = (index) => {
         </script>
       </body>
       `;
-            data = data.replace('</body>', swTag);
-            fs.writeFileSync(index, data);
-        }
-    });
-};
-exports.default = addScriptTag;
+                data = data.replace('</body>', swTag);
+                fs.writeFileSync(index, data);
+            }
+        });
+    };
+    exports.default = addScriptTag;
+});
 //# sourceMappingURL=write-script-tag.js.map
