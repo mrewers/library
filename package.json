@@ -13,6 +13,8 @@
     "types:CSS": "tsm ./src -p.~ src/ -n kebab -e default --exportTypeInterface TypeStyles --exportTypeName TypeClassName --ignore **/exports.scss"
   },
   "devDependencies": {
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
     "@cryptopapers/eslint-config": "^1.0.1",
     "@cryptopapers/prettier-config": "^1.0.0",
     "@mrewers/parcel-plugin-service-worker": "file:packages/parcel-plugin-service-worker",
