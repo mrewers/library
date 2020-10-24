@@ -19,9 +19,7 @@
 .trigger {
   @include button-reset;
   align-items: center;
-  column-gap: 0.5rem;
-  display: grid;
-  grid-template-columns: 30px 30px 1fr;
+  display: flex;
   height: 100%;
   padding: 0.5rem;
   width: 100%;
@@ -33,5 +31,9 @@
   &:focus {
     background-color: rgba($blueLight, 0.2);
     outline: none;
+  }
+
+  > div {
+    flex-shrink: 0;
   }
 }
