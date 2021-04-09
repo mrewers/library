@@ -1,5 +1,6 @@
 # Builds & Caches
 .cache
+.dccache
 .firebase
 dist
 
