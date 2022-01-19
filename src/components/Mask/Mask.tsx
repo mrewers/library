@@ -1,17 +1,16 @@
 import { h } from 'preact';
-
-import s from './Mask.scss';
+import s from './Mask.module.scss';
 
 const Mask = (): h.JSX.Element => (
-  <div class={s.container}>
-    <div class={s.background}>
-      <span class={s.credit}>
+  <div className={s.container}>
+    <div className={s.background}>
+      <span className={s.credit}>
         Background photo courtesy of Robert Anasch on Unsplash, and used under the Unsplash License
         https://unsplash.com/license
       </span>
     </div>
     <svg
-      class={`${s.mask}`}
+      className={`${s.mask}`}
       preserveAspectRatio="none"
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +18,7 @@ const Mask = (): h.JSX.Element => (
       <path d="M64 0 L0 0 L0 50 C4 38 12 40 64 26 Z" />
     </svg>
     <svg
-      class={`${s.mask} ${s.bottom}`}
+      className={`${s.mask} ${s.bottom}`}
       preserveAspectRatio="none"
       viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"

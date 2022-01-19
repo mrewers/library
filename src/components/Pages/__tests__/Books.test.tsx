@@ -6,19 +6,23 @@ import Books from '../Books';
 import { books } from '~/mocks/books';
 import { readerList } from '~/mocks/readers';
 
-jest.mock('preact/hooks', () => ({
-  useContext: (): IMockContext => ({
-    state: {
-      books,
-      reader: 'Alice',
-      readers: readerList,
-      status: 'read',
+jest.mock('preact/hooks', () => {
+  return {
+    useContext(): IMockContext {
+      return {
+        state: {
+          books,
+          reader: 'Alice',
+          readers: readerList,
+          status: 'read',
+        },
+      };
     },
-  }),
-}));
+  };
+});
 
-jest.mock('~/components/Filter/Filter', () => (): h.JSX.Element => <div>Filter</div>);
-jest.mock('~/components/List/List', () => (): h.JSX.Element => <div>List</div>);
+jest.mock('components/Filter/Filter', () => (): h.JSX.Element => <div>Filter</div>);
+jest.mock('components/List/List', () => (): h.JSX.Element => <div>List</div>);
 
 describe('<Books />', () => {
   it('renders a title, filter, and list', () => {

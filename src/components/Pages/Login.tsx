@@ -1,6 +1,6 @@
 import { useEffect } from 'preact/hooks';
 
-import { login } from '~/utils/auth';
+import { login } from 'utils/auth';
 
 const Login = (): null => {
   useEffect(() => {

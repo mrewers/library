@@ -1,6 +1,6 @@
-@import '~/style/colors.scss';
-@import '~/style/mixins.scss';
-@import '~/style/typography.scss';
+@import 'style/colors.scss';
+@import 'style/mixins.scss';
+@import 'style/typography.scss';
 
 @mixin label-grid {
   align-items: center;

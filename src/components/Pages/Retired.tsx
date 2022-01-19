@@ -1,15 +1,15 @@
 import { Fragment, h } from 'preact';
 import { useContext, useEffect } from 'preact/hooks';
 
-import Filter from '~/components/Filter/Filter';
-import List from '~/components/List/List';
+import Filter from 'components/Filter/Filter';
+import List from 'components/List/List';
 
-import { BookContext } from '~/context/bookContext';
-import { fetchData } from '~/utils/api';
-import { FilterContext } from '~/context/filterContext';
-import { filterList, getRead } from '~/utils/list-filters';
+import { BookContext } from 'context/bookContext';
+import { fetchData } from 'utils/api';
+import { FilterContext } from 'context/filterContext';
+import { filterList, getRead } from 'utils/list-filters';
 
-import s from './Pages.scss';
+import s from './Pages.module.scss';
 
 const Retired = (): h.JSX.Element => {
   const {

@@ -1,11 +1,9 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
-
-import { BookContext } from '~/context/bookContext';
-import { FilterContext } from '~/context/filterContext';
-import { filterList } from '~/utils/list-filters';
-
-import s from './Filter.scss';
+import { BookContext } from 'context/bookContext';
+import { FilterContext } from 'context/filterContext';
+import { filterList } from 'utils/list-filters';
+import s from './Filter.module.scss';
 
 const Filter = (): h.JSX.Element => {
   const {
@@ -32,10 +30,10 @@ const Filter = (): h.JSX.Element => {
   const matches = filterList(status, reader, readers.length, books).length;
 
   return (
-    <p class={s.container}>
+    <p className={s.container}>
       <span>
         Show
-        <label class={s.dropdown} for="filter-type">
+        <label className={s.dropdown} htmlFor="filter-type">
           <select
             id="filter-type"
             name="type"
@@ -51,7 +49,7 @@ const Filter = (): h.JSX.Element => {
       </span>
       <span>
         For
-        <label class={s.dropdown} for="filter-reader">
+        <label className={s.dropdown} htmlFor="filter-reader">
           <select
             id="filter-reader"
             name="reader"

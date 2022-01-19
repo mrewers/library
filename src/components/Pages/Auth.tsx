@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 
-import { setToken } from '~/utils/auth';
+import { setToken } from 'utils/auth';
 
 const Auth = (): h.JSX.Element => {
   useEffect(() => {

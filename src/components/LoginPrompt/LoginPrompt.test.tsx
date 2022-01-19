@@ -3,11 +3,11 @@ import { fireEvent, render } from '@testing-library/preact';
 
 import LoginPrompt from './LoginPrompt';
 
-jest.mock('~/utils/auth', () => ({
+jest.mock('utils/auth', () => ({
   login: jest.fn(),
 }));
 
-const login = require('~/utils/auth').login; // eslint-disable-line -- require syntax necessary to spy on function
+const login = require('utils/auth').login; // eslint-disable-line -- require syntax necessary to spy on function
 
 describe('<LoginPrompt />', () => {
   const error = 'Sorry, you are not authorized to add content.';

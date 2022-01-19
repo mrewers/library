@@ -9,8 +9,7 @@
     "dev": "snowpack dev --polyfill-node",
     "build": "parcel build src/index.html",
     "lint": "eslint --ext .js,.ts,.tsx ./",
-    "test": "jest",
-    "types:CSS": "tsm ./src -p.~ src/ -n kebab -e default --exportTypeInterface TypeStyles --exportTypeName TypeClassName --ignore **/exports.scss"
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

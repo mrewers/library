@@ -1,14 +1,13 @@
 import { Fragment, h } from 'preact';
 import { useContext } from 'preact/hooks';
 
-import Filter from '~/components/Filter/Filter';
-import List from '~/components/List/List';
+import s from './Pages.module.scss';
 
-import { BookContext } from '~/context/bookContext';
-import { FilterContext } from '~/context/filterContext';
-import { filterList, getRead } from '~/utils/list-filters';
-
-import s from './Pages.scss';
+import Filter from 'components/Filter/Filter';
+import List from 'components/List/List';
+import { BookContext } from 'context/bookContext';
+import { FilterContext } from 'context/filterContext';
+import { filterList, getRead } from 'utils/list-filters';
 
 const Books = (): h.JSX.Element => {
   const {

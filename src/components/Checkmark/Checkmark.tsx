@@ -1,8 +1,7 @@
 import { h } from 'preact';
 
-import { getColor } from '~/utils/colors.ts';
-
-import s from './Checkmark.scss';
+import getColor from 'utils/colors';
+import s from './Checkmark.module.scss';
 
 interface ICheckmarkProps {
   readonly checked?: boolean;
@@ -13,9 +12,9 @@ interface ICheckmarkProps {
 const Checkmark = ({ checked, color, id }: ICheckmarkProps): h.JSX.Element => {
   if (checked) {
     return (
-      <div class={s.checkmark} id={id}>
+      <div className={s.checkmark} id={id}>
         <svg
-          class={`${s.feather} ${s['feather-check-square']}`}
+          className={`${s.feather} ${s['feather-check-square']}`}
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -27,9 +26,9 @@ const Checkmark = ({ checked, color, id }: ICheckmarkProps): h.JSX.Element => {
   }
 
   return (
-    <div class={s.checkmark} id={id}>
+    <div className={s.checkmark} id={id}>
       <svg
-        class={`${s.feather} ${s['feather-square']}`}
+        className={`${s.feather} ${s['feather-square']}`}
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >

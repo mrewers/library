@@ -1,39 +1,35 @@
 import * as dotenv from 'dotenv';
-
 import { Fragment, h, render } from 'preact';
-import { useReducer, useEffect } from 'preact/hooks';
-import { Router, Route } from 'preact-router';
+import { useEffect, useReducer } from 'preact/hooks';
+import { Route, Router } from 'preact-router';
 
-import Header from '~/components/Header/Header';
-import EditBook from '~/components/Forms/EditBook';
-import Mask from '~/components/Mask/Mask';
-import Modal from '~/components/Modal/Modal';
-import Stats from '~/components/Stats/Stats';
-
-import Auth from '~/components/Pages/Auth';
-import Books from '~/components/Pages/Books';
-import FourOhFour from '~/components/Pages/FourOhFour';
-import Input from '~/components/Pages/Input';
-import Login from '~/components/Pages/Login';
-import Privacy from '~/components/Pages/Privacy';
-import Retired from '~/components/Pages/Retired';
-
-import { BookContext, bookReducer, initialBookState } from '~/context/bookContext';
-import { FilterContext, filterReducer, initialFilterState } from '~/context/filterContext';
-import { ModalContext, modalReducer, initialModalState } from '~/context/modalContext';
-import { fetchData } from '~/utils/api';
-
-import s from '~/style/style.scss';
+import s from 'style/style.module.scss';
+import Header from 'components/Header/Header';
+import EditBook from 'components/Forms/EditBook';
+import Mask from 'components/Mask/Mask';
+import Modal from 'components/Modal/Modal';
+import Stats from 'components/Stats/Stats';
+import Auth from 'components/Pages/Auth';
+import Books from 'components/Pages/Books';
+import FourOhFour from 'components/Pages/FourOhFour';
+import Input from 'components/Pages/Input';
+import Login from 'components/Pages/Login';
+import Privacy from 'components/Pages/Privacy';
+import Retired from 'components/Pages/Retired';
+import { BookContext, bookReducer, initialBookState } from 'context/bookContext';
+import { FilterContext, filterReducer, initialFilterState } from 'context/filterContext';
+import { initialModalState, ModalContext, modalReducer } from 'context/modalContext';
+import { fetchData } from 'utils/api';
 
 // Load environmental variables
 dotenv.config();
 
 /* eslint-disable -- dynamic importing of a CommonJS modules causes all sorts of linting issues */
-if (process.env.NODE_ENV !== 'production') {
-  const devApiServer = require('./mirage');
+// if (process.env.NODE_ENV !== 'production') {
+//   const devApiServer = require('./mirage');
 
-  devApiServer({ environment: 'development' });
-}
+//   devApiServer({ environment: 'development' });
+// }
 /* eslint-enable */
 
 const App = (): h.JSX.Element => {
@@ -62,7 +58,7 @@ const App = (): h.JSX.Element => {
   return (
     <Fragment>
       <Header title="Library" />
-      <div class={s['page-container']}>
+      <div className={s['page-container']}>
         <Mask />
         <BookContext.Provider value={{ dispatch: bookDispatch, state: bookState }}>
           <FilterContext.Provider value={{ dispatch: filterDispatch, state: filterState }}>

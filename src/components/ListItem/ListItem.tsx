@@ -1,15 +1,15 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
 
-import Checkmark from '~/components/Checkmark/Checkmark';
+import Checkmark from 'components/Checkmark/Checkmark';
 
-import { BookContext } from '~/context/bookContext';
-import { FilterContext } from '~/context/filterContext';
-import { ModalContext } from '~/context/modalContext';
-import { containsReader, getSelectedReaderData } from '~/utils/readers';
-import { isLoggedIn } from '~/utils/auth';
+import { BookContext } from 'context/bookContext';
+import { FilterContext } from 'context/filterContext';
+import { ModalContext } from 'context/modalContext';
+import { containsReader, getSelectedReaderData } from 'utils/readers';
+import { isLoggedIn } from 'utils/auth';
 
-import s from './ListItem.scss';
+import s from './ListItem.module.scss';
 
 interface IListItemProps {
   readonly item: IBook | IRetired;

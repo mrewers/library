@@ -1,12 +1,12 @@
 import { h } from 'preact';
 import { Ref, useContext, useEffect, useRef } from 'preact/hooks';
 
-import Button from '~/components/Button/Button';
-import Overlay from '~/components/Overlay/Overlay';
+import Button from 'components/Button/Button';
+import Overlay from 'components/Overlay/Overlay';
 
-import { BookContext } from '~/context/bookContext';
+import { BookContext } from 'context/bookContext';
 
-import s from './Form.scss';
+import s from './Form.module.scss';
 
 interface IBookBaseProps {
   readonly book: {

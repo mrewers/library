@@ -1,6 +1,6 @@
-import colors from '~/style/exports.scss';
+import colors from 'style/exports.module.scss';
 
-export const getColor = (color: string): string => {
+const getColor = (color: string): string => {
   switch (color) {
     case 'blue':
       return colors.blueLight;
@@ -14,3 +14,5 @@ export const getColor = (color: string): string => {
       return colors.blueDark;
   }
 };
+
+export default getColor;

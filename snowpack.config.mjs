@@ -1,9 +1,11 @@
 const snowpackConfig = {
   alias: {
     components: './src/components',
+    context: './src/context',
     react: 'preact/compat',
     'react-dom': 'preact/compat',
     style: './src/style',
+    utils: './src/utils',
   },
   mount: {
     public: {

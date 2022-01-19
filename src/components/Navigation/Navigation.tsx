@@ -1,26 +1,23 @@
 import { h } from 'preact';
-
-import Button from '~/components/Button/Button';
-
-import { logout, isLoggedIn } from '~/utils/auth';
-
-import s from './Navigation.scss';
+import Button from 'components/Button/Button';
+import { logout, isLoggedIn } from 'utils/auth';
+import s from './Navigation.module.scss';
 
 const Navigation = (): h.JSX.Element => (
-  <nav class={s.nav}>
-    <ul class={s.items}>
+  <nav className={s.nav}>
+    <ul className={s.items}>
       <li>
-        <a class={s.link} href="/">
+        <a className={s.link} href="/">
           Home
         </a>
       </li>
       <li>
-        <a class={s.link} href="/add">
+        <a className={s.link} href="/add">
           Add New
         </a>
       </li>
       <li>
-        <a class={s.link} href="/retired">
+        <a className={s.link} href="/retired">
           Jettisoned
         </a>
       </li>

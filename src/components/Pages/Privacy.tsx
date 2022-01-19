@@ -1,6 +1,6 @@
 import { h, Fragment } from 'preact';
 
-import s from './Pages.scss';
+import s from './Pages.module.scss';
 
 const Privacy = (): h.JSX.Element => (
   <Fragment>

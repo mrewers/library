@@ -1,8 +1,8 @@
 import { h } from 'preact';
 
-import ListItem from '~/components/ListItem/ListItem';
+import s from './List.module.scss';
 
-import s from './List.scss';
+import ListItem from 'components/ListItem/ListItem';
 
 interface IListProps {
   readonly list: TypeBookList;
@@ -11,11 +11,11 @@ interface IListProps {
 
 const List = ({ list, read }: IListProps): h.JSX.Element => (
   <section>
-    {list.length === 0 && <div class={s.loader}>Loading...</div>}
+    {list.length === 0 && <div className={s.loader}>Loading...</div>}
     {list.length > 0 && (
-      <ul class={s.list}>
+      <ul className={s.list}>
         {list.map(item => (
-          <li key={item.id} class={read.includes(item) ? s.read : ''}>
+          <li key={item.id} className={read.includes(item) ? s.read : ''}>
             <ListItem item={item} />
           </li>
         ))}

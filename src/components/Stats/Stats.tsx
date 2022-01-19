@@ -1,12 +1,10 @@
 import { h } from 'preact';
 import { useContext } from 'preact/hooks';
-
-import { calcPercentOf, getReaders } from '~/utils/stats';
-import { getListStats } from '~/utils/list-filters';
-import { FilterContext } from '~/context/filterContext';
-import { BookContext } from '~/context/bookContext';
-
-import s from './Stats.scss';
+import { calcPercentOf, getReaders } from 'utils/stats';
+import { getListStats } from 'utils/list-filters';
+import { FilterContext } from 'context/filterContext';
+import { BookContext } from 'context/bookContext';
+import s from './Stats.module.scss';
 
 const Stats = (): h.JSX.Element => {
   const {
@@ -20,19 +18,19 @@ const Stats = (): h.JSX.Element => {
   const { all = 0, read = 0, unread = 0 } = getListStats(books, reader, readers.length);
 
   return (
-    <aside class={s.container}>
-      <div class={s.stats}>
-        <div class={s.topline}>
-          <span class={s.principal}>{`${calcPercentOf(read, all)}%`}</span>
+    <aside className={s.container}>
+      <div className={s.stats}>
+        <div className={s.topline}>
+          <span className={s.principal}>{`${calcPercentOf(read, all)}%`}</span>
           <span>{`Read by ${
             reader === 'all' || reader === 'any' ? getReaders(readers, operator) : reader
           }`}</span>
         </div>
-        <div class={s.pair}>
-          <span class={s.secondary}>{`Read: ${read}`}</span>
-          <span class={s.secondary}>{`Unread: ${unread}`}</span>
+        <div className={s.pair}>
+          <span className={s.secondary}>{`Read: ${read}`}</span>
+          <span className={s.secondary}>{`Unread: ${unread}`}</span>
         </div>
-        <span class={s.secondary}>{`Total: ${all}`}</span>
+        <span className={s.secondary}>{`Total: ${all}`}</span>
       </div>
     </aside>
   );

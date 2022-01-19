@@ -3,12 +3,12 @@ import { fireEvent, render } from '@testing-library/preact';
 
 import Navigation from './Navigation';
 
-jest.mock('~/utils/auth', () => ({
+jest.mock('utils/auth', () => ({
   logout: jest.fn(),
   isLoggedIn: jest.fn().mockReturnValueOnce(false).mockReturnValue(true),
 }));
 
-const logout = require('~/utils/auth').logout; // eslint-disable-line -- require syntax necessary to spy on logout function
+const logout = require('utils/auth').logout; // eslint-disable-line -- require syntax necessary to spy on logout function
 
 describe('<Navigation />', () => {
   it('renders with the anticipated navigation links', () => {

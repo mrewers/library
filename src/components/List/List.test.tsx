@@ -5,7 +5,7 @@ import List from './List';
 
 import { books, bookOne } from '~/mocks/books';
 
-jest.mock('~/components/ListItem/ListItem', () => (): string => 'list-item');
+jest.mock('components/ListItem/ListItem', () => (): string => 'list-item');
 
 const emptyList: TypeBookList = [];
 

@@ -9,36 +9,30 @@ export const initialBookState: IBookState = {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const BookContext = createContext({
-  dispatch: (action: IBookAction): void => {
+  dispatch(action: IBookAction): void {
     console.log(action);
   },
   state: initialBookState,
 });
 
-const getReadersList = (data: readonly IReader[]): string[] => {
-  return data.map(reader => reader.name);
-};
+const getReadersList = (data: readonly IReader[]): string[] => data.map(reader => reader.name);
 
 const addBook = (
   books: readonly IBook[] | readonly IRetired[],
   book: IBook | IRetired
-): IBook[] | IRetired[] => {
-  return [...books, book];
-};
+): IBook[] | IRetired[] => [...books, book];
 
-const removeBook = (books: readonly IBook[], id: string): IBook[] => {
-  return books.filter(book => book.id !== id);
-};
+const removeBook = (books: readonly IBook[], id: string): IBook[] =>
+  books.filter(book => book.id !== id);
 
-const updateSingleBook = (books: readonly IBook[], book: IBook, id: string): IBook[] => {
-  return books.map(b => {
+const updateSingleBook = (books: readonly IBook[], book: IBook, id: string): IBook[] =>
+  books.map(b => {
     if (b.id === id) {
       return book;
     }
 
     return b;
   });
-};
 
 export const bookReducer = (state: IBookState, action: IBookAction): IBookState => {
   const { payload } = action;

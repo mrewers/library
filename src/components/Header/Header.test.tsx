@@ -3,7 +3,7 @@ import { render } from '@testing-library/preact';
 
 import Header from './Header';
 
-jest.mock('~/components/Navigation/Navigation', () => (): h.JSX.Element => <nav>Navigation</nav>);
+jest.mock('components/Navigation/Navigation', () => (): h.JSX.Element => <nav>Navigation</nav>);
 
 describe('<Header />', () => {
   const title = 'Test Title';

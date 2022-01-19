@@ -3,10 +3,10 @@ import { useContext, useState } from 'preact/hooks';
 
 import BookBase from './BookBase';
 
-import { BookContext } from '~/context/bookContext';
-import { getDateString } from '~/utils/dates';
-import { addItem } from '~/utils/api';
-import { toggleArrayValues } from '~/utils/form-helpers';
+import { BookContext } from 'context/bookContext';
+import { getDateString } from 'utils/dates';
+import { addItem } from 'utils/api';
+import { toggleArrayValues } from 'utils/form-helpers';
 
 interface IFormProps {
   readonly label?: string;
