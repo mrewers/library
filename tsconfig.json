@@ -1,26 +1,44 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "alwaysStrict": true,
     "baseUrl": "./",
     "esModuleInterop": true,
-    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
     "jsxFactory": "h",
-    "lib": ["dom", "esnext"],
-    "module": "es6",
+    "jsxFragmentFactory": "Fragment",
+    "lib": [
+      "dom",
+      "es2019"
+    ],
+    "module": "esnext",
     "moduleResolution": "node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "./dist",
     "paths": {
-      "~*": ["src/*"]
+      "components/*": [
+        "./src/components/*"
+      ]
     },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
     "sourceMap": true,
-    "target": "es6"
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "esnext"
   },
-  "exclude": ["dist", "node_modules"],
   "include": [
-    ".eslintrc.js",
-    "./config/**/*",
-    "./packages/**/*",
-    "./src/**/*",
-    "src/__mocks__/**/*.ts"
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
   ]
 }
