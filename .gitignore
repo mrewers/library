@@ -2,6 +2,7 @@
 .cache
 .dccache
 .firebase
+.snowpack
 dist
 
 # Dependencies
