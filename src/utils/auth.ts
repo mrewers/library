@@ -1,9 +1,19 @@
 import * as auth0 from 'auth0-js';
-import jwt_decode from 'jwt-decode';
+import decode from 'jwt-decode';
+
+import.meta.hot;
+
+const {
+  SNOWPACK_PUBLIC_AUTH0_AUDIENCE,
+  SNOWPACK_PUBLIC_AUTH0_CLIENT_DOMAIN,
+  SNOWPACK_PUBLIC_AUTH0_CLIENT_ID,
+  SNOWPACK_PUBLIC_AUTH0_REDIRECT,
+  SNOWPACK_PUBLIC_AUTH0_SCOPE,
+} = __SNOWPACK_ENV__ as Record<string, string>;
 
 const auth = new auth0.WebAuth({
-  clientID: process.env.AUTH0_CLIENT_ID,
-  domain: process.env.AUTH0_CLIENT_DOMAIN,
+  clientID: SNOWPACK_PUBLIC_AUTH0_CLIENT_ID,
+  domain: SNOWPACK_PUBLIC_AUTH0_CLIENT_DOMAIN,
 });
 
 /**
@@ -12,9 +22,11 @@ const auth = new auth0.WebAuth({
 export const login = (path?: string): void => {
   auth.authorize({
     responseType: 'token id_token',
-    redirectUri: path ? `${process.env.AUTH0_REDIRECT}/${path}` : process.env.AUTH0_REDIRECT,
-    audience: process.env.AUTH0_AUDIENCE,
-    scope: process.env.AUTH0_SCOPE,
+    redirectUri: path
+      ? `${SNOWPACK_PUBLIC_AUTH0_REDIRECT}/${path}`
+      : SNOWPACK_PUBLIC_AUTH0_REDIRECT,
+    audience: SNOWPACK_PUBLIC_AUTH0_AUDIENCE,
+    scope: SNOWPACK_PUBLIC_AUTH0_SCOPE,
   });
 };
 
@@ -87,7 +99,7 @@ const getTokenExpirationDate = (encodedToken: string): Date | null => {
     return null;
   }
 
-  const token = jwt_decode(encodedToken);
+  const token = decode(encodedToken);
 
   if (!token.exp) {
     return null;

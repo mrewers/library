@@ -1871,6 +1871,7 @@ __metadata:
     "@cryptopapers/commitlint-config": ^1.0.0
     "@cryptopapers/eslint-config": ^2.1.0
     "@cryptopapers/prettier-config": ^1.1.0
+    "@snowpack/plugin-dotenv": ^2.2.0
     "@snowpack/plugin-sass": ^1.4.0
     "@snowpack/plugin-typescript": ^1.2.1
     "@testing-library/jest-dom": ^5.14.1
@@ -2196,6 +2197,16 @@ __metadata:
   dependencies:
     "@sinonjs/commons": ^1.7.0
   checksum: 09b5a158ce013a6c37613258bad79ca4efeb99b1f59c41c73cca36cac00b258aefcf46eeea970fccf06b989414d86fe9f54c1102272c0c3bdd51a313cea80949
+  languageName: node
+  linkType: hard
+
+"@snowpack/plugin-dotenv@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@snowpack/plugin-dotenv@npm:2.2.0"
+  dependencies:
+    dotenv: ^8.2.0
+    dotenv-expand: ^5.1.0
+  checksum: 8c5fe0edde260d6aca351e2dd3aec1e2dcdbaaf27ae550744323cb395169886db2b36986695986ebbf7b1f21ef471033f4ce928f8e9342dd72af55f8770b7ff9
   languageName: node
   linkType: hard
 
@@ -4308,6 +4319,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv-expand@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "dotenv-expand@npm:5.1.0"
+  checksum: 8017675b7f254384915d55f9eb6388e577cf0a1231a28d54b0ca03b782be9501b0ac90ac57338636d395fa59051e6209e9b44b8ddf169ce6076dffb5dea227d3
+  languageName: node
+  linkType: hard
+
 "dotenv@npm:*":
   version: 14.2.0
   resolution: "dotenv@npm:14.2.0"
@@ -4319,6 +4337,13 @@ __metadata:
   version: 10.0.0
   resolution: "dotenv@npm:10.0.0"
   checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^8.2.0":
+  version: 8.6.0
+  resolution: "dotenv@npm:8.6.0"
+  checksum: 38e902c80b0666ab59e9310a3d24ed237029a7ce34d976796349765ac96b8d769f6df19090f1f471b77a25ca391971efde8a1ea63bb83111bd8bec8e5cc9b2cd
   languageName: node
   linkType: hard
 

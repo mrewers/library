@@ -15,6 +15,7 @@ const snowpackConfig = {
     src: { url: '/dist' },
   },
   plugins: [
+    '@snowpack/plugin-dotenv',
     [
       '@snowpack/plugin-sass',
       {
