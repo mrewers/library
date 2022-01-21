@@ -1,5 +1,5 @@
 import * as auth0 from 'auth0-js';
-import * as jsonwebtoken from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode';
 
 const auth = new auth0.WebAuth({
   clientID: process.env.AUTH0_CLIENT_ID,
@@ -40,7 +40,7 @@ export const clearFromStorage = (key: string): void => {
  * @param name Parameter name to search for.
  */
 const getParameterByName = (name: string): string => {
-  const match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
+  const match = RegExp(`[#&]${name}=([^&]*)`).exec(window.location.hash);
 
   return decodeURIComponent(match[1].replace(/\+/g, ' '));
 };
@@ -83,15 +83,18 @@ const getTokenExpirationDate = (encodedToken: string): Date | null => {
     sub?: string;
   }
 
-  if (!encodedToken) return null;
+  if (!encodedToken) {
+    return null;
+  }
 
-  const token = jsonwebtoken.decode(encodedToken) as IToken;
+  const token = jwt_decode(encodedToken);
 
   if (!token.exp) {
     return null;
   }
 
   const date = new Date(0);
+
   date.setUTCSeconds(token.exp);
 
   return date;
@@ -114,7 +117,7 @@ const isTokenExpired = (token: string): boolean => {
 export const isLoggedIn = (): boolean => {
   const idToken = getFromStorage('id_token');
 
-  return !!idToken && !isTokenExpired(idToken);
+  return Boolean(idToken) && !isTokenExpired(idToken);
 };
 
 /**

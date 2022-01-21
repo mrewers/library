@@ -6,7 +6,7 @@
   "author": "Marek Rewers",
   "license": "MIT",
   "scripts": {
-    "dev": "snowpack dev --polyfill-node",
+    "dev": "snowpack dev",
     "build": "parcel build src/index.html",
     "lint": "eslint --ext .js,.ts,.tsx ./",
     "test": "jest"
@@ -53,6 +53,7 @@
     "@snowpack/plugin-sass": "^1.4.0",
     "auth0-js": "^9.16.4",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "preact": "^10.5.14",
     "preact-router": "^3.2.1"
   },
