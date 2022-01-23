@@ -28,6 +28,9 @@
       "context/*": [
         "./src/context/*"
       ],
+      "mocks/*": [
+        "./src/__mockData__/*"
+      ],
       "style/*": [
         "./src/style/*"
       ],
