@@ -2,8 +2,7 @@ import { h } from 'preact';
 import { render } from '@testing-library/preact';
 
 import List from './List';
-
-import { books, bookOne } from '~/mocks/books';
+import { books, bookOne } from 'mocks/books';
 
 jest.mock('components/ListItem/ListItem', () => (): string => 'list-item');
 
@@ -15,8 +14,8 @@ describe('<List />', () => {
 
     const listItems = queryAllByText('list-item');
 
-    expect(listItems.length).toEqual(books.length);
-    expect(queryByText('Loading...')).toEqual(null);
+    expect(listItems).toHaveLength(books.length);
+    expect(queryByText('Loading...')).toBeNull();
   });
 
   it('render the loader if book list is empty', () => {

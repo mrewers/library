@@ -1,6 +1,5 @@
 import { initialBookState, bookReducer } from '../bookContext';
-
-import { bookOne, bookTwo, bookThree, books } from '~/mocks/books';
+import { bookOne, bookTwo, bookThree, books } from 'mocks/books';
 
 const addedBookState: IBookState = {
   ...initialBookState,
@@ -45,7 +44,7 @@ describe('bookReducer', () => {
 
     const updatedState = bookReducer(initialBookState, action);
 
-    expect(JSON.stringify(updatedState)).toEqual(addBook);
+    expect(JSON.stringify(updatedState)).toStrictEqual(addBook);
 
     const resetAction: IBookAction = {
       type: 'DELETE_BOOK',
@@ -56,20 +55,20 @@ describe('bookReducer', () => {
 
     const resetState = bookReducer(addedBookState, resetAction);
 
-    expect(JSON.stringify(resetState)).toEqual(expectedInitial);
+    expect(JSON.stringify(resetState)).toStrictEqual(expectedInitial);
   });
 
   it('updates the books array when the action is "UPDATE_BOOKS" or "UPDATE_BOOK"', () => {
     const multiAction: IBookAction = {
       type: 'UPDATE_BOOKS',
       payload: {
-        books: books,
+        books,
       },
     };
 
     const multiUpdate = bookReducer(initialBookState, multiAction);
 
-    expect(JSON.stringify(multiUpdate)).toEqual(addBooks);
+    expect(JSON.stringify(multiUpdate)).toStrictEqual(addBooks);
 
     const singleAction: IBookAction = {
       type: 'UPDATE_BOOK',
@@ -81,7 +80,7 @@ describe('bookReducer', () => {
 
     const singleUpdate = bookReducer(addedBooksState, singleAction);
 
-    expect(JSON.stringify(singleUpdate)).toEqual(updateBook);
+    expect(JSON.stringify(singleUpdate)).toStrictEqual(updateBook);
   });
 
   it('adds the provided book to the retired list when the action type is "ADD_RETIRED"', () => {
@@ -94,10 +93,10 @@ describe('bookReducer', () => {
 
     const updatedState = bookReducer(initialBookState, action);
 
-    expect(JSON.stringify(updatedState)).toEqual(addRetired);
+    expect(JSON.stringify(updatedState)).toStrictEqual(addRetired);
   });
 
-  // case 'UPDATE_READER_DATA':
+  // Case 'UPDATE_READER_DATA':
   //   return {
   //     ...state,
   //     readerData: payload.data,

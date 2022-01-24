@@ -2,9 +2,8 @@ import { h } from 'preact';
 import { render } from '@testing-library/preact';
 
 import Books from '../Books';
-
-import { books } from '~/mocks/books';
-import { readerList } from '~/mocks/readers';
+import { books } from 'mocks/books';
+import { readerList } from 'mocks/readers';
 
 jest.mock('preact/hooks', () => {
   return {

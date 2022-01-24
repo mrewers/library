@@ -1,22 +1,25 @@
 import { h } from 'preact';
 import { fireEvent, render } from '@testing-library/preact';
 
+import { mockBooks } from 'mocks/data';
+import { readerList } from 'mocks/readers';
 import Filter from './Filter';
 
-import { books } from '~/mocks/books';
-import { readerList } from '~/mocks/readers';
-
-jest.mock('preact/hooks', () => ({
-  useContext: (): IMockContext => ({
-    dispatch: jest.fn(),
-    state: {
-      books,
-      reader: 'Alice',
-      readers: readerList,
-      status: 'all',
+jest.mock('preact/hooks', () => {
+  return {
+    useContext(): IMockContext {
+      return {
+        dispatch: jest.fn(),
+        state: {
+          books,
+          reader: 'Alice',
+          readers: readerList,
+          status: 'all',
+        },
+      };
     },
-  }),
-}));
+  };
+});
 
 describe('<Filter />', () => {
   const getChildAt = (el: HTMLElement, index: number): ChildNode => el.childNodes.item(index);
@@ -26,11 +29,11 @@ describe('<Filter />', () => {
 
     const selects = getAllByRole('combobox');
 
-    expect(selects.length).toEqual(2);
+    expect(selects).toHaveLength(2);
 
     const statusSelect = selects[0];
 
-    expect(statusSelect.childElementCount).toEqual(3);
+    expect(statusSelect.childElementCount).toStrictEqual(3);
     expect(statusSelect).toHaveValue('all');
     expect(getChildAt(statusSelect, 0)).toHaveTextContent('All Books');
     expect(getChildAt(statusSelect, 0)).toHaveValue('all');
@@ -41,7 +44,7 @@ describe('<Filter />', () => {
 
     const readerSelect = selects[1];
 
-    expect(readerSelect.childElementCount).toEqual(readerList.length + 2);
+    expect(readerSelect.childElementCount).toStrictEqual(readerList.length + 2);
     expect(readerSelect).toHaveValue('Alice');
     expect(getChildAt(readerSelect, 0)).toHaveTextContent('Any Reader');
     expect(getChildAt(readerSelect, 0)).toHaveValue('any');
@@ -54,7 +57,7 @@ describe('<Filter />', () => {
   });
 
   it('renders the number of matches for the given criteria', () => {
-    const expected = `${books.length} matches`;
+    const expected = `${mockBooks.length} matches`;
 
     const { queryByText } = render(<Filter />);
 
