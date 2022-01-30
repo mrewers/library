@@ -6,7 +6,6 @@ import { Route, Router } from 'preact-router';
 import s from 'style/style.module.scss';
 import Header from 'components/Header/Header';
 import EditBook from 'components/Forms/EditBook';
-import Mask from 'components/Mask/Mask';
 import Modal from 'components/Modal/Modal';
 import Stats from 'components/Stats/Stats';
 import Auth from 'components/Pages/Auth';
@@ -59,7 +58,6 @@ const App = (): h.JSX.Element => {
     <Fragment>
       <Header title="Library" />
       <div className={s['page-container']}>
-        <Mask />
         <BookContext.Provider value={{ dispatch: bookDispatch, state: bookState }}>
           <FilterContext.Provider value={{ dispatch: filterDispatch, state: filterState }}>
             <ModalContext.Provider value={{ dispatch: modalDispatch, state: modalState }}>
