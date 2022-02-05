@@ -5,11 +5,11 @@ describe('getDateString()', () => {
     const date = getDateString();
     const parts = date.split('-');
 
-    expect(date.length).toEqual(10);
+    expect(date).toHaveLength(10);
 
-    expect(parts.length).toEqual(3);
-    expect(parts[0].length).toEqual(4);
-    expect(parts[1].length).toEqual(2);
-    expect(parts[2].length).toEqual(2);
+    expect(parts).toHaveLength(3);
+    expect(parts[0]).toHaveLength(4);
+    expect(parts[1]).toHaveLength(2);
+    expect(parts[2]).toHaveLength(2);
   });
 });

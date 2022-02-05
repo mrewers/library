@@ -15,17 +15,17 @@ describe('getColor()', () => {
     const orange = getColor('orange');
     const pink = getColor('pink');
 
-    expect(blue).toEqual(expected.blueLight);
-    expect(green).toEqual(expected.green);
-    expect(orange).toEqual(expected.orange);
-    expect(pink).toEqual(expected.pink);
+    expect(blue).toStrictEqual(expected.blueLight);
+    expect(green).toStrictEqual(expected.green);
+    expect(orange).toStrictEqual(expected.orange);
+    expect(pink).toStrictEqual(expected.pink);
   });
 
   it('defaults to the dark blue hex value when an invalid color is provided', () => {
     const empty = getColor('');
     const invalid = getColor('invalid');
 
-    expect(empty).toEqual(expected.blueDark);
-    expect(invalid).toEqual(expected.blueDark);
+    expect(empty).toStrictEqual(expected.blueDark);
+    expect(invalid).toStrictEqual(expected.blueDark);
   });
 });

@@ -6,10 +6,10 @@ describe('toggleArrayValues()', () => {
 
     const newArray = toggleArrayValues(arr, 'Cornelius');
 
-    expect(newArray.length).toEqual(2);
-    expect(newArray.includes('Alice')).toEqual(true);
-    expect(newArray.includes('Bob')).toEqual(true);
-    expect(newArray.includes('Cornelius')).toEqual(false);
+    expect(newArray).toHaveLength(2);
+    expect(newArray).toContain('Alice');
+    expect(newArray).toContain('Bob');
+    expect(newArray).not.toContain('Cornelius');
   });
 
   it('adds the provided item from an array if it is not present', () => {
@@ -17,9 +17,9 @@ describe('toggleArrayValues()', () => {
 
     const newArray = toggleArrayValues(arr, 'Cornelius');
 
-    expect(newArray.length).toEqual(3);
-    expect(newArray.includes('Alice')).toEqual(true);
-    expect(newArray.includes('Bob')).toEqual(true);
-    expect(newArray.includes('Cornelius')).toEqual(true);
+    expect(newArray).toHaveLength(3);
+    expect(newArray).toContain('Alice');
+    expect(newArray).toContain('Bob');
+    expect(newArray).toContain('Cornelius');
   });
 });
