@@ -1,0 +1,17 @@
+{
+  "name": "cloud-functions",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "CREDENTIALS_PATH=./keyfile.json serverless deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "serverless.com",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-google-cloudfunctions": "*",
+    "serverless-plugin-typescript": "^2.1.2",
+    "typescript": "^4.7.3"
+  }
+}

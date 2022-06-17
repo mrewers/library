@@ -11,6 +11,9 @@
     "lint": "eslint --ext .js,.ts,.tsx ./",
     "test": "jest"
   },
+  "workspaces": [
+    "cloud-functions"
+  ],
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/eslint-parser": "^7.16.0",
