@@ -9,6 +9,9 @@
   },
   "author": "serverless.com",
   "license": "MIT",
+  "dependencies": {
+    "faunadb": "^4.6.0"
+  },
   "devDependencies": {
     "serverless-google-cloudfunctions": "*",
     "serverless-plugin-typescript": "^2.1.2",

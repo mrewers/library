@@ -1,9 +1,7 @@
-'use strict';
+import getBooks from './books/getBooks';
+import createBook from './book/createBook';
 
-exports.http = (request, response) => {
-  response.status(200).send('Hello World!');
-};
-
-exports.event = (event, callback) => {
-  callback();
-};
+module.exports = {
+  createBook,
+  getBooks
+}
