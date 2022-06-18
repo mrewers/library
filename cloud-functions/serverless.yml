@@ -1,16 +1,26 @@
-service: cloud-functions
+service: library
+
+# Uncomment the below line for local development
+useDotenv: true
 
 provider:
   name: google
   stage: dev
   runtime: nodejs14
-  region: us-east4
-  project: marek-dev-283303
-  credentials: ${env:CREDENTIALS_PATH}
+  region: ${env:GCP_REGION}
+  project: ${env:GCP_PROJECT}
+  credentials: ${env:GCP_CREDENTIALS_PATH}
 
 frameworkVersion: '3'
 
+custom:
+  dotenv:
+    exclude:
+      - FAUNADB_DOMAIN
+      - FAUNADB_SECRET
+
 plugins:
+  - serverless-dotenv-plugin
   - serverless-google-cloudfunctions
   - serverless-plugin-typescript
 
@@ -19,10 +29,21 @@ package:
     - '!.git/**'
     - '!.gitignore'
     - '!.serverless/**'
-    - '!node_modules/**'
 
 functions:
-  books:
-    handler: http
+  createBook:
+    handler: createBook
     events:
       - http: path
+    labels:
+      project: library
+      component: serverless-api
+      environment: ${opt:stage}
+  getBooks:
+    handler: getBooks
+    events:
+      - http: path
+    labels:
+      project: library
+      component: serverless-api
+      environment: ${opt:stage}
