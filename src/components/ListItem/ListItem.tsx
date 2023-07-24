@@ -1,13 +1,12 @@
-import { h } from 'preact';
-import { useContext } from 'preact/hooks';
+import { For, Show } from 'solid-js';
+import type { Component, JSX } from 'solid-js';
+import { A } from '@solidjs/router';
 
 import Checkmark from 'components/Checkmark/Checkmark';
 
-import { BookContext } from 'context/bookContext';
-import { FilterContext } from 'context/filterContext';
-import { ModalContext } from 'context/modalContext';
 import { containsReader, getSelectedReaderData } from 'utils/readers';
-import { isLoggedIn } from 'utils/auth';
+import { useFilters } from 'context/FilterProvider';
+import { useReaders } from 'context/ReaderProvider';
 
 import s from './ListItem.module.scss';
 
@@ -15,61 +14,47 @@ interface IListItemProps {
   readonly item: IBook | IRetired;
 }
 
-const ListItem = ({ item }: IListItemProps): h.JSX.Element => {
-  const {
-    state: { reader },
-  } = useContext(FilterContext);
+const ListItem: Component<IListItemProps> = (props) => {
+  const [filters] = useFilters();
+  const [readerList] = useReaders();
 
-  const {
-    state: { readerData },
-  } = useContext(BookContext);
-
-  const { dispatch } = useContext(ModalContext);
-
-  const isCollective = reader === 'all' || reader === 'any';
-
-  const openModal = (e: h.JSX.TargetedEvent): void => {
-    const { id } = e.target as HTMLElement;
-
-    if (typeof id === 'string') {
-      dispatch({ type: 'OPEN_MODAL', payload: { id } });
-    }
-  };
+  const isCollective = filters.reader() === 'all' || filters.reader() === 'any';
 
   return (
     <article>
-      <button
+      <A
         class={s.trigger}
-        disabled={!isLoggedIn()}
-        id={item.id}
-        type="button"
-        onClick={(e): void => openModal(e)}
+        href={`/book/${props.item.id}`}
       >
-        {isCollective &&
-          readerData.map(r => (
+        <Show
+          when={isCollective}
+          fallback={
             <Checkmark
-              key={r.name}
-              checked={containsReader(item.read, r.name)}
-              color={r.color}
-              id={item.id}
+              checked={containsReader(props.item.read, filters.reader())}
+              color={getSelectedReaderData(readerList, filters.reader()).color}
+              id={props.item.id}
             />
-          ))}
-        {!isCollective && (
-          <Checkmark
-            checked={containsReader(item.read, reader)}
-            color={getSelectedReaderData(readerData, reader).color}
-            id={item.id}
-          />
-        )}
-        <p class={s.text} id={item.id}>
-          <strong id={item.id}>{item.title}</strong>
-          {item.author && <span class={s.author} id={item.id}>{` - ${item.author}`}</span>}
+          }
+        >
+          <For each={readerList}>{
+            (r): JSX.Element => (
+              <Checkmark
+                checked={containsReader(props.item.read, r.name)}
+                color={r.color}
+                id={props.item.id}
+              />
+            )
+          }</For>
+        </Show>
+        <p class={s.text} id={props.item.id}>
+          <strong id={props.item.id}>{props.item.title}</strong>
+          { props.item.author && (
+            <span class={s.author} id={props.item.id}>{` - ${props.item.author}`}</span>
+          ) }
         </p>
-      </button>
+      </A>
     </article>
-  );
+  )
 };
-
-ListItem.displayName = 'ListItem';
 
 export default ListItem;

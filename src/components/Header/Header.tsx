@@ -1,4 +1,6 @@
-import { h } from 'preact';
+import type { Component } from 'solid-js';
+import { A } from '@solidjs/router';
+
 import Navigation from 'components/Navigation/Navigation';
 import s from './Header.module.scss';
 
@@ -6,17 +8,15 @@ interface IHeaderProps {
   readonly title: string;
 }
 
-const Header = ({ title }: IHeaderProps): h.JSX.Element => (
+const Header: Component<IHeaderProps> = (props) => (
   <header>
-    <div className={s.container}>
-      <h1 className={s.title}>
-        <a href="/">{title}</a>
-      </h1>
+    <div class={s.container}>
+      <span class={s.masthead}>
+        <A href="/">{props.title}</A>
+      </span>
       <Navigation />
     </div>
   </header>
 );
-
-Header.displayName = 'Header';
 
 export default Header;

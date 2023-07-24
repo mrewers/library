@@ -1,49 +1,63 @@
 export const mockBooks = [
   {
     id: '1',
-    acquired: 'no',
+    acquired: false,
     author: 'David Goldblatt',
     date: '',
     read: [],
     title: 'The Ball is Round',
   },
-  { id: '2', acquired: 'yes', author: '', date: '2020-06-28', read: [], title: 'Great at Work' },
+  {
+    id: '2',
+    acquired: true,
+    author: '',
+    date: '2020-06-28',
+    read: [],
+    title: 'Great at Work'
+  },
   {
     id: '3',
-    acquired: 'no',
+    acquired: false,
     author: 'Thomas Ricks',
     date: '2013-05-11',
-    read: ['Marek'],
+    read: ['Bob'],
     title: 'Fiasco',
   },
-  { id: '4', acquired: 'no', author: '', date: '', read: [], title: "The Startup Owner's Manual" },
+  {
+    id: '4',
+    acquired: false,
+    author: '',
+    date: '',
+    read: [],
+    title: "The Startup Owner's Manual"
+  },
   {
     id: '5',
-    acquired: 'yes',
+    acquired: true,
     author: '',
     date: '2020-07-01',
-    read: ['Marek'],
+    read: ['Bob'],
     title: 'Tea Time With Terrorists',
   },
   {
     id: '6',
-    acquired: 'no',
+    acquired: false,
     author: 'Tom Foreman',
     date: '',
-    read: ['Jul'],
+    read: ['Alice'],
     title: 'My Year of Running Dangerously',
   },
   {
     id: '7',
-    acquired: 'no',
+    acquired: false,
     author: 'Jeff Vandermeer',
     date: '',
-    read: ['Jul', 'Marek'],
+    read: ['Alice', 'Bob'],
     title: 'Annihilation',
   },
 ];
 
 export const mockReaders = [
-  { id: '1', color: 'pink', name: 'Jul' },
-  { id: '2', color: 'blue', name: 'Marek' },
+  { id: '1', color: 'pink', name: 'Alice' },
+  { id: '2', color: 'blue', name: 'Bob' },
 ];

@@ -1,90 +1,99 @@
-import { h } from 'preact';
-import { useContext, useState } from 'preact/hooks';
+import type { Component, JSX } from 'solid-js';
+import { createSignal } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 
 import BookBase from './BookBase';
-
-import { BookContext } from 'context/bookContext';
+import { useBooks } from 'context/BookProvider';
 import { getDateString } from 'utils/dates';
 import { addItem } from 'utils/api';
-import { toggleArrayValues } from 'utils/form-helpers';
+import { handleFormInput } from 'utils/form-helpers';
 
-interface IFormProps {
+interface IAddBookProps {
   readonly label?: string;
 }
 
-const Form = ({ label }: IFormProps): h.JSX.Element => {
-  const initialState: IBook = {
-    acquired: 'no',
-    author: '',
-    date: getDateString(),
-    read: [],
-    title: '',
-  };
+const AddBook: Component<IAddBookProps> = (props) => {
+  const navigate = useNavigate();
 
-  const [book, setBook] = useState(initialState);
-  const [saving, setSaving] = useState(false);
-  const [overlayText, setOverlayText] = useState('Saving..');
+  const [_, { addBook, createNewBook }] = useBooks();
 
-  const { dispatch } = useContext(BookContext);
+  const [book, setBook] = createSignal(createNewBook());
 
-  const resetOverlay = (msg: string): void => {
-    setOverlayText(msg);
-    setTimeout((): void => {
-      setSaving(false);
-      setOverlayText('Saving...');
-    }, 1000);
-  };
+  const overlayText = '';
+  const saving = false;
 
-  const resetForm = (): void => {
-    resetOverlay('Successfully Saved!');
-    setBook(initialState);
-  };
+  // Const [saving, setSaving] = useState(false);
+  // const [overlayText, setOverlayText] = useState('Saving..');
+
+  // const resetOverlay = (msg: string): void => {
+  //   setOverlayText(msg);
+  //   setTimeout((): void => {
+  //     setSaving(false);
+  //     setOverlayText('Saving...');
+  //   }, 1000);
+  // };
+
+  // const resetForm = (): void => {
+  //   resetOverlay('Successfully Saved!');
+  //   setBook(initialState);
+  // };
 
   const onSubmit = (e: Event): void => {
-    setSaving(true);
-    addItem({ book }, 'books')
-      .then((data: IBookResponse) => {
-        if (data !== undefined) {
-          const added = {
-            ...data.book,
-            id: data.id,
-          };
-
-          dispatch({ type: 'ADD_BOOK', payload: { book: added } });
-          resetForm();
-        } else {
-          resetOverlay('We encountered an error while saving :(');
-        }
-      })
-      .catch(err => {
-        resetOverlay('We encountered an error while saving :(');
-        console.error(err);
-      });
     e.preventDefault();
+    
+    addBook(book());
+
+    navigate('/');
+  //   setSaving(true);
+  //   addItem({ book }, 'books')
+  //     .then((data: IBookResponse) => {
+  //       if (data !== undefined) {
+  //         const added = {
+  //           ...data.book,
+  //           id: data.id,
+  //         };
+
+  //         dispatch({ type: 'ADD_BOOK', payload: { book: added } });
+  //         resetForm();
+  //       } else {
+  //         resetOverlay('We encountered an error while saving :(');
+  //       }
+  //     })
+  //     .catch(err => {
+  //       resetOverlay('We encountered an error while saving :(');
+  //       console.error(err);
+  //     });
   };
 
-  const onInput = ({ currentTarget }: TypeEventInput): void => {
-    const { name, value } = currentTarget;
+  const onInput = ({ currentTarget }: InputEvent): void => {
+    if (currentTarget === null) {
+      return;
+    }
+
+    const [name, val] = handleFormInput(currentTarget as HTMLInputElement, book());
 
     setBook({
-      ...book,
-      [name]: name === 'read' ? toggleArrayValues(book.read, value) : value,
+      ...book(),
+      [name]: val,
     });
   };
 
+  const onCancel = () => {
+    navigate('/');
+  }
+
   return (
     <BookBase
-      book={book}
+      book={book()}
       classes="add"
-      label={label}
+      label={props.label}
       overlayText={overlayText}
       saving={saving}
+      onCancel={onCancel}
       onInput={onInput}
       onSubmit={onSubmit}
     />
   );
 };
 
-Form.displayName = 'Form';
-
-export default Form;
+export default AddBook;

@@ -1,11 +1,13 @@
-import { h } from 'preact';
+import type { Component } from 'solid-js';
 
-const FourOhFour = (): h.JSX.Element => (
-  <div>
-    <h2>404: Page Not Found</h2>
-  </div>
+import Layout from 'components/Layout/Layout';
+
+const FourOhFour: Component = () => (
+  <Layout>
+    <div>
+      <h1>404: Page Not Found</h1>
+    </div>
+  </Layout>
 );
-
-FourOhFour.displayName = 'FourOhFour';
 
 export default FourOhFour;

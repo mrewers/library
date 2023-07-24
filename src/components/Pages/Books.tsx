@@ -1,34 +1,38 @@
-import { Fragment, h } from 'preact';
-import { useContext } from 'preact/hooks';
+import type { Component } from 'solid-js';
+import {createEffect, Show} from 'solid-js'
+
+import Filter from 'components/Filter/Filter';
+import Layout from 'components/Layout/Layout';
+import List from 'components/List/List';
+import { filterList, getRead } from 'utils/list-filters';
+import { useBooks } from 'context/BookProvider';
+import { useFilters } from 'context/FilterProvider';
+import { useReaders } from 'context/ReaderProvider';
 
 import s from './Pages.module.scss';
 
-import Filter from 'components/Filter/Filter';
-import List from 'components/List/List';
-import { BookContext } from 'context/bookContext';
-import { FilterContext } from 'context/filterContext';
-import { filterList, getRead } from 'utils/list-filters';
+const Books: Component = () => {
+  const [booksList] = useBooks();
+  const [readerList] = useReaders();
+  const [filters] = useFilters();
 
-const Books = (): h.JSX.Element => {
-  const {
-    state: { status, reader },
-  } = useContext(FilterContext);
-
-  const {
-    state: { books, readers },
-  } = useContext(BookContext);
-
-  const count = readers.length;
+  const count = readerList.length;
+  
+  const list = () => filterList(filters.readStatus(), filters.reader(), count, booksList);
+  const read = () => getRead(booksList, filters.reader(), count);
 
   return (
-    <Fragment>
-      <h2 class={s.subhead}>Inventory</h2>
+    <Layout>
+      <h1 class={s.subhead}>Inventory</h1>
       <Filter />
-      <List list={filterList(status, reader, count, books)} read={getRead(books, reader, count)} />
-    </Fragment>
-  );
+      <Show when={booksList.length > 0 && readerList.length > 0}>
+        <List
+          list={list()}
+          read={read()}
+        />
+      </Show>
+    </Layout>
+  )
 };
-
-Books.displayName = 'Books';
 
 export default Books;

@@ -1,5 +1,6 @@
 @import 'style/colors.scss';
 @import 'style/mixins.scss';
+@import 'style/typography.scss';
 
 header {
   background: $blueLight;
@@ -17,7 +18,11 @@ header {
   @include page-width;
 }
 
-.title {
+.masthead {
+  @include heading-style;
+  font-size: $fontSizeXLarge;
+  display: block;
+  margin: 2rem 0 1rem;
   text-align: center;
 
   @include breakpoint(tablet) {

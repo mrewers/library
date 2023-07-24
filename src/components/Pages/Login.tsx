@@ -1,11 +1,12 @@
-import { useEffect } from 'preact/hooks';
+import { createEffect } from 'solid-js';
+import type { Component } from 'solid-js';
 
 import { login } from 'utils/auth';
 
-const Login = (): null => {
-  useEffect(() => {
-    login('home');
-  }, []);
+const Login: Component = (): null => {
+  createEffect(() => {
+    login('/');
+  });
 
   return null;
 };

@@ -1,44 +1,47 @@
-import { h } from 'preact';
-import { useContext } from 'preact/hooks';
-import { BookContext } from 'context/bookContext';
-import { FilterContext } from 'context/filterContext';
+import { For } from 'solid-js';
+import type { Component, JSX } from 'solid-js';
+
+import { useBooks } from 'context/BookProvider';
+import { useFilters } from 'context/FilterProvider';
+import { useReaders } from 'context/ReaderProvider';
+
 import { filterList } from 'utils/list-filters';
 import s from './Filter.module.scss';
 
-const Filter = (): h.JSX.Element => {
-  const {
-    state: { books, readers },
-  } = useContext(BookContext);
+const Filter: Component = () => {
+  const [readerList] = useReaders();
+  const [bookList] = useBooks();
+  const [filters, { updateReaderFilters, updateReadStatusFilter }] = useFilters();
 
-  const {
-    state: { reader, status },
-    dispatch,
-  } = useContext(FilterContext);
+  const handleChange = ({ currentTarget }: Event): void => {
+    if (currentTarget === null) {
+      return;
+    }
 
-  const handleChange = ({ currentTarget }: TypeEventSelect): void => {
-    const { name, value } = currentTarget;
+    const { name, value } = currentTarget as HTMLSelectElement;
 
-    if (name === 'type' && typeof value === 'string') {
-      dispatch({ type: 'UPDATE_TYPE', payload: { status: value } });
+    if (name === 'read-status' && typeof value === 'string') {
+      updateReadStatusFilter( value )
     }
 
     if (name === 'reader' && typeof value === 'string') {
-      dispatch({ type: 'UPDATE_READER', payload: { reader: value } });
+      updateReaderFilters( value );
     }
   };
 
-  const matches = filterList(status, reader, readers.length, books).length;
-
+  const matches = () => filterList(
+    filters.readStatus(), filters.reader(), readerList.length, bookList
+  ).length;
+  
   return (
-    <p className={s.container}>
+    <p class={s.container}>
       <span>
         Show
-        <label className={s.dropdown} htmlFor="filter-type">
+        <label class={s.dropdown} for="filter-read-status">
           <select
-            id="filter-type"
-            name="type"
-            value={status}
-            onBlur={handleChange}
+            id="filter-read-status"
+            name="read-status"
+            value={filters.readStatus()}
             onChange={handleChange}
           >
             <option value="all">All Books</option>
@@ -49,31 +52,30 @@ const Filter = (): h.JSX.Element => {
       </span>
       <span>
         For
-        <label className={s.dropdown} htmlFor="filter-reader">
+        <label class={s.dropdown} for="filter-reader">
           <select
             id="filter-reader"
             name="reader"
-            value={reader}
-            onBlur={handleChange}
+            value={filters.reader()}
             onChange={handleChange}
           >
             <option value="any">Any Reader</option>
             <option value="all">All Readers</option>
-            {readers.map(r => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
+            <For each={readerList}>
+              { (r): JSX.Element => (
+                <option value={r.name}>
+                  {r.name}
+                </option>
+              ) }
+            </For>
           </select>
         </label>
       </span>
       <span>
-        <strong>{`${matches || 0} matches`}</strong>
+        <strong>{`${matches() || 0} matches`}</strong>
       </span>
     </p>
   );
 };
-
-Filter.displayName = 'Filter';
 
 export default Filter;

@@ -1,77 +1,53 @@
-import { h } from 'preact';
-import { Ref, useContext, useEffect, useRef } from 'preact/hooks';
+import { For, Show } from 'solid-js';
+import type { Component, JSX } from 'solid-js';
 
 import Button from 'components/Button/Button';
 import Overlay from 'components/Overlay/Overlay';
-
 import { BookContext } from 'context/bookContext';
-
 import s from './Form.module.scss';
+import { useReaders } from 'context/ReaderProvider';
 
 interface IBookBaseProps {
-  readonly book: {
-    readonly acquired: 'yes' | 'no';
-    readonly author?: string;
-    readonly date?: string;
-    readonly read?: readonly string[];
-    readonly title?: string;
-  };
+  readonly book: IBook;
   readonly classes?: string;
-  readonly hasCancel?: boolean;
-  readonly hasDelete?: boolean;
-  readonly hasRetire?: boolean;
   readonly label?: string;
   readonly loading?: boolean;
   readonly onCancel?: () => void;
-  readonly onDelete?: (e: TypeEventInput) => void;
-  readonly onInput: (e: TypeEventInput) => void;
-  readonly onRetire?: (e: TypeEventInput) => void;
+  readonly onDelete?: (e: MouseEvent) => void;
+  readonly onInput: (e: InputEvent) => void;
+  readonly onRetire?: (e: MouseEvent) => void;
   readonly onSubmit: (e: Event) => void;
   readonly overlayText?: string;
   readonly saving?: boolean;
 }
 
-const BookBase = ({
-  book,
-  classes,
-  hasCancel,
-  hasDelete,
-  hasRetire,
-  label,
-  loading,
-  onCancel,
-  onDelete,
-  onInput,
-  onRetire,
-  onSubmit,
-  overlayText,
-  saving,
-}: IBookBaseProps): h.JSX.Element => {
-  const { acquired, author, date, read, title } = book;
-  const input: Ref<null | HTMLInputElement> = useRef(null);
+const BookBase: Component<IBookBaseProps> = (props) => {
+  const [readerList] = useReaders();
 
-  const {
-    state: { readers },
-  } = useContext(BookContext);
+  // Const input: Ref<HTMLInputElement | null> = useRef(null);
 
-  useEffect(() => {
-    if (input !== null) {
-      input.current.focus();
-    }
-  }, [input]);
+  // const {
+  //   state: { readers },
+  // } = useContext(BookContext);
+
+  // useEffect(() => {
+  //   if (input !== null) {
+  //     input.current.focus();
+  //   }
+  // }, [input]);
 
   return (
-    <form class={classes ? `${s.form} ${s[classes]}` : s.form} onSubmit={onSubmit}>
-      {loading && <Overlay text="Loading Book Data..." />}
-      {saving && <Overlay text={overlayText} />}
-      {label && <h3 class={s.title}>{label}</h3>}
+    <form class={props.classes ? `${s.form} ${s[props.classes]}` : s.form}>
+      {props.loading && <Overlay text="Loading Book Data..." />}
+      {props.saving && <Overlay text={props.overlayText || 'Saving...'} />}
+      {typeof props.label !== 'undefined' && <h3 class={s.title}>{props.label}</h3>}
       <label class={s.label} for="title">
         Title:
-        <input ref={input} id="title" name="title" type="text" value={title} onInput={onInput} />
+        <input id="title" name="title" type="text" value={props.book.title} onInput={props.onInput} />
       </label>
       <label class={s.label} for="author">
         Author:
-        <input id="author" name="author" type="text" value={author} onInput={onInput} />
+        <input id="author" name="author" type="text" value={props.book.author} onInput={props.onInput} />
       </label>
       <div class={s['meta-label']}>
         <span class={s['meta-label-text']}>Newly Acquired:</span>
@@ -79,89 +55,101 @@ const BookBase = ({
           <label class={s['sub-label']} for="acquired-yes">
             Yes:
             <input
-              checked={acquired === 'yes'}
+              checked={props.book.acquired === true}
               id="acquired-yes"
               name="acquired"
               type="radio"
               value="yes"
-              onInput={onInput}
+              onInput={props.onInput}
             />
           </label>
           <label class={s['sub-label']} for="acquired-no">
             No:
             <input
-              checked={acquired === 'no'}
+              checked={props.book.acquired === false}
               id="acquired-no"
               name="acquired"
               type="radio"
               value="no"
-              onInput={onInput}
+              onInput={props.onInput}
             />
           </label>
         </div>
       </div>
-      {acquired === 'yes' && (
+      <Show when={props.book.acquired === true}>{
         <label class={s.label} for="date-acquired">
           Date Acquired:
-          <input id="date-acquired" name="date" type="date" value={date} onInput={onInput} />
+          <input
+            id="date-acquired"
+            name="date"
+            type="date"
+            value={props.book.date}
+            onInput={props.onInput}
+          />
         </label>
-      )}
+      }</Show>
       <div class={s['meta-label']}>
         <span class={s['meta-label-text']}>Read By:</span>
         <div class={s['sub-label-column']}>
-          {readers.map(reader => (
-            <label key={reader} class={s['sub-label']} for={`reader-${reader}`}>
-              <input
-                checked={read.includes(reader)}
-                id={`reader-${reader}`}
-                name="read"
-                type="checkbox"
-                value={reader}
-                onInput={onInput}
-              />
-              {reader}
-            </label>
-          ))}
+          <For each={readerList}>{
+            (reader): JSX.Element => (
+              <label class={s['sub-label']} for={`reader-${reader}`}>
+                <input
+                  checked={props.book.read.includes(reader.name)}
+                  id={`reader-${reader}`}
+                  name="read"
+                  type="checkbox"
+                  value={reader.name}
+                  onInput={props.onInput}
+                />
+                {reader.name}
+              </label>
+            )
+          }</For>
         </div>
       </div>
       <div class={s['button-container']}>
         <div>
-          {hasDelete && (
+          <Show when={props.onDelete}>
             <Button
               classes={s.button}
               color="plain"
               label="Delete"
               type="button"
-              onClick={onDelete}
+              onClick={props.onDelete}
             />
-          )}
-          {hasRetire && (
+          </Show>
+          <Show when={props.onRetire}>
             <Button
               classes={s.button}
               color="plain"
               label="Jettison"
               type="button"
-              onClick={onRetire}
+              onClick={props.onRetire}
             />
-          )}
+          </Show>
         </div>
         <div>
-          {hasCancel && (
+          <Show when={props.onCancel}>
             <Button
               classes={s.button}
               color="plain"
               label="Cancel"
               type="button"
-              onClick={onCancel}
+              onClick={props.onCancel}
             />
-          )}
-          <Button classes={s.button} color="light" label="Submit" type="submit" />
+          </Show>
+          <Button
+            classes={s.button}
+            color="light"
+            label="Submit"
+            type="submit"
+            onClick={props.onSubmit}
+          />
         </div>
       </div>
     </form>
   );
 };
-
-BookBase.displayName = 'BookBase';
 
 export default BookBase;

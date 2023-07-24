@@ -1,32 +1,44 @@
-import * as auth0 from 'auth0-js';
+import { WebAuth } from 'auth0-js';
 import decode from 'jwt-decode';
 
-import.meta.hot;
-
+/**
+ * Get Auth0 variables from the environment.
+ */
 const {
-  SNOWPACK_PUBLIC_AUTH0_AUDIENCE,
-  SNOWPACK_PUBLIC_AUTH0_CLIENT_DOMAIN,
-  SNOWPACK_PUBLIC_AUTH0_CLIENT_ID,
-  SNOWPACK_PUBLIC_AUTH0_REDIRECT,
-  SNOWPACK_PUBLIC_AUTH0_SCOPE,
-} = __SNOWPACK_ENV__ as Record<string, string>;
+  VITE_AUTH0_AUDIENCE,
+  VITE_AUTH0_CLIENT_DOMAIN,
+  VITE_AUTH0_CLIENT_ID,
+  VITE_AUTH0_REDIRECT,
+  VITE_AUTH0_SCOPE,
+} = import.meta.env as Record<string, string>;
 
-const auth = new auth0.WebAuth({
-  clientID: SNOWPACK_PUBLIC_AUTH0_CLIENT_ID,
-  domain: SNOWPACK_PUBLIC_AUTH0_CLIENT_DOMAIN,
+/**
+ * The key of the local storage pair used to save the post-auth redirect path.
+ */
+const AUTH_REDIRECT_STATE = 'library-auth-redirect';
+
+/**
+ * Initialize Auth0 client.
+ */
+const auth = new WebAuth({
+  clientID: VITE_AUTH0_CLIENT_ID,
+  domain: VITE_AUTH0_CLIENT_DOMAIN,
 });
 
 /**
  * Initiate a login.
+ * 
+ * @param callback The URI the user is redirected to upon successful login.
  */
-export const login = (path?: string): void => {
+const login = (callback?: string): void => {
+  localStorage.setItem(AUTH_REDIRECT_STATE, callback || '');
+
   auth.authorize({
+    audience: VITE_AUTH0_AUDIENCE,
+    redirectUri: VITE_AUTH0_REDIRECT,
     responseType: 'token id_token',
-    redirectUri: path
-      ? `${SNOWPACK_PUBLIC_AUTH0_REDIRECT}/${path}`
-      : SNOWPACK_PUBLIC_AUTH0_REDIRECT,
-    audience: SNOWPACK_PUBLIC_AUTH0_AUDIENCE,
-    scope: SNOWPACK_PUBLIC_AUTH0_SCOPE,
+    scope: VITE_AUTH0_SCOPE,
+    state: AUTH_REDIRECT_STATE,
   });
 };
 
@@ -35,26 +47,38 @@ export const login = (path?: string): void => {
  *
  * @param key The key of the item to retrieve.
  */
-export const getFromStorage = (key: string): string => localStorage.getItem(key);
+const getFromStorage = (key: string): string => {
+  const item = localStorage.getItem(key);
+  
+  if (item === null) {
+    return ''
+  }
+
+  return item;
+};
 
 /**
  * Remove a value from local storage by key name.
  *
  * @param key The key of the item to retrieve.
  */
-export const clearFromStorage = (key: string): void => {
+const clearFromStorage = (key: string): void => {
   localStorage.removeItem(key);
 };
 
 /**
  * Helper function that will allow us to extract the access_token and id_token.
  *
- * @param name Parameter name to search for.
+ * @param paramName Parameter name to search for.
  */
-const getParameterByName = (name: string): string => {
-  const match = RegExp(`[#&]${name}=([^&]*)`).exec(window.location.hash);
+const getParameterByName = (paramName: string): string => {
+  const match = RegExp(`[#&]${paramName}=([^&]*)`, 'u').exec(window.location.hash);
 
-  return decodeURIComponent(match[1].replace(/\+/g, ' '));
+  if (match === null) {
+    return '';
+  }
+
+  return decodeURIComponent(match[1].replace(/\+/gu, ' '));
 };
 
 /**
@@ -62,7 +86,7 @@ const getParameterByName = (name: string): string => {
  *
  * @param {string} tokenName
  */
-export const setToken = (tokenName: 'access_token' | 'id_token'): void => {
+const setToken = (tokenName: 'access_token' | 'id_token'): void => {
   let key;
 
   switch (tokenName) {
@@ -80,13 +104,25 @@ export const setToken = (tokenName: 'access_token' | 'id_token'): void => {
 };
 
 /**
+ * Retrieves the post-auth redirection path from local storage
+ * and then removes that entry from local storage.
+ */
+const getAuthRedirect = (): string => {
+  const redirect = getFromStorage(AUTH_REDIRECT_STATE);
+  
+  clearFromStorage(AUTH_REDIRECT_STATE);
+
+  return redirect;
+}
+
+/**
  * Retrieves the token expiration date.
  *
  * @param encodedToken Token
  */
 const getTokenExpirationDate = (encodedToken: string): Date | null => {
   interface IToken {
-    at_hash?: string;
+    at_hash?: string; // eslint-disable-line camelcase, @typescript-eslint/naming-convention
     aud?: string;
     exp?: number;
     iat?: number;
@@ -99,9 +135,9 @@ const getTokenExpirationDate = (encodedToken: string): Date | null => {
     return null;
   }
 
-  const token = decode(encodedToken);
+  const token: IToken = decode(encodedToken);
 
-  if (!token.exp) {
+  if (typeof token.exp !== 'number') {
     return null;
   }
 
@@ -120,13 +156,18 @@ const getTokenExpirationDate = (encodedToken: string): Date | null => {
 const isTokenExpired = (token: string): boolean => {
   const expirationDate = getTokenExpirationDate(token);
 
+  // Short circuit if there is no expiration date.
+  if (expirationDate === null) {
+    return true;
+  }
+
   return expirationDate < new Date();
 };
 
 /**
  * Check if current user is login and the token is not expired.
  */
-export const isLoggedIn = (): boolean => {
+const isLoggedIn = (): boolean => {
   const idToken = getFromStorage('id_token');
 
   return Boolean(idToken) && !isTokenExpired(idToken);
@@ -134,10 +175,21 @@ export const isLoggedIn = (): boolean => {
 
 /**
  * Clear access tokens from local storage and return to the homepage
- * Uses window.location to redirect rather than preact-route to force a refresh of the page so that the logout button disappears
+ * Uses window.location to redirect rather than preact-route to force
+ * a refresh of the page so that the logout button disappears
  */
-export const logout = (): void => {
+const logout = (): void => {
   clearFromStorage('id_token');
   clearFromStorage('access_token');
   window.location.href = '/';
+};
+
+export {
+  clearFromStorage,
+  getAuthRedirect,
+  getFromStorage,
+  isLoggedIn,
+  login,
+  logout,
+  setToken
 };

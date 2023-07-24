@@ -1,49 +1,45 @@
-import { Fragment, h } from 'preact';
-import { useContext, useEffect } from 'preact/hooks';
+import type { Component } from 'solid-js';
 
 import Filter from 'components/Filter/Filter';
+import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
 
-import { BookContext } from 'context/bookContext';
+import { useFilters } from 'context/FilterProvider';
+import { useReaders } from 'context/ReaderProvider';
 import { fetchData } from 'utils/api';
-import { FilterContext } from 'context/filterContext';
 import { filterList, getRead } from 'utils/list-filters';
 
 import s from './Pages.module.scss';
 
-const Retired = (): h.JSX.Element => {
-  const {
-    state: { status, reader },
-  } = useContext(FilterContext);
+import { mockBooks } from 'mocks/data';
 
-  const {
-    dispatch,
-    state: { retired, readers },
-  } = useContext(BookContext);
+const Retired: Component = () => {
+  const [filters] = useFilters();
+  const [readerList] = useReaders();
 
-  useEffect(() => {
-    // Fetch reader data
-    fetchData('retired')
-      .then((data: IRetiredResponse) =>
-        dispatch({ type: 'UPDATE_RETIRED', payload: { retired: data.retired } })
-      )
-      .catch(err => console.error(err));
-  }, [dispatch]);
+  const retired = mockBooks;
 
-  const count = readers.length;
+  // useEffect(() => {
+  //   // Fetch reader data
+  //   fetchData('retired')
+  //     .then((data: IRetiredResponse) =>
+  //       dispatch({ type: 'UPDATE_RETIRED', payload: { retired: data.retired } })
+  //     )
+  //     .catch(err => console.error(err));
+  // }, [dispatch]);
+
+  const count = readerList.length;
 
   return (
-    <Fragment>
-      <h2 class={s.subhead}>Jettisoned Books</h2>
+    <Layout>
+      <h1 class={s.subhead}>Jettisoned Books</h1>
       <Filter />
       <List
-        list={filterList(status, reader, count, retired)}
-        read={getRead(retired, reader, count)}
+        list={filterList(filters.readStatus(), filters.reader(), count, retired)}
+        read={getRead(retired, filters.reader(), count)}
       />
-    </Fragment>
+    </Layout>
   );
 };
-
-Retired.displayName = 'Retired';
 
 export default Retired;

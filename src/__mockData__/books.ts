@@ -1,6 +1,6 @@
 export const bookOne: IBook = {
   id: 'abcd',
-  acquired: 'yes',
+  acquired: true,
   author: 'Mr. Princeton',
   date: '2020-08-05',
   read: ['Alice'],
@@ -9,7 +9,7 @@ export const bookOne: IBook = {
 
 export const bookTwo: IBook = {
   id: 'efgh',
-  acquired: 'no',
+  acquired: false,
   author: 'Ms. Harvard',
   date: '2020-07-06',
   read: ['Alice', 'Bob'],
@@ -18,7 +18,7 @@ export const bookTwo: IBook = {
 
 export const bookThree: IBook = {
   id: 'ijkl',
-  acquired: 'no',
+  acquired: false,
   author: 'Mrs. Yale',
   date: '2020-07-06',
   read: [],

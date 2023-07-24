@@ -2,10 +2,10 @@
 @import 'style/mixins.scss';
 
 .page-wrapper {
-  @include border-light-shadow;
   @include form-layout;
   background-color: $white;
 
+  > h2,
   > h3,
   > h4,
   > h5 {

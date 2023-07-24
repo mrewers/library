@@ -34,27 +34,27 @@ dialog {
 
 h1 {
   @include heading-style;
-  font-size: $fontSizeXLarge;
+  font-size: $fontSizeLarge;
 }
 
 h2 {
   @include heading-style;
-  font-size: $fontSizeLarge;
+  font-size: $fontSizeMediumLarge;
 }
 
 h3 {
   @include heading-style;
-  font-size: $fontSizeMediumLarge;
+  font-size: $fontSizeMedium;
 }
 
 h4 {
   @include heading-style;
-  font-size: $fontSizeMedium;
+  font-size: $fontSizeMediumSmall;
 }
 
 h5 {
   @include heading-style;
-  font-size: $fontSizeMediumSmall;
+  font-size: $fontSizeNormal;
 }
 
 main {

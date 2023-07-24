@@ -1,5 +1,3 @@
-import { JSX } from 'preact';
-
 declare module '*.scss';
 
 declare module '*.svg';
@@ -7,11 +5,17 @@ declare module '*.svg';
 declare global {
   interface IBook {
     readonly id?: string;
-    readonly acquired: 'yes' | 'no';
+    readonly acquired: boolean;
     readonly author?: string;
     readonly date?: string;
     readonly read: readonly string[];
     readonly title: string;
+  }
+
+  interface IReader {
+    readonly id: string;
+    readonly name: string;
+    readonly color?: string;
   }
 
   interface IRetired extends IBook {
@@ -25,8 +29,8 @@ declare global {
   }
 
   /* eslint-disable @typescript-eslint/no-type-alias */
-  type TypeEventInput = JSX.TargetedEvent<HTMLInputElement>;
-  type TypeEventSelect = JSX.TargetedEvent<HTMLSelectElement>;
+  // type TypeEventInput = JSX.TargetedEvent<HTMLInputElement>;
+  // type TypeEventSelect = JSX.TargetedEvent<HTMLSelectElement>;
 
   type TypeBookList = readonly IBook[];
   /* eslint-enable @typescript-eslint/no-type-alias */
@@ -38,3 +42,5 @@ declare global {
     }
   }
 }
+
+export {};

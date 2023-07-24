@@ -1,33 +1,43 @@
-import { h } from 'preact';
+import type { Component } from 'solid-js';
+import { Show } from 'solid-js';
+import { A } from '@solidjs/router';
+
 import Button from 'components/Button/Button';
-import { logout, isLoggedIn } from 'utils/auth';
+
+import { logout, login, isLoggedIn } from 'utils/auth';
+
 import s from './Navigation.module.scss';
 
-const Navigation = (): h.JSX.Element => (
-  <nav className={s.nav}>
-    <ul className={s.items}>
+const Navigation: Component = () => (
+  <nav class={s.nav}>
+    <ul class={s.items}>
       <li>
-        <a className={s.link} href="/">
+        <A class={s.link} href="/">
           Home
-        </a>
+        </A>
       </li>
+      <Show when={isLoggedIn()}>
+        <li>
+          <A class={s.link} href="/add">
+            Add New
+          </A>
+        </li>
+      </Show>
       <li>
-        <a className={s.link} href="/add">
-          Add New
-        </a>
-      </li>
-      <li>
-        <a className={s.link} href="/retired">
+        <A class={s.link} href="/retired">
           Jettisoned
-        </a>
+        </A>
       </li>
     </ul>
-    {isLoggedIn() && (
+    <Show
+      when={isLoggedIn()}
+      fallback={
+        <Button color="plain" label="Log In" type="button" onClick={(): void => login()} />
+      }
+    >
       <Button color="plain" label="Log Out" type="button" onClick={(): void => logout()} />
-    )}
+    </Show>
   </nav>
 );
-
-Navigation.displayName = 'Navigation';
 
 export default Navigation;

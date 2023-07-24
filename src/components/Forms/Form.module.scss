@@ -27,13 +27,6 @@
   }
 }
 
-.add {
-  @include breakpoint(laptop) {
-    margin-left: 5rem;
-    width: calc(70% - 5rem);
-  }
-}
-
 .button {
   margin: 1rem 0.5rem 0;
 

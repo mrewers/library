@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "baseUrl": "./",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
+    "jsxImportSource": "solid-js",
     "lib": [
       "dom",
+      "dom.iterable",
       "es2019"
     ],
     "module": "esnext",
@@ -43,7 +44,10 @@
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "esnext"
+    "target": "esnext",
+    "types": [
+      "vite/client"
+    ]
   },
   "include": [
     "**/*.ts",
