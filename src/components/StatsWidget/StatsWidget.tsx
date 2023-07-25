@@ -1,3 +1,4 @@
+import { useLocation } from "@solidjs/router";
 import type { Component } from 'solid-js';
 
 import { calcPercentOf, getReaders } from 'utils/stats';
@@ -13,8 +14,12 @@ const StatsWidget: Component = () => {
   const [bookList] = useBooks();
   const [readerList] = useReaders();
   const [filters] = useFilters();
+
+  const location = useLocation();
+
+  const list = location.pathname === '/retired' ? 'retired' : 'active';
   
-  const stats = () => getListStats(bookList().fullList.active, filters.reader(), readerList.length);
+  const stats = () => getListStats(bookList().fullList[list], filters.reader(), readerList.length);
 
   return (
     <aside class={s.container}>
