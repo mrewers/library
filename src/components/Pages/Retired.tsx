@@ -1,23 +1,26 @@
 import type { Component } from 'solid-js';
+import { createStore } from 'solid-js/store';
 
 import Filter from 'components/Filter/Filter';
 import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
 
 import { useFilters } from 'context/FilterProvider';
-import { useReaders } from 'context/ReaderProvider';
-import { fetchData } from 'utils/api';
-import { filterList, getRead } from 'utils/list-filters';
+import { useBooks } from 'context/BookProvider';
 
 import s from './Pages.module.scss';
 
-import { mockBooks } from 'mocks/data';
-
 const Retired: Component = () => {
+  const [bookList] = useBooks();
   const [filters] = useFilters();
-  const [readerList] = useReaders();
 
-  const retired = mockBooks;
+  const [readList] = createStore(() => {
+    if ( filters.reader() === 'all' || filters.reader() === 'any' ) {
+      return filters.reader();
+    }
+    
+    return bookList().retired.filtered.findIndex(i => i.name === filters.reader());
+  })
 
   // useEffect(() => {
   //   // Fetch reader data
@@ -28,15 +31,23 @@ const Retired: Component = () => {
   //     .catch(err => console.error(err));
   // }, [dispatch]);
 
-  const count = readerList.length;
-
   return (
     <Layout>
       <h1 class={s.subhead}>Jettisoned Books</h1>
       <Filter />
       <List
-        list={filterList(filters.readStatus(), filters.reader(), count, retired)}
-        read={getRead(retired, filters.reader(), count)}
+        list={
+          filters.readStatus() === 'all'
+          ? bookList().fullList.retired
+          : typeof readList() === 'number'
+            ? bookList().retired.filtered[readList() as number][filters.readStatus() as 'read' | 'unread']
+            : bookList().retired[readList() as 'all' | 'any'][filters.readStatus() as 'read' | 'unread']
+        }
+        read={
+          typeof readList() === 'number' 
+          ? bookList().retired.filtered[readList() as number].read
+          : bookList().retired[readList() as 'all' | 'any'].read
+        }
       />
     </Layout>
   );

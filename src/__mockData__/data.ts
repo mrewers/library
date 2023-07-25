@@ -5,6 +5,7 @@ export const mockBooks = [
     author: 'David Goldblatt',
     date: '',
     read: [],
+    retired: false,
     title: 'The Ball is Round',
   },
   {
@@ -13,6 +14,7 @@ export const mockBooks = [
     author: '',
     date: '2020-06-28',
     read: [],
+    retired: false,
     title: 'Great at Work'
   },
   {
@@ -21,6 +23,7 @@ export const mockBooks = [
     author: 'Thomas Ricks',
     date: '2013-05-11',
     read: ['Bob'],
+    retired: false,
     title: 'Fiasco',
   },
   {
@@ -29,6 +32,7 @@ export const mockBooks = [
     author: '',
     date: '',
     read: [],
+    retired: false,
     title: "The Startup Owner's Manual"
   },
   {
@@ -37,6 +41,7 @@ export const mockBooks = [
     author: '',
     date: '2020-07-01',
     read: ['Bob'],
+    retired: false,
     title: 'Tea Time With Terrorists',
   },
   {
@@ -45,15 +50,35 @@ export const mockBooks = [
     author: 'Tom Foreman',
     date: '',
     read: ['Alice'],
+    retired: true,
     title: 'My Year of Running Dangerously',
   },
   {
     id: '7',
     acquired: false,
+    author: 'Albert Camus',
+    date: '',
+    read: ['Alice'],
+    retired: false,
+    title: 'The Rebel',
+  },
+  {
+    id: '8',
+    acquired: false,
     author: 'Jeff Vandermeer',
     date: '',
     read: ['Alice', 'Bob'],
+    retired: false,
     title: 'Annihilation',
+  },
+  {
+    id: '9',
+    acquired: false,
+    author: 'Mark Bowden',
+    date: '',
+    read: ['Alice', 'Bob'],
+    retired: true,
+    title: 'Worm',
   },
 ];
 

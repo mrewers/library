@@ -14,7 +14,7 @@ const StatsWidget: Component = () => {
   const [readerList] = useReaders();
   const [filters] = useFilters();
   
-  const stats = () => getListStats(bookList().fullList, filters.reader(), readerList.length);
+  const stats = () => getListStats(bookList().fullList.active, filters.reader(), readerList.length);
 
   return (
     <aside class={s.container}>

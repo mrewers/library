@@ -3,7 +3,7 @@ import {createStore} from 'solid-js/store';
 import type { Component, JSX } from 'solid-js';
 
 import { getDateString } from 'utils/dates';
-import { getRead, getUnread } from 'utils/list-filters';
+import { filterRetired, getRead, getUnread } from 'utils/list-filters';
 import { useReaders } from './ReaderProvider';
 
 interface IBookProviderProps {
@@ -21,7 +21,16 @@ interface IBookStoreState {
   readonly all: IBookListObject
   readonly any: IBookListObject
   readonly filtered: IBookListObject[]
-  readonly fullList: IBook[]
+  readonly retired: {
+    readonly all: IBookListObject
+    readonly any: IBookListObject
+    readonly filtered: IBookListObject[]
+  }
+  readonly fullList: {
+    readonly active: IBook[]
+    readonly fullList: IBook[]
+    readonly retired: IBook[]
+  }
 }
 
 type TBookStore = [
@@ -31,6 +40,7 @@ type TBookStore = [
     createNewBook: () => IBook,
     getBook: (id: string) => IBook,
     removeBook: (id: string) => void,
+    retireBook: (id: string) => void,
     updateBook: (id: string, value: IBook) => void,
   }
 ]
@@ -44,6 +54,7 @@ const createNewBook = (): IBook => {
     author: '',
     date: getDateString(),
     read: [],
+    retired: false,
     title: '',
   }
 };
@@ -58,23 +69,45 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
 
   createEffect(() => setReaderCount(readerList.length))
   
-  const [bookList] = createStore(createMemo(() => ({
+  const [bookList] = createStore(createMemo(() => {
+    const [active, retired] = filterRetired(fullList);
+
+    return ({
       all: {
-        read: getRead(fullList, 'all', readerCount()),
-        unread: getUnread(fullList, 'all', readerCount()),
+        read: getRead(active, 'all', readerCount()),
+        unread: getUnread(active, 'all', readerCount()),
       },
       any: {
-        read: getRead(fullList, 'any', readerCount()),
-        unread: getUnread(fullList, 'any', readerCount()),
+        read: getRead(active, 'any', readerCount()),
+        unread: getUnread(active, 'any', readerCount()),
       },
       filtered: readerList.map(r => ({
         name: r.name,
-        read: getRead(fullList, r.name, readerCount()),
-        unread: getUnread(fullList, r.name, readerCount()),
+        read: getRead(active, r.name, readerCount()),
+        unread: getUnread(active, r.name, readerCount()),
       })),
-      fullList: fullList,
-    }))
-  )
+      retired: {
+        all: {
+          read: getRead(retired, 'all', readerCount()),
+          unread: getUnread(retired, 'all', readerCount()),
+        },
+        any: {
+          read: getRead(retired, 'any', readerCount()),
+          unread: getUnread(retired, 'any', readerCount()),
+        },
+        filtered: readerList.map(r => ({
+          name: r.name,
+          read: getRead(retired, r.name, readerCount()),
+          unread: getUnread(retired, r.name, readerCount()),
+        }))
+      },
+      fullList: {
+        active,
+        fullList,
+        retired,
+      }
+    });
+  }))
 
   /**
    * Adds new book data to the full list of books.
@@ -120,6 +153,15 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
     })
   }
 
+  const retireBook = (id: string) => {
+    setFullList(
+      book => book.id === id,
+      // @ts-ignore
+      'retired',
+      true
+    )
+  }
+
   const bookStore = [
     bookList,
     {
@@ -127,6 +169,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
       createNewBook,
       getBook,
       removeBook,
+      retireBook,
       updateBook,
     }
   ]

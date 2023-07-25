@@ -26,11 +26,11 @@ const Books: Component = () => {
     <Layout>
       <h1 class={s.subhead}>Inventory</h1>
       <Filter />
-      <Show when={bookList().fullList.length > 0}>
+      <Show when={bookList().fullList.active.length > 0}>
         <List
           list={
             filters.readStatus() === 'all'
-            ? bookList().fullList
+            ? bookList().fullList.active
             : typeof readList() === 'number'
               ? bookList().filtered[readList() as number][filters.readStatus() as 'read' | 'unread']
               : bookList()[readList() as 'all' | 'any'][filters.readStatus() as 'read' | 'unread']

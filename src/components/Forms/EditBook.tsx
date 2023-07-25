@@ -20,9 +20,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
   const [overlayText, setOverlayText] = createSignal('Saving..');
   const [saving, setSaving] = createSignal(false);
 
-  const [_, {getBook, removeBook, updateBook}] = useBooks();
-
-  const onRetire = () => {};
+  const [_, {getBook, removeBook, retireBook, updateBook}] = useBooks();
 
   const [book, setBook] = createSignal(getBook(props.id));
 
@@ -61,7 +59,9 @@ const EditBook: Component<IEditBookProps> = (props) => {
     navigate('/');
   };
 
-  // const onRetire = async (): Promise<void> => {
+  const onRetire = async (): Promise<void> => {
+    updateBook(props.id, book());
+    retireBook(props.id);
   //   setSaving(true);
 
   //   const date = getDateString();
@@ -74,7 +74,8 @@ const EditBook: Component<IEditBookProps> = (props) => {
   //   bookDispatch({ type: 'DELETE_BOOK', payload: { id } });
 
   //   resetOverlay('Successfully Jettisoned!', true);
-  // };
+    navigate('/');
+  };
 
   const onCancel = () => {
     navigate('/');

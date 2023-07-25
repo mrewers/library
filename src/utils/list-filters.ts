@@ -1,3 +1,18 @@
+export const filterRetired = (list: IBook[]) => {
+  const active = [] as IBook[];
+  const retired = [] as IBook[];
+  
+  list.forEach( item => {
+    if (item.retired === true) {
+      retired.push( item );
+    } else {
+      active.push( item );
+    }
+  });
+
+  return [active, retired];
+}
+
 /**
  * Get the list of books read by the selected reader.
  *

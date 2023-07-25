@@ -9,6 +9,7 @@ declare global {
     readonly author?: string;
     readonly date?: string;
     readonly read: readonly string[];
+    readonly retired: boolean;
     readonly title: string;
   }
 
