@@ -29,9 +29,9 @@ const Filter: Component = () => {
     }
   };
 
-  const matches = () => filterList(
-    filters.readStatus(), filters.reader(), readerList.length, bookList
-  ).length;
+  // const matches = () => filterList(
+  //   filters.readStatus(), filters.reader(), readerList.length, bookList
+  // ).length;
   
   return (
     <p class={s.container}>
@@ -72,7 +72,7 @@ const Filter: Component = () => {
         </label>
       </span>
       <span>
-        <strong>{`${matches() || 0} matches`}</strong>
+        {/* <strong>{`${matches() || 0} matches`}</strong> */}
       </span>
     </p>
   );

@@ -24,8 +24,8 @@ const setOperator = (reader: string): string => (reader === 'all' ? 'and' : 'or'
 const FilterContext = createContext();
 
 const FilterProvider: Component<IFilterProviderProps> = (props) => {
-  const [filterOperator, setFilterOperator] = createSignal('and');
-  const [filterReader, setFilterReader] = createSignal('all');
+  const [filterOperator, setFilterOperator] = createSignal('or');
+  const [filterReader, setFilterReader] = createSignal('any');
   const [filterReadStatus, setFilterReadStatus] = createSignal('all');
 
   const updateReaderFilters = ( reader: string) => {

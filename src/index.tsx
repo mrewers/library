@@ -18,13 +18,13 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 }
 
 const Library = () => (
-  <BookProvider books={mockBooks}>
-    <ReaderProvider readers={mockReaders}>
+  <ReaderProvider readers={mockReaders}>
+    <BookProvider books={mockBooks}>
       <FilterProvider>
         <App />
       </FilterProvider>
-    </ReaderProvider>
-  </BookProvider>
+    </BookProvider>
+  </ReaderProvider>
 );
 
 render( Library, root! );

@@ -18,7 +18,7 @@ const ListItem: Component<IListItemProps> = (props) => {
   const [filters] = useFilters();
   const [readerList] = useReaders();
 
-  const isCollective = filters.reader() === 'all' || filters.reader() === 'any';
+  const isCollective = () => filters.reader() === 'all' || filters.reader() === 'any';
 
   return (
     <article>
@@ -27,7 +27,7 @@ const ListItem: Component<IListItemProps> = (props) => {
         href={`/book/${props.item.id}`}
       >
         <Show
-          when={isCollective}
+          when={isCollective()}
           fallback={
             <Checkmark
               checked={containsReader(props.item.read, filters.reader())}

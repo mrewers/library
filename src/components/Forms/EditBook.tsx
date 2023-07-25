@@ -58,6 +58,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
     // bookDispatch({ type: 'DELETE_BOOK', payload: { id } });
     // resetOverlay('Successfully Deleted!', true);
     removeBook(props.id)
+    navigate('/');
   };
 
   // const onRetire = async (): Promise<void> => {

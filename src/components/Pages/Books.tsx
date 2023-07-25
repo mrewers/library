@@ -1,34 +1,45 @@
 import type { Component } from 'solid-js';
-import {createEffect, Show} from 'solid-js'
+import { Show } from 'solid-js'
+import { createStore } from 'solid-js/store';
 
 import Filter from 'components/Filter/Filter';
 import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
-import { filterList, getRead } from 'utils/list-filters';
 import { useBooks } from 'context/BookProvider';
 import { useFilters } from 'context/FilterProvider';
-import { useReaders } from 'context/ReaderProvider';
 
 import s from './Pages.module.scss';
 
 const Books: Component = () => {
-  const [booksList] = useBooks();
-  const [readerList] = useReaders();
+  const [bookList] = useBooks();
   const [filters] = useFilters();
 
-  const count = readerList.length;
-  
-  const list = () => filterList(filters.readStatus(), filters.reader(), count, booksList);
-  const read = () => getRead(booksList, filters.reader(), count);
+  const [readList] = createStore(() => {
+    if ( filters.reader() === 'all' || filters.reader() === 'any' ) {
+      return filters.reader();
+    }
+    
+    return bookList().filtered.findIndex(i => i.name === filters.reader());
+  })
 
   return (
     <Layout>
       <h1 class={s.subhead}>Inventory</h1>
       <Filter />
-      <Show when={booksList.length > 0 && readerList.length > 0}>
+      <Show when={bookList().fullList.length > 0}>
         <List
-          list={list()}
-          read={read()}
+          list={
+            filters.readStatus() === 'all'
+            ? bookList().fullList
+            : typeof readList() === 'number'
+              ? bookList().filtered[readList() as number][filters.readStatus() as 'read' | 'unread']
+              : bookList()[readList() as 'all' | 'any'][filters.readStatus() as 'read' | 'unread']
+          }
+          read={
+            typeof readList() === 'number' 
+            ? bookList().filtered[readList() as number].read
+            : bookList()[readList() as 'all' | 'any'].read
+          }
         />
       </Show>
     </Layout>

@@ -24,14 +24,13 @@ export const getRead = (list: IBook[], reader: string, readerCount: number): IBo
  * @param reader Name of the selected reader (or group of readers).
  * @param readerCount Total number of readers (needed to calculate if no readers read an book).
  */
-const getUnread = (list: IBook[], reader: string, readerCount: number): IBook[] => {
+export const getUnread = (list: IBook[], reader: string, readerCount: number): IBook[] => {
   switch (reader) {
     case 'all':
       return list.filter((item: IBook) => item.read.length === 0);
     case 'any':
       return list.filter((item: IBook) => item.read.length < readerCount);
     default:
-      console.log(reader)
       return list.filter((item: IBook) => !item.read.includes(reader));
   }
 };
