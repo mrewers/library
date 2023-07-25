@@ -9,6 +9,11 @@
     box-shadow: $focusShadow;
     outline: none;
   }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
 }
 
 .accent {

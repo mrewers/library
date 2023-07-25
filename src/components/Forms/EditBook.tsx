@@ -6,12 +6,12 @@ import BookBase from './BookBase';
 import { addItem, fetchData, updateItem, deleteItem } from 'utils/api';
 import { getDateString } from 'utils/dates';
 import { handleFormInput } from 'utils/form-helpers';
-import { ModalContext } from 'context/modalContext';
 import { useBooks } from 'context/BookProvider';
 
 interface IEditBookProps {
   readonly id: string;
   readonly label?: string;
+  readonly readonly?: boolean;
 }
 
 const EditBook: Component<IEditBookProps> = (props) => {
@@ -113,6 +113,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
       onInput={onInput}
       onRetire={onRetire}
       onSubmit={onSubmit}
+      readonly={props.readonly}
     />
   );
 };

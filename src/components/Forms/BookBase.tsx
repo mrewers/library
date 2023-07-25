@@ -3,9 +3,9 @@ import type { Component, JSX } from 'solid-js';
 
 import Button from 'components/Button/Button';
 import Overlay from 'components/Overlay/Overlay';
-import { BookContext } from 'context/bookContext';
-import s from './Form.module.scss';
 import { useReaders } from 'context/ReaderProvider';
+
+import s from './Form.module.scss';
 
 interface IBookBaseProps {
   readonly book: IBook;
@@ -18,6 +18,7 @@ interface IBookBaseProps {
   readonly onRetire?: (e: MouseEvent) => void;
   readonly onSubmit: (e: Event) => void;
   readonly overlayText?: string;
+  readonly readonly?: boolean;
   readonly saving?: boolean;
 }
 
@@ -43,11 +44,25 @@ const BookBase: Component<IBookBaseProps> = (props) => {
       {typeof props.label !== 'undefined' && <h3 class={s.title}>{props.label}</h3>}
       <label class={s.label} for="title">
         Title:
-        <input id="title" name="title" type="text" value={props.book.title} onInput={props.onInput} />
+        <input
+          id="title"
+          name="title"
+          readonly={props.readonly || false}
+          type="text"
+          value={props.book.title}
+          onInput={props.onInput}
+        />
       </label>
       <label class={s.label} for="author">
         Author:
-        <input id="author" name="author" type="text" value={props.book.author} onInput={props.onInput} />
+        <input
+          id="author"
+          name="author"
+          readonly={props.readonly || false}
+          type="text"
+          value={props.book.author}
+          onInput={props.onInput}
+        />
       </label>
       <div class={s['meta-label']}>
         <span class={s['meta-label-text']}>Newly Acquired:</span>
@@ -56,6 +71,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
             Yes:
             <input
               checked={props.book.acquired === true}
+              disabled={props.readonly || false}
               id="acquired-yes"
               name="acquired"
               type="radio"
@@ -67,6 +83,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
             No:
             <input
               checked={props.book.acquired === false}
+              disabled={props.readonly || false}
               id="acquired-no"
               name="acquired"
               type="radio"
@@ -82,6 +99,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           <input
             id="date-acquired"
             name="date"
+            readonly={props.readonly || false}
             type="date"
             value={props.book.date}
             onInput={props.onInput}
@@ -96,6 +114,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
               <label class={s['sub-label']} for={`reader-${reader}`}>
                 <input
                   checked={props.book.read.includes(reader.name)}
+                  disabled={props.readonly || false}
                   id={`reader-${reader}`}
                   name="read"
                   type="checkbox"
@@ -109,11 +128,12 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         </div>
       </div>
       <div class={s['button-container']}>
-        <div>
+        <div class={s['button-group']}>
           <Show when={props.onDelete}>
             <Button
               classes={s.button}
               color="plain"
+              disabled={props.readonly || false}
               label="Delete"
               type="button"
               onClick={props.onDelete}
@@ -123,13 +143,14 @@ const BookBase: Component<IBookBaseProps> = (props) => {
             <Button
               classes={s.button}
               color="plain"
+              disabled={props.readonly || false}
               label="Jettison"
               type="button"
               onClick={props.onRetire}
             />
           </Show>
         </div>
-        <div>
+        <div class={s['button-group']}>
           <Show when={props.onCancel}>
             <Button
               classes={s.button}
@@ -142,6 +163,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           <Button
             classes={s.button}
             color="light"
+            disabled={props.readonly || false}
             label="Submit"
             type="submit"
             onClick={props.onSubmit}

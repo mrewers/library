@@ -27,13 +27,11 @@ const BookEdit: Component = () => {
     <Layout stats={false}>
       <h1 class={s.subhead}>Edit Book</h1>
       <Show
-        when={isLoggedIn() && !loginError()}
-        fallback={
-          <LoginPrompt callback={`book/${params.id}`} error={loginError()} message='Edit This Book'/>
-        }
+        when={!isLoggedIn() || loginError()}
       >
-        <EditBook id={params.id}/>
+        <LoginPrompt callback={`book/${params.id}`} error={loginError()} message='Edit This Book'/>
       </Show>
+        <EditBook id={params.id} readonly={!isLoggedIn()}/>
     </Layout>
   );
 };

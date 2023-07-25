@@ -5,6 +5,7 @@ import s from './Button.module.scss';
 interface IButton {
   readonly classes?: string;
   readonly color?: 'accent' | 'dark' | 'light' | 'plain' | 'white';
+  readonly disabled?: boolean,
   readonly label: string;
   readonly onClick?: (e: MouseEvent) => void;
   readonly type?: 'button' | 'submit';
@@ -19,9 +20,12 @@ const Button: Component<IButton> = (props) => {
 
   return (
   <button
-    class={`${s.button}
-    ${s[props.color ?? 'light']}
-    ${props.classes ?? ''}`}
+    class={
+      `${s.button}
+       ${s[props.color ?? 'light']}
+       ${props.classes ?? ''}`
+    }
+    disabled={props.disabled || false}
     type={props.type ?? 'button'}
     onClick={(e) => onClickFunc(e)} 
   >
