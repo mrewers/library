@@ -8,6 +8,7 @@ import Books from 'components/Pages/Books';
 import FourOhFour from 'components/Pages/FourOhFour';
 import Login from 'components/Pages/Login';
 import Privacy from 'components/Pages/Privacy';
+import Stats from 'components/Pages/Stats';
 import Retired from 'components/Pages/Retired';
 
 const App: Component = () => (
@@ -20,6 +21,7 @@ const App: Component = () => (
       <Route component={BookEdit} path="/book/:id" />
       <Route component={Retired} path="/retired" />
       <Route component={Privacy} path="/privacy" />
+      <Route component={Stats} path="/stats" />
       <Route component={FourOhFour} path="*" />
     </Routes>
   </Router>

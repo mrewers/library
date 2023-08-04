@@ -45,3 +45,12 @@
     }
   }
 }
+
+.table {
+  margin: 0.5rem;
+
+  &-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
