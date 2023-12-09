@@ -6,7 +6,6 @@
 dist
 
 # Dependencies
-# Dependencies
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -25,6 +24,7 @@ node_modules/
 
 # Local settings
 .vscode/
+!.vscode/cspell.json
 
 # Test Coverage
 coverage/

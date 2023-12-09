@@ -1,0 +1,2 @@
+# Package names that trip up the spell checker
+solidjs
