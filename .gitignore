@@ -18,6 +18,7 @@ node_modules/
 # Environmental Variables
 .env
 .firebaserc
+*.tfvars
 
 # Error Logs
 *.log
