@@ -10,4 +10,6 @@ module "api" {
 
 module "firestore" {
   source = "./modules/firestore"
+
+  region = var.region
 }
