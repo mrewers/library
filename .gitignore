@@ -3,6 +3,9 @@
 .dccache
 .firebase
 .snowpack
+.terraform
+*.tfstate
+*.tfstate.backup
 dist
 
 # Dependencies
