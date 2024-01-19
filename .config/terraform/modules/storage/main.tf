@@ -1,6 +1,6 @@
-resource "google_storage_bucket" "tfstate_bucket" {
+resource "google_storage_bucket" "deployment_bucket" {
   provider      = google
-  name          = "${var.project}-deployments"
+  name          = var.deploy_bucket
   force_destroy = false
   location      = "US"
   storage_class = "STANDARD"

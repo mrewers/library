@@ -33,10 +33,14 @@ provider "google-beta" {
   }
 }
 
-module "tfstate" {
-  source = "./modules/tfstate"
+locals {
+  deploy_bucket = "${var.project}-deployments"
+}
 
-  project = var.project
+module "storage" {
+  source = "./modules/storage"
+
+  deploy_bucket = local.deploy_bucket
 }
 
 # module "api" {
