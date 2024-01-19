@@ -90,5 +90,5 @@
     "staticPath": "src/assets/public"
   },
   "types": "./src/typings.d.ts",
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@4.0.2"
 }
