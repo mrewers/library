@@ -54,7 +54,8 @@ module "functions" {
 module "api" {
   source = "./modules/api"
 
-  get_books_url = module.functions.get_books_url
+  get_books_url   = module.functions.get_books_url
+  get_readers_url = module.functions.get_readers_url
 }
 
 module "firestore" {

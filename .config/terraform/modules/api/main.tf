@@ -4,14 +4,10 @@ resource "google_api_gateway_api" "api" {
   display_name = "library-api"
 }
 
-resource "random_id" "id" {
-  byte_length = 8
-}
-
 resource "google_api_gateway_api_config" "api_config" {
   provider      = google-beta
   api           = google_api_gateway_api.api.api_id
-  api_config_id = "library-api-config-${random_id.id.hex}"
+  api_config_id = "library-api-config-${formatdate("YYYYMMDDhhmmss", timestamp())}"
   display_name  = "library-api-config"
 
   openapi_documents {
@@ -36,6 +32,26 @@ resource "google_api_gateway_api_config" "api_config" {
                 responses : {
                   "200" : {
                     description : "A list of books"
+                    schema : {
+                      type : "array"
+                      items : {
+                        type : "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            "/readers" : {
+              get : {
+                description : "Retrieves a list of readers from the database."
+                operationId : "getReaders"
+                x-google-backend : {
+                  address : "${var.get_readers_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "A list of readers"
                     schema : {
                       type : "array"
                       items : {
