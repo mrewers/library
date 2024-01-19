@@ -43,9 +43,19 @@ module "storage" {
   deploy_bucket = local.deploy_bucket
 }
 
-# module "api" {
-#   source = "./modules/api"
-# }
+module "functions" {
+  source = "./modules/functions"
+
+  deploy_bucket = local.deploy_bucket
+  project       = var.project
+  region        = var.region
+}
+
+module "api" {
+  source = "./modules/api"
+
+  get_books_url = module.functions.get_books_url
+}
 
 module "firestore" {
   source = "./modules/firestore"

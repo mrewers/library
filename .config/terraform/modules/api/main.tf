@@ -4,15 +4,50 @@ resource "google_api_gateway_api" "api" {
   display_name = "library-api"
 }
 
+resource "random_id" "id" {
+  byte_length = 8
+}
+
 resource "google_api_gateway_api_config" "api_config" {
   provider      = google-beta
   api           = google_api_gateway_api.api.api_id
-  api_config_id = "library-api-config"
+  api_config_id = "library-api-config-${random_id.id.hex}"
+  display_name  = "library-api-config"
 
   openapi_documents {
     document {
-      path     = "${path.module}/spec.yaml"
-      contents = filebase64("${path.module}/spec.yaml")
+      path = "spec.json"
+      contents = base64encode(
+        jsonencode({
+          swagger : "2.0"
+          info : {
+            title : "Library API"
+            version : "0.0.1"
+            description : "Routes for used by the library client application to interact with the serverless backend."
+          }
+          "paths" : {
+            "/books" : {
+              get : {
+                description : "Retrieves a list of books from the database."
+                operationId : "getBooks"
+                x-google-backend : {
+                  address : "${var.get_books_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "A list of books"
+                    schema : {
+                      type : "array"
+                      items : {
+                        type : "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }))
     }
   }
 
