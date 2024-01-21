@@ -7,3 +7,8 @@ variable "get_readers_url" {
   description = "The invokation URL for the get-readers cloud function."
   type        = string
 }
+
+variable "options_url" {
+  description = "The invokation URL for the options cloud function."
+  type        = string
+}

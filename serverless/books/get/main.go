@@ -13,6 +13,8 @@ import (
 func getBooks(w http.ResponseWriter, r *http.Request) {
 	books, err := utils.FirestoreGetAll("Books")
 
+	utils.SetCorsHeaders(w, r)
+
 	if err != nil {
 		log.Print("Error retrieving books")
 		fmt.Fprint(w, "Unable to retrieve books")
