@@ -4,7 +4,7 @@
 *.tfstate
 *.tfstate.backup
 dist
-zips
+serverless/**/*.zip
 
 # Dependencies
 web/.yarn/*
@@ -14,6 +14,7 @@ web/.yarn/*
 !web/.yarn/sdks
 !web/.yarn/versions
 node_modules
+vendor
 
 # Environmental Variables
 .env

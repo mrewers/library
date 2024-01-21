@@ -1,16 +1,18 @@
-module github.com/mrewers/library/getbooks
+module github.com/mrewers/library/serverless/getbooks
 
 go 1.21.5
 
 require (
-	cloud.google.com/go/firestore v1.14.0
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.0
+	github.com/mrewers/library/serverless v1.0.0
 )
 
 require (
 	cloud.google.com/go v0.110.2 // indirect
 	cloud.google.com/go/compute v1.19.3 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	cloud.google.com/go/firestore v1.14.0 // indirect
+	cloud.google.com/go/functions v1.15.1 // indirect
 	cloud.google.com/go/longrunning v0.5.0 // indirect
 	github.com/cloudevents/sdk-go/v2 v2.14.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -43,3 +45,5 @@ require (
 	google.golang.org/grpc v1.56.1 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 )
+
+replace github.com/mrewers/library/serverless => ../../
