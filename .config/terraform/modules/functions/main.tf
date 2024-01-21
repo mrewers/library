@@ -43,3 +43,26 @@ resource "google_cloudfunctions2_function" "get_readers" {
     }
   }
 }
+
+resource "google_cloudfunctions2_function" "options" {
+  name        = "options"
+  description = "Send success message with CORS headers."
+  location    = var.region
+
+  build_config {
+    runtime     = "go121"
+    entry_point = "Options200"
+    source {
+      storage_source {
+        bucket = var.deploy_bucket
+        object = "functions/options.zip"
+      }
+    }
+  }
+
+  service_config {
+    environment_variables = {
+      PROJECT_ID = var.project
+    }
+  }
+}
