@@ -1,3 +1,45 @@
+resource "google_cloudfunctions2_function" "init" {
+  name        = "init"
+  description = "Initialize the Firestore database."
+  location    = var.region
+
+  build_config {
+    runtime     = "go121"
+    entry_point = "Init"
+    source {
+      storage_source {
+        bucket = var.deploy_bucket
+        object = "functions/init.zip"
+      }
+    }
+  }
+
+  service_config {
+    environment_variables = {
+      PROJECT_ID = var.project
+    }
+  }
+}
+
+# BOOK
+resource "google_cloudfunctions2_function" "post_book" {
+  name        = "post-book"
+  description = "Creates a new book."
+  location    = var.region
+
+  build_config {
+    runtime     = "go121"
+    entry_point = "PostBook"
+    source {
+      storage_source {
+        bucket = var.deploy_bucket
+        object = "functions/post-book.zip"
+      }
+    }
+  }
+}
+
+# BOOKS
 resource "google_cloudfunctions2_function" "get_books" {
   name        = "get-books"
   description = "Retrieves a list of all books."

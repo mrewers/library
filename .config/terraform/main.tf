@@ -56,6 +56,7 @@ module "api" {
 
   get_books_url   = module.functions.get_books_url
   get_readers_url = module.functions.get_readers_url
+  post_book_url   = module.functions.post_book_url
   options_url     = module.functions.options_url
 }
 
