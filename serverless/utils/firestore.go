@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"log"
 	"os"
 
 	"cloud.google.com/go/firestore"
@@ -42,4 +43,28 @@ func FirestoreGetAll(collection string) ([]*firestore.DocumentSnapshot, error) {
 	docs, err = client.GetAll(ctx, []*firestore.DocumentRef{client.Doc(collection)})
 
 	return docs, err
+}
+
+func firestoreCreateDocument(doc map[string]interface{}, col string) (string, error) {
+	var id string
+
+	ctx := context.Background()
+
+	client, err := openFirestoreConn(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+		return id, err
+	}
+
+	defer client.Close()
+
+	ref, _, err := client.Collection(col).Add(ctx, doc)
+
+	if err != nil {
+		log.Println(err.Error())
+		return id, err
+	}
+
+	return ref.ID, nil
 }
