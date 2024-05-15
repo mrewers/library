@@ -6,12 +6,15 @@ ZIPS=$BUILD_ROOT/zips
 function build {
   cd $BUILD_ROOT/$1
   go mod tidy
-  go mod vendor
+  GOWORK=off go mod vendor
   zip -r -q $ZIPS/$2.zip *
 }
 
 # Clear out old zip files.
 rm zips/*
+
+# Build the post-book function.
+build book/post post-book
 
 # Build the get-books function.
 build books/get get-books

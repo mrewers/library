@@ -1,6 +1,8 @@
 module github.com/mrewers/library/serverless/getbooks
 
-go 1.21.5
+go 1.22.1
+
+replace github.com/mrewers/library/serverless => ../../
 
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.0
@@ -19,7 +21,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
-	github.com/google/uuid v1.3.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.4 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
@@ -45,5 +47,3 @@ require (
 	google.golang.org/grpc v1.56.1 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 )
-
-replace github.com/mrewers/library/serverless => ../../

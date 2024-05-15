@@ -11,7 +11,7 @@ import (
 )
 
 func getReaders(w http.ResponseWriter, r *http.Request) {
-	readers, err := utils.FirestoreGetAll("Readers")
+	readers, err := utils.FirestoreGetAll("readers")
 
 	if err != nil {
 		log.Print("Error retrieving readers")
