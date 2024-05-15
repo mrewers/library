@@ -1,0 +1,5 @@
+# Compound Cloud Function names
+addauthor
+addbook
+getbooks
+getreaders
