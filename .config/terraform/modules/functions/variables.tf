@@ -1,3 +1,8 @@
+variable "db_name" {
+  description = "The name of the Firestore database where the application data is saved."
+  type        = string
+}
+
 variable "deploy_bucket" {
   description = "The Google Cloud Storage bucket used to store deployment assets."
   type        = string

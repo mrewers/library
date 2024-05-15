@@ -1,3 +1,9 @@
+variable "db_name" {
+  description = "The name of the Firestore database where the application data is saved."
+  type        = string
+  default     = "default"
+}
+
 variable "project" {
   description = "The GCP account project that owns this application."
   type        = string

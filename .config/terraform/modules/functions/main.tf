@@ -16,7 +16,8 @@ resource "google_cloudfunctions2_function" "init" {
 
   service_config {
     environment_variables = {
-      PROJECT_ID = var.project
+      FIRESTORE_DB_NAME = var.db_name
+      PROJECT_ID        = var.project
     }
   }
 }
@@ -35,6 +36,13 @@ resource "google_cloudfunctions2_function" "post_book" {
         bucket = var.deploy_bucket
         object = "functions/post-book.zip"
       }
+    }
+  }
+
+  service_config {
+    environment_variables = {
+      FIRESTORE_DB_NAME = var.db_name
+      PROJECT_ID        = var.project
     }
   }
 }
@@ -58,7 +66,8 @@ resource "google_cloudfunctions2_function" "get_books" {
 
   service_config {
     environment_variables = {
-      PROJECT_ID = var.project
+      FIRESTORE_DB_NAME = var.db_name
+      PROJECT_ID        = var.project
     }
   }
 }
@@ -81,7 +90,8 @@ resource "google_cloudfunctions2_function" "get_readers" {
 
   service_config {
     environment_variables = {
-      PROJECT_ID = var.project
+      FIRESTORE_DB_NAME = var.db_name
+      PROJECT_ID        = var.project
     }
   }
 }
@@ -104,7 +114,8 @@ resource "google_cloudfunctions2_function" "options" {
 
   service_config {
     environment_variables = {
-      PROJECT_ID = var.project
+      FIRESTORE_DB_NAME = var.db_name
+      PROJECT_ID        = var.project
     }
   }
 }

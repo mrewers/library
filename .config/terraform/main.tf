@@ -47,6 +47,7 @@ module "functions" {
   source = "./modules/functions"
 
   deploy_bucket = local.deploy_bucket
+  db_name       = var.db_name
   project       = var.project
   region        = var.region
 }

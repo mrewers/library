@@ -12,13 +12,15 @@ func openFirestoreConn(ctx context.Context) (*firestore.Client, error) {
 	var client *firestore.Client
 	var err error
 
-	client, err = firestore.NewClient(ctx, os.Getenv("PROJECT_ID"))
+	client, err = firestore.NewClientWithDatabase(
+		ctx,
+		os.Getenv("PROJECT_ID"),
+		os.Getenv("FIRESTORE_DB_NAME"),
+	)
 
 	if err != nil {
 		return nil, err
 	}
-
-	defer client.Close()
 
 	return client, nil
 }
@@ -34,6 +36,8 @@ func FirestoreGetAll(collection string) ([]*firestore.DocumentSnapshot, error) {
 	if err != nil {
 		panic(err.Error())
 	}
+
+	defer client.Close()
 
 	docs, err = client.GetAll(ctx, []*firestore.DocumentRef{client.Doc(collection)})
 
