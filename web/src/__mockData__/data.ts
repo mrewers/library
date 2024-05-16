@@ -1,7 +1,6 @@
 export const mockBooks = [
   {
     id: '1',
-    acquired: false,
     author: 'David Goldblatt',
     date: '',
     read: [],
@@ -10,7 +9,6 @@ export const mockBooks = [
   },
   {
     id: '2',
-    acquired: true,
     author: '',
     date: '2020-06-28',
     read: [],
@@ -19,7 +17,6 @@ export const mockBooks = [
   },
   {
     id: '3',
-    acquired: false,
     author: 'Thomas Ricks',
     date: '2013-05-11',
     read: ['Bob'],
@@ -28,7 +25,6 @@ export const mockBooks = [
   },
   {
     id: '4',
-    acquired: false,
     author: '',
     date: '',
     read: [],
@@ -37,7 +33,6 @@ export const mockBooks = [
   },
   {
     id: '5',
-    acquired: true,
     author: '',
     date: '2020-07-01',
     read: ['Bob'],
@@ -46,7 +41,6 @@ export const mockBooks = [
   },
   {
     id: '6',
-    acquired: false,
     author: 'Tom Foreman',
     date: '',
     read: ['Alice'],
@@ -55,7 +49,6 @@ export const mockBooks = [
   },
   {
     id: '7',
-    acquired: false,
     author: 'Albert Camus',
     date: '',
     read: ['Alice'],
@@ -64,7 +57,6 @@ export const mockBooks = [
   },
   {
     id: '8',
-    acquired: false,
     author: 'Jeff Vandermeer',
     date: '',
     read: ['Alice', 'Bob'],
@@ -73,7 +65,6 @@ export const mockBooks = [
   },
   {
     id: '9',
-    acquired: false,
     author: 'Mark Bowden',
     date: '',
     read: ['Alice', 'Bob'],

@@ -5,7 +5,6 @@ declare module '*.svg';
 declare global {
   interface IBook {
     readonly id?: string;
-    readonly acquired: boolean;
     readonly author?: string;
     readonly date?: string;
     readonly read: readonly string[];

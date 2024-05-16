@@ -64,48 +64,17 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           onInput={props.onInput}
         />
       </label>
-      <div class={s['meta-label']}>
-        <span class={s['meta-label-text']}>Newly Acquired:</span>
-        <div class={s['sub-label-container']}>
-          <label class={s['sub-label']} for="acquired-yes">
-            Yes:
-            <input
-              checked={props.book.acquired === true}
-              disabled={props.readonly || false}
-              id="acquired-yes"
-              name="acquired"
-              type="radio"
-              value="yes"
-              onInput={props.onInput}
-            />
-          </label>
-          <label class={s['sub-label']} for="acquired-no">
-            No:
-            <input
-              checked={props.book.acquired === false}
-              disabled={props.readonly || false}
-              id="acquired-no"
-              name="acquired"
-              type="radio"
-              value="no"
-              onInput={props.onInput}
-            />
-          </label>
-        </div>
-      </div>
-      <Show when={props.book.acquired === true}>{
-        <label class={s.label} for="date-acquired">
-          Date Acquired:
-          <input
-            id="date-acquired"
-            name="date"
-            readonly={props.readonly || false}
-            type="date"
-            value={props.book.date}
-            onInput={props.onInput}
-          />
+      <label class={s.label} for="date-acquired">
+        Date Acquired:
+        <input
+          id="date-acquired"
+          name="date"
+          readonly={props.readonly || false}
+          type="date"
+          value={props.book.date}
+          onInput={props.onInput}
+        />
         </label>
-      }</Show>
       <div class={s['meta-label']}>
         <span class={s['meta-label-text']}>Read By:</span>
         <div class={s['sub-label-column']}>

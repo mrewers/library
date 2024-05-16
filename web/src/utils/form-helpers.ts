@@ -15,9 +15,6 @@ export const handleFormInput = (
   let val;
 
   switch (name) {
-    case 'acquired':
-      val = value === 'yes';
-      break;
     case 'read':
       val = toggleArrayValues(book.read, value)
       break;

@@ -50,7 +50,6 @@ type TBookStore = [
  */
 const createNewBook = (): IBook => {
   return {
-    acquired: false,
     author: '',
     date: getDateString(),
     read: [],
