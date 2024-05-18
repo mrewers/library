@@ -66,7 +66,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
   const [fullList, setFullList] = createStore(props.books as IBook[]);
   const [readerCount, setReaderCount] = createSignal(0);
 
-  createEffect(() => setReaderCount(readerList.length))
+  createEffect(() => setReaderCount(readerList.length));
   
   const [bookList] = createStore(createMemo(() => {
     const [active, retired] = filterRetired(fullList);
@@ -106,14 +106,14 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
         retired,
       }
     });
-  }))
+  }));
 
   /**
    * Adds new book data to the full list of books.
    * @param book The new book to add to the full list.
    */
   const addBook = (book: IBook) => {
-    setFullList( [...fullList, book])
+    setFullList( [...fullList, book]);
   }
 
   /**
@@ -121,7 +121,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
    * @param id The unique id for a given book.
    */
   const getBook = (id:string) => {
-    const book = fullList.filter(b => b.id === id)
+    const book = fullList.filter(b => b.id === id);
 
     return book[0];
   }
@@ -131,7 +131,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
    * @param id The unique id for a given book.
    */
   const removeBook = (id:string) => {
-    setFullList( fullList.filter(b => b.id !== id) )
+    setFullList( fullList.filter(b => b.id !== id) );
   }
 
   /**

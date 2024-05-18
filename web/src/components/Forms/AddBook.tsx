@@ -5,7 +5,7 @@ import { useNavigate } from '@solidjs/router';
 import BookBase from './BookBase';
 import { useBooks } from 'context/BookProvider';
 import { getDateString } from 'utils/dates';
-import { addItem } from 'utils/api';
+import { addItem, buildQuery } from 'utils/api';
 import { handleFormInput } from 'utils/form-helpers';
 
 interface IAddBookProps {
@@ -42,6 +42,8 @@ const AddBook: Component<IAddBookProps> = (props) => {
     e.preventDefault();
     
     addBook(book());
+
+    buildQuery('book', {...book()}, 'POST')
 
     navigate('/');
   //   setSaving(true);

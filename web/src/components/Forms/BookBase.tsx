@@ -22,7 +22,20 @@ interface IBookBaseProps {
   readonly saving?: boolean;
 }
 
-const BookBase: Component<IBookBaseProps> = (props) => {
+const BookBase: Component<IBookBaseProps> = ({
+  book,
+  classes,
+  label,
+  loading,
+  onCancel,
+  onDelete,
+  onInput,
+  onRetire,
+  onSubmit,
+  overlayText,
+  readonly,
+  saving,
+}) => {
   const [readerList] = useReaders();
 
   // Const input: Ref<HTMLInputElement | null> = useRef(null);
@@ -38,19 +51,19 @@ const BookBase: Component<IBookBaseProps> = (props) => {
   // }, [input]);
 
   return (
-    <form class={props.classes ? `${s.form} ${s[props.classes]}` : s.form}>
-      {props.loading && <Overlay text="Loading Book Data..." />}
-      {props.saving && <Overlay text={props.overlayText || 'Saving...'} />}
-      {typeof props.label !== 'undefined' && <h3 class={s.title}>{props.label}</h3>}
+    <form class={classes ? `${s.form} ${s[classes]}` : s.form}>
+      {loading && <Overlay text="Loading Book Data..." />}
+      {saving && <Overlay text={overlayText || 'Saving...'} />}
+      {typeof label !== 'undefined' && <h3 class={s.title}>{label}</h3>}
       <label class={s.label} for="title">
         Title:
         <input
           id="title"
           name="title"
-          readonly={props.readonly || false}
+          readonly={readonly || false}
           type="text"
-          value={props.book.title}
-          onInput={props.onInput}
+          value={book.title}
+          onInput={onInput}
         />
       </label>
       <label class={s.label} for="author">
@@ -58,10 +71,10 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         <input
           id="author"
           name="author"
-          readonly={props.readonly || false}
+          readonly={readonly || false}
           type="text"
-          value={props.book.author}
-          onInput={props.onInput}
+          value={book.author}
+          onInput={onInput}
         />
       </label>
       <label class={s.label} for="date-acquired">
@@ -69,10 +82,10 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         <input
           id="date-acquired"
           name="date"
-          readonly={props.readonly || false}
+          readonly={readonly || false}
           type="date"
-          value={props.book.date}
-          onInput={props.onInput}
+          value={book.date}
+          onInput={onInput}
         />
         </label>
       <div class={s['meta-label']}>
@@ -82,13 +95,13 @@ const BookBase: Component<IBookBaseProps> = (props) => {
             (reader): JSX.Element => (
               <label class={s['sub-label']} for={`reader-${reader}`}>
                 <input
-                  checked={props.book.read.includes(reader.name)}
-                  disabled={props.readonly || false}
+                  checked={book.read.includes(reader.name)}
+                  disabled={readonly || false}
                   id={`reader-${reader}`}
                   name="read"
                   type="checkbox"
                   value={reader.name}
-                  onInput={props.onInput}
+                  onInput={onInput}
                 />
                 {reader.name}
               </label>
@@ -98,44 +111,44 @@ const BookBase: Component<IBookBaseProps> = (props) => {
       </div>
       <div class={s['button-container']}>
         <div class={s['button-group']}>
-          <Show when={props.onDelete}>
+          <Show when={onDelete}>
             <Button
               classes={s.button}
               color="plain"
-              disabled={props.readonly || false}
+              disabled={readonly || false}
               label="Delete"
               type="button"
-              onClick={props.onDelete}
+              onClick={onDelete}
             />
           </Show>
-          <Show when={props.onRetire}>
+          <Show when={onRetire}>
             <Button
               classes={s.button}
               color="plain"
-              disabled={props.readonly || false}
+              disabled={readonly || false}
               label="Jettison"
               type="button"
-              onClick={props.onRetire}
+              onClick={onRetire}
             />
           </Show>
         </div>
         <div class={s['button-group']}>
-          <Show when={props.onCancel}>
+          <Show when={onCancel}>
             <Button
               classes={s.button}
               color="plain"
               label="Cancel"
               type="button"
-              onClick={props.onCancel}
+              onClick={onCancel}
             />
           </Show>
           <Button
             classes={s.button}
             color="light"
-            disabled={props.readonly || false}
+            disabled={readonly || false}
             label="Submit"
             type="submit"
-            onClick={props.onSubmit}
+            onClick={onSubmit}
           />
         </div>
       </div>
