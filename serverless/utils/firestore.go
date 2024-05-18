@@ -35,12 +35,17 @@ func FirestoreGetAll(collection string) ([]*firestore.DocumentSnapshot, error) {
 	client, err := openFirestoreConn(ctx)
 
 	if err != nil {
-		panic(err.Error())
+		log.Println(err.Error())
+		return docs, err
 	}
 
 	defer client.Close()
 
 	docs, err = client.GetAll(ctx, []*firestore.DocumentRef{client.Doc(collection)})
+
+	if err != nil {
+		log.Println(err.Error())
+	}
 
 	return docs, err
 }

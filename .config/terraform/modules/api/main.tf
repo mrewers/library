@@ -111,6 +111,21 @@ resource "google_api_gateway_api_config" "api_config" {
                   }
                 }
               }
+              options : {
+                description : "Return headers required for CORS."
+                operationId : "optionsReaders"
+                x-google-backend : {
+                  address : "${var.options_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "CORS success"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
             }
           }
       }))

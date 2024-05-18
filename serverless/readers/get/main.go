@@ -13,10 +13,10 @@ import (
 func getReaders(w http.ResponseWriter, r *http.Request) {
 	readers, err := utils.FirestoreGetAll("readers")
 
+	utils.SetCorsHeaders(w, r)
+
 	if err != nil {
 		log.Print("Error retrieving readers")
-		fmt.Fprint(w, "Unable to retrieve readers")
-		return
 	}
 
 	fmt.Fprint(w, readers)
