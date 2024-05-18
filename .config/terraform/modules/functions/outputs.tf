@@ -13,6 +13,11 @@ output "post_book_url" {
   value       = google_cloudfunctions2_function.post_book.url
 }
 
+output "post_readers_url" {
+  description = "The invokation URL for the post-readers cloud function."
+  value       = google_cloudfunctions2_function.post_readers.url
+}
+
 output "options_url" {
   description = "The invokation URL for the options cloud function."
   value       = google_cloudfunctions2_function.options.url

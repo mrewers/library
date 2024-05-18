@@ -111,6 +111,32 @@ resource "google_api_gateway_api_config" "api_config" {
                   }
                 }
               }
+              post : {
+                description : "Adds multiple readers to the database."
+                operationId : "postReaders"
+                x-google-backend : {
+                  address : "${var.post_readers_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "A list of reader ids and the temporary ids created for them in the client."
+                    schema : {
+                      type : "array"
+                      items : {
+                        type : "object"
+                        properties : {
+                          id : {
+                            type : "string"
+                          }
+                          tmp : {
+                            type : "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
               options : {
                 description : "Return headers required for CORS."
                 operationId : "optionsReaders"
