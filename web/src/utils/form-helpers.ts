@@ -8,7 +8,7 @@ const toggleArrayValues = (arr: readonly string[], value: string): string[] => {
 
 export const handleFormInput = (
   target: HTMLInputElement,
-  book: IBook
+  item: any
 ): [string, string | boolean | string[]] => {
   const { name, value } = target;
 
@@ -16,7 +16,7 @@ export const handleFormInput = (
 
   switch (name) {
     case 'read':
-      val = toggleArrayValues(book.read, value)
+      val = toggleArrayValues(item.read, value)
       break;
     default:
       val = value;

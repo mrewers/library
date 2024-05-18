@@ -6,6 +6,38 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+/**
+ * Accepted API methods.
+ */
+export type TMethods = 'DELETE' | 'GET' | 'POST' | 'PUT';
+
+// Retrieve the API Gateway endpoint URL from environmental variables.
+const API_URL = import.meta.env.VITE_API_URL;
+
+/**
+ * Generate the complete URL for the API Gateway including the resource path.
+ * @param endpoint The path to the specific resource on the API Gateway.
+ * @returns The complete API Gateway URL.
+ */
+export const constructUrl = ( endpoint: string ) => `${API_URL}/${endpoint}`;
+
+export const buildQuery = async (endpoint: string, body: any, method?: TMethods) => {
+  const opts = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: method || 'GET',
+  } as RequestInit;
+
+  if (body !== null) {
+    opts.body = JSON.stringify( body )
+  }
+
+  const response = await fetch( constructUrl( endpoint), opts);
+
+  return await response.json();
+}
+
 export const fetchData = async (endpoint: string): Promise<TypeAllowedResponses> => {
   try {
     const response = await fetch(`${process.env.API_BASE_URL}/${endpoint}`);

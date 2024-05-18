@@ -5,6 +5,7 @@ import Auth from 'components/Pages/Auth';
 import BookAdd from 'components/Pages/BookAdd';
 import BookEdit from 'components/Pages/BookEdit';
 import Books from 'components/Pages/Books';
+import Config from 'components/Pages/Config';
 import FourOhFour from 'components/Pages/FourOhFour';
 import Login from 'components/Pages/Login';
 import Privacy from 'components/Pages/Privacy';
@@ -19,6 +20,7 @@ const App: Component = () => (
       <Route component={Books} path="/" />
       <Route component={BookAdd} path="/add" />
       <Route component={BookEdit} path="/book/:id" />
+      <Route component={Config} path="/config" />
       <Route component={Retired} path="/retired" />
       <Route component={Privacy} path="/privacy" />
       <Route component={Stats} path="/stats" />
