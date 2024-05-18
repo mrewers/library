@@ -1,5 +1,6 @@
 # Compound Cloud Function names
 addauthor
 addbook
+addreaders
 getbooks
 getreaders

@@ -27,3 +27,6 @@ build options options
 
 # Build the get-readers function.
 build readers/get get-readers
+
+# Build the post-readers function.
+build readers/post post-readers

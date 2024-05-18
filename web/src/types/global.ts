@@ -16,6 +16,7 @@ declare global {
     readonly id: string;
     readonly name: string;
     readonly color?: string;
+    readonly tempId?: string;
   }
 
   interface IRetired extends IBook {

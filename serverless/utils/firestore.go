@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"cloud.google.com/go/firestore"
+	"google.golang.org/api/iterator"
 )
 
 // openFirestoreConn connects to the Firestore database.
@@ -27,8 +28,8 @@ func openFirestoreConn(ctx context.Context) (*firestore.Client, error) {
 }
 
 // FirestoreGetAll retrieves all the items from the provided collection.
-func FirestoreGetAll(collection string) ([]*firestore.DocumentSnapshot, error) {
-	var docs []*firestore.DocumentSnapshot
+func FirestoreGetAll(collection string) ([]map[string]interface{}, error) {
+	var docs []map[string]interface{}
 
 	ctx := context.Background()
 
@@ -41,10 +42,25 @@ func FirestoreGetAll(collection string) ([]*firestore.DocumentSnapshot, error) {
 
 	defer client.Close()
 
-	docs, err = client.GetAll(ctx, []*firestore.DocumentRef{client.Doc(collection)})
+	iter := client.Collection(collection).Documents(ctx)
 
-	if err != nil {
-		log.Println(err.Error())
+	for {
+		doc, err := iter.Next()
+
+		if err == iterator.Done {
+			break
+		}
+
+		if err != nil {
+			log.Println(err.Error())
+			return docs, err
+		}
+
+		// Extract the document data and append the document id.
+		data := doc.Data()
+		data["id"] = doc.Ref.ID
+
+		docs = append(docs, data)
 	}
 
 	return docs, err

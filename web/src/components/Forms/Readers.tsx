@@ -6,6 +6,8 @@ import Button from 'components/Button/Button';
 import Overlay from 'components/Overlay/Overlay';
 import { useReaders } from 'context/ReaderProvider';
 
+import { buildQuery } from 'utils/api';
+
 import s from './Form.module.scss';
 
 interface IReadersProps {
@@ -15,15 +17,19 @@ interface IReadersProps {
 }
 
 const Readers: Component<IReadersProps> = (props) => {
-  const [readerList, { 
-    addReader,
-    createNewReader,
-    getReader,
-    updateReader,
-  }] = useReaders();
+  const [
+    readerList,
+    {
+      addReader,
+      createNewReader,
+      getReader,
+      updateReader,
+    },
+  ] = useReaders();
 
-  const [addingReader, setAddingReader] = createSignal(false);
+  const [changesMade, setChangesMade] = createSignal(false);
   const [reader, setReader] = createSignal(createNewReader());
+  const [newReaders, setNewReaders] = createSignal([] as string[])
 
   const [saving, setSaving] = createSignal(false);
   const [overlayText, setOverlayText] = createSignal('');                
@@ -59,20 +65,28 @@ const Readers: Component<IReadersProps> = (props) => {
   const onAddReader = (e: Event): void => {
     e.preventDefault();
     
-    setReader(createNewReader())
+    setReader(createNewReader());
     addReader(reader());
-    setAddingReader(true)
+
+    setNewReaders([...newReaders(), reader().id]);
+    setChangesMade(true);
   }
 
   const onSubmit = (e: Event): void => {
     e.preventDefault();
 
-    setAddingReader(false)
+    setChangesMade(false)
     setReader(createNewReader())
 
-    // addReader(reader());
+    const added = [] as IReader[];
 
-    // buildQuery('reader', {...reader()}, 'POST')
+    newReaders().forEach( r => {
+      const item = readerList.filter(i => i.id === r);
+
+      added.push({...item[0], tempId: item[0].id});
+    })
+
+    buildQuery('readers', { readers: added }, 'POST');
   }
 
   return (
@@ -108,7 +122,7 @@ const Readers: Component<IReadersProps> = (props) => {
           </div>
         )
       }</For>
-      <Show when={!addingReader()}>
+      <Show when={!changesMade()}>
         <Button
           classes={s.button}
           color="light"
@@ -117,7 +131,7 @@ const Readers: Component<IReadersProps> = (props) => {
           onClick={onAddReader}
         />
       </Show>
-      <Show when={addingReader()}>
+      <Show when={changesMade()}>
         <Button
           classes={s.button}
           color="light"

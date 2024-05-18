@@ -2,7 +2,6 @@ import { createContext, useContext, createEffect } from 'solid-js';
 import {createStore} from 'solid-js/store';
 import type { Component, JSX } from 'solid-js';
 
-import { buildQuery } from 'utils/api';
 import { generateUuid } from 'utils/crypto';
 
 interface IReaderProviderProps {
@@ -64,7 +63,7 @@ const ReaderProvider: Component<IReaderProviderProps> = (props) => {
    * @param value The updated reader data.
    */
   const updateReader = (id: string, value: IReader) => {
-    const attributes = Object.entries(value).slice(1);
+    const attributes = Object.entries(value);
 
     attributes.forEach( attr => {
       setReaderList(
@@ -73,7 +72,7 @@ const ReaderProvider: Component<IReaderProviderProps> = (props) => {
         attr[0],
         attr[1]
       )
-    })
+    });
   }
 
   const readerStore = [

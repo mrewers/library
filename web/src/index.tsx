@@ -26,15 +26,15 @@ const Library = () => {
   const [readers, setReaders] = createSignal([] as IReader[])
 
   createEffect(async () => {
-    const data = await buildQuery('readers', null);
+    const { data } = await buildQuery('readers', null);
 
-    setReaders(data);
+    if (data) {
+      setReaders(data);
+    }
   });
 
   createEffect(async () => {
-    const data = await buildQuery('books', null);
-
-    console.log(data);
+    const { data } = await buildQuery('books', null);
 
     setBooks(mockBooks);
   });

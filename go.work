@@ -5,6 +5,7 @@ use (
 	./serverless/author/post
 	./serverless/book/post
 	./serverless/books/get
-	./serverless/readers/get
 	./serverless/options
+	./serverless/readers/get
+	./serverless/readers/post
 )

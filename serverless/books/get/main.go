@@ -17,8 +17,6 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Print("Error retrieving books")
-		fmt.Fprint(w, "Unable to retrieve books")
-		return
 	}
 
 	fmt.Fprint(w, books)
