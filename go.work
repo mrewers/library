@@ -5,6 +5,7 @@ use (
 	./serverless/author/post
 	./serverless/book/post
 	./serverless/books/get
+	./serverless/init
 	./serverless/options
 	./serverless/reader/delete
 	./serverless/readers/get
