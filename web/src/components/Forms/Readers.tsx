@@ -43,14 +43,21 @@ const Readers: Component = () => {
     const { name, value, dataset } = currentTarget as HTMLInputElement;
 
     if (dataset?.id) {
-      const r = getReader(dataset.id)
+      const { id } = dataset;
+
+      // Keep a list of existing readers that have been updated.
+      if ( !newReaders().includes(id) && !modifiedReaders().includes(id) ) {
+        setModifiedReaders([...modifiedReaders(), id]);
+      }
+
+      const r = getReader(id)
 
       setReader({
         ...r,
         [name]: value,
       });
 
-      updateReader(dataset.id, reader());
+      updateReader(id, reader());
     }
   };
 
@@ -84,14 +91,18 @@ const Readers: Component = () => {
     const { dataset } = e.currentTarget as HTMLButtonElement;
 
     if (dataset?.id) {
+      const { id } = dataset;
+
       // If deleting newly added reader remove the id from the list of new readers.
-      if ( newReaders().includes(dataset.id) ) {
-        setNewReaders( newReaders().filter( i => i !== dataset.id ) );
+      if ( newReaders().includes(id) ) {
+        setNewReaders( newReaders().filter( i => i !== id ) );
       } else {
-        await buildQuery('readers', {}, 'DELETE');
+        setSaving(true);
+        await buildQuery( `reader?id=${id}`, null, 'DELETE' );
+        setSaving(false);
       }
 
-      deleteReader(dataset.id);
+      deleteReader(id);
     }
   }
 
@@ -122,6 +133,23 @@ const Readers: Component = () => {
   }
 
   /**
+   * Send the data for multiple updated readers to the API to be saved.
+   */
+  const bulkReaderEdit = async () => {
+    const modified = [] as IReader[];
+
+    // Iterate over the list of new reader ids, pulling the data for each.
+    modifiedReaders().forEach( r => {
+      const item = readerList.filter(i => i.id === r);
+
+      modified.push(item[0]);
+    })
+
+    // Send the new reader data to the API for saving.
+    await buildQuery('readers', { readers: modified }, 'PUT');
+  }
+
+  /**
    * Handle the request to save form inputs.
    * @param e A button click event.
    */
@@ -140,6 +168,8 @@ const Readers: Component = () => {
 
     // Save modifications to existing readers.
     if ( modifiedReaders().length > 0 ) {
+      await bulkReaderEdit();
+
       setModifiedReaders([]);
     }
 
