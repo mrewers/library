@@ -2,6 +2,7 @@ import { createContext, createEffect, createSignal, useContext } from 'solid-js'
 import {createStore} from 'solid-js/store';
 import type { Component, JSX } from 'solid-js';
 
+import { getDefaultColors } from 'utils/colors';
 import { generateUuid } from 'utils/crypto';
 
 interface IReaderProviderProps {
@@ -14,7 +15,7 @@ type TReaderStore = [
   IReader[],
   {
     addReader: (reader: IReader) => void,
-    createNewReader: () => IReader,
+    createNewReader: (idx?: number) => IReader,
     deleteReader: (id: string) => void,
     getReader: (id: string) => IReader,
     isReadersLoading: () => boolean,
@@ -25,9 +26,9 @@ type TReaderStore = [
 /**
  * Generates a new reader object with placeholder data.
  */
-const createNewReader = (): IReader => {
+const createNewReader = (idx: number = 4): IReader => {
   return {
-    color: '',
+    color: getDefaultColors(idx),
     id: generateUuid(),
     name: '',
   }

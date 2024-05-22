@@ -1,4 +1,4 @@
-import { For, Show } from 'solid-js';
+import { For } from 'solid-js';
 import { createSignal } from 'solid-js';
 import type { Component, JSX } from 'solid-js';
 
@@ -7,7 +7,6 @@ import Overlay from 'components/Overlay/Overlay';
 import { useReaders } from 'context/ReaderProvider';
 
 import { buildQuery } from 'utils/api';
-import { getDefaultColors } from 'utils/colors';
 
 import s from './Form.module.scss';
 
@@ -61,8 +60,10 @@ const Readers: Component = () => {
    */
   const onAddReader = (e: Event): void => {
     e.preventDefault();
-    
-    setReader(createNewReader());
+
+    const readerCount = readerList.length;
+
+    setReader(createNewReader(readerCount));
     addReader(reader());
 
     setNewReaders([...newReaders(), reader().id]);
@@ -155,7 +156,7 @@ const Readers: Component = () => {
       <h3 class={s.title}>Readers</h3>
       <div class={s.grid}>
         <For each={readerList}>{
-          (reader, idx): JSX.Element => (
+          (reader): JSX.Element => (
             <div>
               <label class={`${s.label} ${s.condensed}`} for="name">
                 Name:
@@ -176,7 +177,7 @@ const Readers: Component = () => {
                   name="color"
                   style="padding: 0;"
                   type="color"
-                  value={getDefaultColors(idx())}
+                  value={reader.color}
                   onInput={onInput}
                 />
               </label>
