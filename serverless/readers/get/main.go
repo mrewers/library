@@ -1,7 +1,6 @@
 package getreaders
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -11,7 +10,7 @@ import (
 )
 
 func getReaders(w http.ResponseWriter, r *http.Request) {
-	readers, err := utils.FirestoreGetAll("readers")
+	readers, err := utils.FirestoreGetAll("readers", "name")
 
 	utils.SetCorsHeaders(w, r)
 
@@ -19,7 +18,7 @@ func getReaders(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error retrieving readers")
 	}
 
-	fmt.Fprint(w, readers)
+	utils.SendResponse(readers, w)
 }
 
 func init() {

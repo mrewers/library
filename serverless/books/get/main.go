@@ -1,7 +1,6 @@
 package getbooks
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -11,7 +10,7 @@ import (
 )
 
 func getBooks(w http.ResponseWriter, r *http.Request) {
-	books, err := utils.FirestoreGetAll("books")
+	books, err := utils.FirestoreGetAll("books", "title")
 
 	utils.SetCorsHeaders(w, r)
 
@@ -19,7 +18,7 @@ func getBooks(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error retrieving books")
 	}
 
-	fmt.Fprint(w, books)
+	utils.SendResponse(books, w)
 }
 
 func init() {

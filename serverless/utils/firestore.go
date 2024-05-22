@@ -28,7 +28,7 @@ func openFirestoreConn(ctx context.Context) (*firestore.Client, error) {
 }
 
 // FirestoreGetAll retrieves all the items from the provided collection.
-func FirestoreGetAll(collection string) ([]map[string]interface{}, error) {
+func FirestoreGetAll(collection string, order string) ([]map[string]interface{}, error) {
 	var docs []map[string]interface{}
 
 	ctx := context.Background()
@@ -42,7 +42,7 @@ func FirestoreGetAll(collection string) ([]map[string]interface{}, error) {
 
 	defer client.Close()
 
-	iter := client.Collection(collection).Documents(ctx)
+	iter := client.Collection(collection).OrderBy(order, firestore.Asc).Documents(ctx)
 
 	for {
 		doc, err := iter.Next()
