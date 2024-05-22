@@ -6,6 +6,7 @@ use (
 	./serverless/book/post
 	./serverless/books/get
 	./serverless/options
+	./serverless/reader/delete
 	./serverless/readers/get
 	./serverless/readers/post
 )

@@ -89,3 +89,26 @@ func firestoreCreateDocument(doc map[string]interface{}, col string) (string, er
 
 	return ref.ID, nil
 }
+
+func firestoreDeleteDocument(id string, col string) error {
+	var err error
+
+	ctx := context.Background()
+
+	client, err := openFirestoreConn(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+
+	defer client.Close()
+
+	_, err = client.Collection(col).Doc(id).Delete(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	return err
+}

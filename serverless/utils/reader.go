@@ -13,6 +13,7 @@ type Reader struct {
 	TempId       string `json:"tempId,omitempty"`
 }
 
+// AddReader creates a new reader document in the Firestore database.
 func (r Reader) AddReader() string {
 	var id string
 
@@ -32,4 +33,15 @@ func (r Reader) AddReader() string {
 	}
 
 	return id
+}
+
+// RemoveReader deletes the reader with the specified id from the Firestore database.
+func RemoveReader(id string) error {
+	err := firestoreDeleteDocument(id, "readers")
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	return err
 }
