@@ -49,9 +49,49 @@
   }
 }
 
+.grid {
+  margin: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint('tablet') {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, calc((100% - 2rem)/2));
+  }
+
+  @include breakpoint('laptop') {
+    grid-template-columns: repeat(3, calc((100% - 2rem)/3));
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: $borderGreyLight;
+    border-radius: $borderRadius;
+    background-color: $white;
+    box-shadow: $boxShadowGrey;
+  }
+
+  button {
+    margin: 1rem 0;
+    align-self: center;
+
+    @include breakpoint('tablet') {
+      align-self: normal;
+    }
+  }
+}
+
 .label {
   @include label-grid;
   @include label-text;
+
+  &.condensed {
+    grid-template-columns: 5rem 1fr;
+  }
 
   > input {
     margin: 0 0.5rem;
@@ -91,6 +131,12 @@
 }
 
 .title {
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1rem;
   text-align: center;
+}
+
+.bottom-bar {
+  margin: 1rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }

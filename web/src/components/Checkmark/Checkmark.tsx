@@ -1,7 +1,7 @@
 import { Show } from 'solid-js';
 import type { Component, JSX } from 'solid-js';
 
-import getColor from 'utils/colors';
+import { getColor } from 'utils/colors';
 import s from './Checkmark.module.scss';
 
 interface ICheckmarkProps {

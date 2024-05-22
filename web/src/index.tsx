@@ -25,11 +25,14 @@ const Library = () => {
   const [books, setBooks] = createSignal([] as IBook[])
   const [readers, setReaders] = createSignal([] as IReader[])
 
+  const [loadingReaders, setLoadingReaders] = createSignal(true);
+
   createEffect(async () => {
     const { data } = await buildQuery('readers', null);
 
     if (data) {
       setReaders(data);
+      setLoadingReaders(false);
     }
   });
 
@@ -40,7 +43,7 @@ const Library = () => {
   });
 
   return (
-  <ReaderProvider readers={readers()}>
+  <ReaderProvider loading={loadingReaders()} readers={readers()}>
     <BookProvider books={mockBooks}>
       <FilterProvider>
         <App />

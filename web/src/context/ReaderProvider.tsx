@@ -1,10 +1,11 @@
-import { createContext, useContext, createEffect } from 'solid-js';
+import { createContext, createEffect, createSignal, useContext } from 'solid-js';
 import {createStore} from 'solid-js/store';
 import type { Component, JSX } from 'solid-js';
 
 import { generateUuid } from 'utils/crypto';
 
 interface IReaderProviderProps {
+  readonly loading: boolean;
   readonly readers: IReader[];
   readonly children: JSX.Element;
 }
@@ -14,7 +15,9 @@ type TReaderStore = [
   {
     addReader: (reader: IReader) => void,
     createNewReader: () => IReader,
+    deleteReader: (id: string) => void,
     getReader: (id: string) => IReader,
+    isReadersLoading: () => boolean,
     updateReader: (id: string, value: IReader) => void,
   }
 ]
@@ -33,10 +36,15 @@ const createNewReader = (): IReader => {
 const ReaderContext = createContext();
 
 const ReaderProvider: Component<IReaderProviderProps> = (props) => {
+  const [isReadersLoading, setIsReadersLoading] = createSignal(true)
   const [readerList, setReaderList] = createStore([] as IReader[]);
 
   createEffect(() => {
     setReaderList(props.readers);
+  })
+
+  createEffect(() => {
+    setIsReadersLoading(props.loading);
   })
 
   /**
@@ -45,6 +53,16 @@ const ReaderProvider: Component<IReaderProviderProps> = (props) => {
    */
   const addReader = (reader: IReader) => {
     setReaderList( [...readerList, reader] );
+  }
+
+  /**
+   * Removes a given reader from the list of readers.
+   * @param id The id of the reader to remove.
+   */
+  const deleteReader = (id: string) => {
+    const updatedList = readerList.filter( r => r.id !== id );
+
+    setReaderList( updatedList );
   }
 
   /**
@@ -80,7 +98,9 @@ const ReaderProvider: Component<IReaderProviderProps> = (props) => {
     {
       addReader,
       createNewReader,
+      deleteReader,
       getReader,
+      isReadersLoading,
       updateReader,
     }
   ];

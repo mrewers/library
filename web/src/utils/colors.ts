@@ -1,6 +1,11 @@
 import colors from 'style/exports.module.scss';
 
-const getColor = (color: string): string => {
+/**
+ * Retrieves the hex code for a given color from CSS.
+ * @param color The name of the color to retrieve.
+ * @returns A string hex value representing the requested color.
+ */
+export const getColor = (color: string): string => {
   switch (color) {
     case 'blue':
       return colors.blueLight;
@@ -15,4 +20,8 @@ const getColor = (color: string): string => {
   }
 };
 
-export default getColor;
+export const getDefaultColors = (idx: number) => {
+  const options = ['blue', 'orange', 'pink', 'green'];
+
+  return idx < 4 ? getColor(options[idx]) : getColor('default');
+};
