@@ -25,6 +25,7 @@ const Library = () => {
   const [books, setBooks] = createSignal([] as IBook[])
   const [readers, setReaders] = createSignal([] as IReader[])
 
+  const [loadingBooks, setLoadingBooks] = createSignal(true);
   const [loadingReaders, setLoadingReaders] = createSignal(true);
 
   createEffect(async () => {
@@ -38,6 +39,10 @@ const Library = () => {
 
   createEffect(async () => {
     const { data } = await buildQuery('books', null);
+
+    if ( data ) {
+      setLoadingBooks(false);
+    }
 
     setBooks(mockBooks);
   });
