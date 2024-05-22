@@ -55,11 +55,12 @@ module "functions" {
 module "api" {
   source = "./modules/api"
 
-  get_books_url    = module.functions.get_books_url
-  get_readers_url  = module.functions.get_readers_url
-  post_book_url    = module.functions.post_book_url
-  post_readers_url = module.functions.post_readers_url
-  options_url      = module.functions.options_url
+  delete_reader_url = module.functions.delete_reader_url
+  get_books_url     = module.functions.get_books_url
+  get_readers_url   = module.functions.get_readers_url
+  post_book_url     = module.functions.post_book_url
+  post_readers_url  = module.functions.post_readers_url
+  options_url       = module.functions.options_url
 }
 
 module "firestore" {

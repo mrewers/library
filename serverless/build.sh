@@ -25,6 +25,9 @@ build init init
 # Build the options function.
 build options options
 
+# Build the delete-reader function.
+build reader/delete delete-reader
+
 # Build the get-readers function.
 build readers/get get-readers
 

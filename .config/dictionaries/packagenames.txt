@@ -2,5 +2,6 @@
 addauthor
 addbook
 addreaders
+deletereader
 getbooks
 getreaders

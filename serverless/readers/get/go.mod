@@ -2,6 +2,8 @@ module github.com/mrewers/library/serverless/getreaders
 
 go 1.21.5
 
+replace github.com/mrewers/library/serverless => ../../
+
 require (
 	github.com/GoogleCloudPlatform/functions-framework-go v1.8.0
 	github.com/mrewers/library/serverless v1.0.0
@@ -45,5 +47,3 @@ require (
 	google.golang.org/grpc v1.56.1 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 )
-
-replace github.com/mrewers/library/serverless => ../../

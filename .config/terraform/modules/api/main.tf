@@ -92,6 +92,46 @@ resource "google_api_gateway_api_config" "api_config" {
                 }
               }
             }
+            "/reader" : {
+              delete : {
+                description : "Deletes an individual reader."
+                operationId : "deleteReader"
+                parameters : [
+                  {
+                    in : "query"
+                    name : "id"
+                    required : true
+                    type : "string"
+                  }
+                ]
+                x-google-backend : {
+                  address : "${var.delete_reader_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "The id of the reader"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+              options : {
+                description : "Return headers required for CORS."
+                operationId : "optionsReader"
+                x-google-backend : {
+                  address : "${var.options_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "CORS success"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+            }
             "/readers" : {
               get : {
                 description : "Retrieves a list of readers from the database."
