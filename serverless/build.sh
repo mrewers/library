@@ -33,3 +33,6 @@ build readers/get get-readers
 
 # Build the post-readers function.
 build readers/post post-readers
+
+# Build the put-readers function.
+build readers/put put-readers

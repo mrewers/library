@@ -27,6 +27,13 @@ func openFirestoreConn(ctx context.Context) (*firestore.Client, error) {
 	return client, nil
 }
 
+func FirestorePrepUpdate(path string, value interface{}) firestore.Update {
+	return firestore.Update{
+		Path:  path,
+		Value: value,
+	}
+}
+
 // FirestoreGetAll retrieves all the items from the provided collection.
 func FirestoreGetAll(collection string, order string) ([]map[string]interface{}, error) {
 	var docs []map[string]interface{}
@@ -111,4 +118,26 @@ func firestoreDeleteDocument(id string, col string) error {
 	}
 
 	return err
+}
+
+func firestoreUpdateDocument(id string, updates []firestore.Update, col string) error {
+	ctx := context.Background()
+
+	client, err := openFirestoreConn(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+
+	defer client.Close()
+
+	_, err = client.Collection(col).Doc(id).Update(ctx, updates)
+
+	if err != nil {
+		log.Println(err.Error())
+		return err
+	}
+
+	return nil
 }

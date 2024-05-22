@@ -11,17 +11,13 @@ import (
 	"github.com/mrewers/library/serverless/utils"
 )
 
-type readersBody struct {
-	Readers []utils.Reader `json:"readers,omitempty"`
-}
-
 type ReaderIds struct {
 	Tmp string
 	Id  string
 }
 
 func postReaders(w http.ResponseWriter, r *http.Request) {
-	var body readersBody
+	var body utils.ReadersBody
 
 	err := json.NewDecoder(r.Body).Decode(&body)
 

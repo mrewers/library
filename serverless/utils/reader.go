@@ -3,14 +3,21 @@ package utils
 import (
 	"log"
 	"time"
+
+	"cloud.google.com/go/firestore"
 )
 
 type Reader struct {
+	Id           string `json:"id,omitempty"`
 	Color        string `json:"color,omitempty"`
 	Name         string `json:"name,omitempty"`
 	DateCreated  string `json:"dateCreated,omitempty"`
 	DateModified string `json:"dateModified,omitempty"`
 	TempId       string `json:"tempId,omitempty"`
+}
+
+type ReadersBody struct {
+	Readers []Reader `json:"readers,omitempty"`
 }
 
 // AddReader creates a new reader document in the Firestore database.
@@ -38,6 +45,16 @@ func (r Reader) AddReader() string {
 // RemoveReader deletes the reader with the specified id from the Firestore database.
 func RemoveReader(id string) error {
 	err := firestoreDeleteDocument(id, "readers")
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	return err
+}
+
+func UpdateReader(id string, updates []firestore.Update) error {
+	err := firestoreUpdateDocument(id, updates, "readers")
 
 	if err != nil {
 		log.Println(err.Error())

@@ -10,4 +10,5 @@ use (
 	./serverless/reader/delete
 	./serverless/readers/get
 	./serverless/readers/post
+	./serverless/readers/put
 )
