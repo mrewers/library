@@ -45,3 +45,27 @@ resource "google_cloudfunctions2_function" "post_readers" {
     }
   }
 }
+
+resource "google_cloudfunctions2_function" "put_readers" {
+  name        = "put-readers"
+  description = "Update multiple existing readers."
+  location    = var.region
+
+  build_config {
+    runtime     = "go121"
+    entry_point = "PutReaders"
+    source {
+      storage_source {
+        bucket = var.deploy_bucket
+        object = "functions/put-readers.zip"
+      }
+    }
+  }
+
+  service_config {
+    environment_variables = {
+      FIRESTORE_DB_NAME = var.db_name
+      PROJECT_ID        = var.project
+    }
+  }
+}

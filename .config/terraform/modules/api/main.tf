@@ -177,6 +177,21 @@ resource "google_api_gateway_api_config" "api_config" {
                   }
                 }
               }
+              put : {
+                description : "Updates multiple readers in the database."
+                operationId : "putReaders"
+                x-google-backend : {
+                  address : "${var.put_readers_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "A success message."
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
               options : {
                 description : "Return headers required for CORS."
                 operationId : "optionsReaders"
