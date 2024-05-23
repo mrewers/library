@@ -53,34 +53,35 @@ const AddBook: Component<IAddBookProps> = (props) => {
   };
 
   /**
+   * Handle the request to save form inputs.
+   * @param e A button click event.
+   */
+  const onSubmit = async (e: Event): Promise<void> => {
+    e.preventDefault();
+
+    setSaving(true);
+
+    const { data } = await buildQuery('book', {...book()}, 'POST')
+
+    setSaving(false);
+
+    if ( data?.id ) {
+      setBook({
+        ...book(),
+        id: data.id,
+      });
+
+      addBook(book());
+      navigate(`/book/${data.id}`);
+    }
+  };
+
+  /**
    * Stop adding a book and return to the home page.
    */
   const onCancel = () => {
     navigate('/');
   }
-
-  /**
-   * Handle the request to save form inputs.
-   * @param e A button click event.
-   */
-    const onSubmit = async (e: Event): Promise<void> => {
-      e.preventDefault();
-
-      setSaving(true);
-
-      const { data } = await buildQuery('book', {...book()}, 'POST')
-
-      if ( data?.id ) {
-        setBook({
-          ...book(),
-          id: data.id,
-        });
-
-        addBook(book());
-      }
-
-      setSaving(false);
-    };
 
   return (
     <BookBase

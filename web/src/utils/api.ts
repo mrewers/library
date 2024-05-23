@@ -9,7 +9,7 @@ const headers = {
 /**
  * Accepted API methods.
  */
-export type TMethods = 'DELETE' | 'GET' | 'POST' | 'PUT';
+export type TMethods = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 
 // Retrieve the API Gateway endpoint URL from environmental variables.
 const API_URL = import.meta.env.VITE_API_URL;

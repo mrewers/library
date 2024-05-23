@@ -7,6 +7,8 @@ declare global {
     readonly id?: string;
     readonly author?: string;
     readonly dateAcquired?: string;
+    readonly dateRestored?: string;
+    readonly dateRetired?: string;
     readonly read: readonly string[];
     readonly retired: boolean;
     readonly title: string;

@@ -101,7 +101,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
               classes={s.button}
               color="plain"
               disabled={props.readonly || false}
-              label="Jettison"
+              label={props.book.retired ? 'Restore' : 'Jettison'}
               type="button"
               onClick={props.onRetire}
             />
