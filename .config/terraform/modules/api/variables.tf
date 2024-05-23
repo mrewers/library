@@ -1,3 +1,8 @@
+variable "delete_book_url" {
+  description = "The invokation URL for the delete-book cloud function."
+  type        = string
+}
+
 variable "delete_reader_url" {
   description = "The invokation URL for the delete-reader cloud function."
   type        = string

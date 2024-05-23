@@ -1,3 +1,8 @@
+output "delete_book_url" {
+  description = "The invokation URL for the delete-book cloud function."
+  value       = google_cloudfunctions2_function.delete_book.url
+}
+
 output "delete_reader_url" {
   description = "The invokation URL for the delete-reader cloud function."
   value       = google_cloudfunctions2_function.delete_reader.url

@@ -23,6 +23,29 @@ resource "google_api_gateway_api_config" "api_config" {
           }
           "paths" : {
             "/book" : {
+              delete : {
+                description : "Deletes a given book from the database."
+                operationId : "deleteBook"
+                x-google-backend : {
+                  address : "${var.delete_book_url}"
+                }
+                parameters : [
+                  {
+                    in : "query"
+                    name : "id"
+                    required : true
+                    type : "string"
+                  }
+                ]
+                responses : {
+                  "200" : {
+                    description : "A success message."
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
               patch : {
                 description : "Updates a given book in the database."
                 operationId : "patchBook"
