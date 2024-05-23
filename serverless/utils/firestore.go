@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
@@ -73,6 +74,7 @@ func FirestoreGetAll(collection string, order string) ([]map[string]interface{},
 	return docs, err
 }
 
+// firestoreCreateDocument creates a new document in the specified Firestore collection.
 func firestoreCreateDocument(doc map[string]interface{}, col string) (string, error) {
 	var id string
 
@@ -97,6 +99,8 @@ func firestoreCreateDocument(doc map[string]interface{}, col string) (string, er
 	return ref.ID, nil
 }
 
+// firestoreDeleteDocument delete the document with the
+// specified id from the specified Firestore collection.
 func firestoreDeleteDocument(id string, col string) error {
 	var err error
 
@@ -120,6 +124,8 @@ func firestoreDeleteDocument(id string, col string) error {
 	return err
 }
 
+// firestoreUpdateDocument completes an incremental update of the document
+// with the specified id in the specified Firestore collection.
 func firestoreUpdateDocument(id string, updates []firestore.Update, col string) error {
 	ctx := context.Background()
 
@@ -131,6 +137,11 @@ func firestoreUpdateDocument(id string, updates []firestore.Update, col string) 
 	}
 
 	defer client.Close()
+
+	// Appended a modified timestamp to the list of updates.
+	modified := FirestorePrepUpdate("dateModified", time.Now())
+
+	updates = append(updates, modified)
 
 	_, err = client.Collection(col).Doc(id).Update(ctx, updates)
 

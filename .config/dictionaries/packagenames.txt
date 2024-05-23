@@ -5,4 +5,5 @@ addreaders
 deletereader
 getbooks
 getreaders
+updatebook
 updatereaders

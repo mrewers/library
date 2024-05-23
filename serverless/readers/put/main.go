@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	"cloud.google.com/go/firestore"
 	_ "github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
@@ -29,7 +28,6 @@ func putReaders(w http.ResponseWriter, r *http.Request) {
 		updates := []firestore.Update{
 			utils.FirestorePrepUpdate("name", reader.Name),
 			utils.FirestorePrepUpdate("color", reader.Color),
-			utils.FirestorePrepUpdate("dateModified", time.Now()),
 		}
 
 		err = utils.UpdateReader(reader.Id, updates)
