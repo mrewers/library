@@ -125,7 +125,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
   const onDelete = async (): Promise<void> => {
     setSaving(true);
 
-    // await buildQuery(`book?id=${props.id}`, null, 'DELETE');
+    await buildQuery(`book?id=${props.id}`, null, 'DELETE');
 
     removeBook(props.id)
 
