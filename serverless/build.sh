@@ -13,6 +13,9 @@ function build {
 # Clear out old zip files.
 rm zips/*
 
+# Build the delete-book function.
+build book/delete delete-book
+
 # Build the patch-book function.
 build book/patch patch-book
 

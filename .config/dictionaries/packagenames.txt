@@ -2,6 +2,7 @@
 addauthor
 addbook
 addreaders
+deletebook
 deletereader
 getbooks
 getreaders

@@ -42,7 +42,7 @@ func (r Reader) AddReader() string {
 	return id
 }
 
-// RemoveReader deletes the reader with the specified id from the Firestore database.
+// RemoveReader deletes the reader at the specified id from the Firestore database.
 func RemoveReader(id string) error {
 	err := firestoreDeleteDocument(id, "readers")
 
@@ -53,6 +53,7 @@ func RemoveReader(id string) error {
 	return err
 }
 
+// UpdateReader incrementally updates the reader at the specified id with the provided values.
 func UpdateReader(id string, updates []firestore.Update) error {
 	err := firestoreUpdateDocument(id, updates, "readers")
 

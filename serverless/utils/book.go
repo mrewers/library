@@ -56,7 +56,18 @@ func (b Book) NormalizeDate() time.Time {
 	return acquired
 }
 
-// UpdateBook incremental updates the book with the specified id with the provided values.
+// RemoveBook deletes the book at the specified id from the Firestore database.
+func RemoveBook(id string) error {
+	err := firestoreDeleteDocument(id, "books")
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	return err
+}
+
+// UpdateBook incrementally updates the book at the specified id with the provided values.
 func UpdateBook(id string, updates []firestore.Update) error {
 	err := firestoreUpdateDocument(id, updates, "books")
 
