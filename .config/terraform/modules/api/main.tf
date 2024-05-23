@@ -23,6 +23,29 @@ resource "google_api_gateway_api_config" "api_config" {
           }
           "paths" : {
             "/book" : {
+              patch : {
+                description : "Updates a given book in the database."
+                operationId : "patchBook"
+                x-google-backend : {
+                  address : "${var.patch_book_url}"
+                }
+                parameters : [
+                  {
+                    in : "query"
+                    name : "id"
+                    required : true
+                    type : "string"
+                  }
+                ]
+                responses : {
+                  "200" : {
+                    description : "A success message."
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
               post : {
                 description : "Submits a book to be added to the database."
                 operationId : "postBook"

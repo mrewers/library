@@ -22,31 +22,6 @@ resource "google_cloudfunctions2_function" "init" {
   }
 }
 
-# BOOK
-resource "google_cloudfunctions2_function" "post_book" {
-  name        = "post-book"
-  description = "Creates a new book."
-  location    = var.region
-
-  build_config {
-    runtime     = "go121"
-    entry_point = "PostBook"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/post-book.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
-}
-
 # BOOKS
 resource "google_cloudfunctions2_function" "get_books" {
   name        = "get-books"

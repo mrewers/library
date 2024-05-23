@@ -13,6 +13,11 @@ output "get_readers_url" {
   value       = google_cloudfunctions2_function.get_readers.url
 }
 
+output "patch_book_url" {
+  description = "The invokation URL for the patch-book cloud function."
+  value       = google_cloudfunctions2_function.patch_book.url
+}
+
 output "post_book_url" {
   description = "The invokation URL for the post-book cloud function."
   value       = google_cloudfunctions2_function.post_book.url
