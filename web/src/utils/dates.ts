@@ -12,12 +12,28 @@ const padTwo = (val: string | number): string => val.toString().padStart(2, '0')
  *
  * @returns {string} Date in the format YYYY-MM-DD.
  */
-export const getDateString = (): string => {
-  const date = new Date();
+export const getDateString = (date?: Date): string => {
+  const d = date ? date : new Date();
 
-  const year = date.getFullYear();
-  const month = padTwo(date.getMonth() + 1); // +1 because months are zero indexed
-  const day = padTwo(date.getDate());
+  const year = d.getFullYear();
+  const month = padTwo(d.getMonth() + 1); // +1 because months are zero indexed
+  const day = padTwo(d.getDate());
 
   return `${year}-${month}-${day}`;
 };
+
+export const getTimeString = (date?: Date): string => {
+  const d = date ? date : new Date();
+
+  const hours = padTwo(d.getHours());
+  const minutes = padTwo(d.getMinutes());
+  const seconds = padTwo(d.getSeconds());
+
+  return `${hours}:${minutes}:${seconds}`
+}
+
+export const getDateTimeString = (): string => {
+  const date = new Date();
+
+  return `${getDateString(date)} ${getTimeString(date)}`
+}

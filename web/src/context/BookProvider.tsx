@@ -51,7 +51,7 @@ type TBookStore = [
 const createNewBook = (): IBook => {
   return {
     author: '',
-    date: getDateString(),
+    dateAcquired: getDateString(),
     read: [],
     retired: false,
     title: '',

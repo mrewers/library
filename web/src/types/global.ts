@@ -6,7 +6,7 @@ declare global {
   interface IBook {
     readonly id?: string;
     readonly author?: string;
-    readonly date?: string;
+    readonly dateAcquired?: string;
     readonly read: readonly string[];
     readonly retired: boolean;
     readonly title: string;

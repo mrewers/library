@@ -1,11 +1,10 @@
-import type { Component, JSX } from 'solid-js';
+import type { Component } from 'solid-js';
 import { createSignal } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 
 import BookBase from './BookBase';
 import { useBooks } from 'context/BookProvider';
-import { getDateString } from 'utils/dates';
-import { addItem, buildQuery } from 'utils/api';
+import { buildQuery } from 'utils/api';
 import { handleFormInput } from 'utils/form-helpers';
 
 interface IAddBookProps {
@@ -19,11 +18,8 @@ const AddBook: Component<IAddBookProps> = (props) => {
 
   const [book, setBook] = createSignal(createNewBook());
 
-  const overlayText = '';
-  const saving = false;
-
-  // Const [saving, setSaving] = useState(false);
-  // const [overlayText, setOverlayText] = useState('Saving..');
+  const [saving, setSaving] = createSignal(false);
+  const [overlayText, setOverlayText] = createSignal('');
 
   // const resetOverlay = (msg: string): void => {
   //   setOverlayText(msg);
@@ -38,35 +34,11 @@ const AddBook: Component<IAddBookProps> = (props) => {
   //   setBook(initialState);
   // };
 
-  const onSubmit = (e: Event): void => {
-    e.preventDefault();
-    
-    addBook(book());
-
-    buildQuery('book', {...book()}, 'POST')
-
-    navigate('/');
-  //   setSaving(true);
-  //   addItem({ book }, 'books')
-  //     .then((data: IBookResponse) => {
-  //       if (data !== undefined) {
-  //         const added = {
-  //           ...data.book,
-  //           id: data.id,
-  //         };
-
-  //         dispatch({ type: 'ADD_BOOK', payload: { book: added } });
-  //         resetForm();
-  //       } else {
-  //         resetOverlay('We encountered an error while saving :(');
-  //       }
-  //     })
-  //     .catch(err => {
-  //       resetOverlay('We encountered an error while saving :(');
-  //       console.error(err);
-  //     });
-  };
-
+  /**
+   * Handle user inputs in the add book form.
+   * @param e An input event.
+   * @param e.currentTarget The input element that is being interacted with.
+   */
   const onInput = ({ currentTarget }: InputEvent): void => {
     if (currentTarget === null) {
       return;
@@ -80,17 +52,43 @@ const AddBook: Component<IAddBookProps> = (props) => {
     });
   };
 
+  /**
+   * Stop adding a book and return to the home page.
+   */
   const onCancel = () => {
     navigate('/');
   }
+
+  /**
+   * Handle the request to save form inputs.
+   * @param e A button click event.
+   */
+    const onSubmit = async (e: Event): Promise<void> => {
+      e.preventDefault();
+
+      setSaving(true);
+
+      const { data } = await buildQuery('book', {...book()}, 'POST')
+
+      if ( data?.id ) {
+        setBook({
+          ...book(),
+          id: data.id,
+        });
+
+        addBook(book());
+      }
+
+      setSaving(false);
+    };
 
   return (
     <BookBase
       book={book()}
       classes="add"
       label={props.label}
-      overlayText={overlayText}
-      saving={saving}
+      overlayText={overlayText()}
+      saving={saving()}
       onCancel={onCancel}
       onInput={onInput}
       onSubmit={onSubmit}
