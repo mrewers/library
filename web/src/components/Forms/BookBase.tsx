@@ -68,14 +68,14 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         <div class={s['sub-label-column']}>
           <For each={readerList}>{
             (reader): JSX.Element => (
-              <label class={s['sub-label']} for={`reader-${reader}`}>
+              <label class={s['sub-label']} for={`reader-${reader.id}`}>
                 <input
-                  checked={props.book.read.includes(reader.name)}
+                  checked={props.book.readBy.includes(reader.id)}
                   disabled={props.readonly || false}
-                  id={`reader-${reader}`}
-                  name="read"
+                  id={`reader-${reader.id}`}
+                  name="readBy"
                   type="checkbox"
-                  value={reader.name}
+                  value={reader.id}
                   onInput={props.onInput}
                 />
                 {reader.name}

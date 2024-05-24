@@ -9,7 +9,7 @@ declare global {
     readonly dateAcquired?: string;
     readonly dateRestored?: string;
     readonly dateRetired?: string;
-    readonly read: readonly string[];
+    readonly readBy: readonly string[];
     readonly retired: boolean;
     readonly title: string;
   }

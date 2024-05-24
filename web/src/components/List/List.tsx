@@ -1,4 +1,4 @@
-import { For } from 'solid-js';
+import { For, Show } from 'solid-js';
 import type { Component, JSX } from 'solid-js';
 
 import ListItem from 'components/ListItem/ListItem';
@@ -7,13 +7,19 @@ import s from './List.module.scss';
 
 interface IListProps {
   readonly list: IBook[];
+  readonly loading: boolean;
   readonly read: IBook[];
 }
 
 const List: Component<IListProps> = (props) => (
   <section>
-    {props.list.length === 0 && <div class={s.loader}>Loading...</div>}
-    {props.list.length > 0 && (
+    <Show when={props.loading}>
+      <div class={s.loader}>Loading...</div>
+    </Show>
+    <Show when={!props.loading && props.list.length === 0}>
+      <div class={s.loader}>No Books to Display</div>
+    </Show>
+    <Show when={props.list.length > 0}>
       <ul class={s.list}>
         <For each={props.list}>{
           (item): JSX.Element => (
@@ -23,7 +29,7 @@ const List: Component<IListProps> = (props) => (
           )
         }</For>
       </ul>
-    )}
+    </Show>
   </section>
 );
 

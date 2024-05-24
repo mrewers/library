@@ -13,6 +13,7 @@ type Book struct {
 	DateModified string     `json:"dateModified,omitempty"`
 	DateRestored *time.Time `json:"dateRestored,omitempty"`
 	DateRetired  *time.Time `json:"dateRetired,omitempty"`
+	ReadBy       []string   `json:"readBy,omitempty"`
 	Retired      *bool      `json:"retired,omitempty"`
 	Title        string     `json:"title,omitempty"`
 }
@@ -25,6 +26,7 @@ func (b Book) AddBook() string {
 		"dateAcquired": b.NormalizeDate(),
 		"dateCreated":  ts,
 		"dateModified": ts,
+		"readBy":       b.ReadBy,
 		"retired":      b.Retired,
 		"title":        b.Title,
 	}

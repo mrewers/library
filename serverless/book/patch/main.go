@@ -34,6 +34,11 @@ func prepUpdates(book utils.Book) []firestore.Update {
 		updates = append(updates, update)
 	}
 
+	if book.ReadBy != nil {
+		update := utils.FirestorePrepUpdate("readBy", book.ReadBy)
+		updates = append(updates, update)
+	}
+
 	if book.Retired != nil {
 		update := utils.FirestorePrepUpdate("retired", book.Retired)
 		updates = append(updates, update)

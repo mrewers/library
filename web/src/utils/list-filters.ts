@@ -17,18 +17,18 @@ export const filterRetired = (list: IBook[]) => {
  * Get the list of books read by the selected reader.
  *
  * @param list List of books.
- * @param reader Name of the selected reader (or group of readers).
+ * @param reader Id of the selected reader (or name of the group of readers).
  * @param readerCount Total number of readers (needed to calculate if all readers read an book).
  *
  */
 export const getRead = (list: IBook[], reader: string, readerCount: number): IBook[] => {
   switch (reader) {
     case 'all':
-      return list.filter((item: IBook) => item.read.length === readerCount);
+      return list.filter((item: IBook) => item.readBy.length === readerCount);
     case 'any':
-      return list.filter((item: IBook) => item.read.length > 0);
+      return list.filter((item: IBook) => item.readBy.length > 0);
     default:
-      return list.filter((item: IBook) => item.read.includes(reader));
+      return list.filter((item: IBook) => item.readBy.includes(reader));
   }
 };
 
@@ -42,11 +42,11 @@ export const getRead = (list: IBook[], reader: string, readerCount: number): IBo
 export const getUnread = (list: IBook[], reader: string, readerCount: number): IBook[] => {
   switch (reader) {
     case 'all':
-      return list.filter((item: IBook) => item.read.length === 0);
+      return list.filter((item: IBook) => item.readBy.length === 0);
     case 'any':
-      return list.filter((item: IBook) => item.read.length < readerCount);
+      return list.filter((item: IBook) => item.readBy.length < readerCount);
     default:
-      return list.filter((item: IBook) => !item.read.includes(reader));
+      return list.filter((item: IBook) => !item.readBy.includes(reader));
   }
 };
 
@@ -54,7 +54,7 @@ export const getUnread = (list: IBook[], reader: string, readerCount: number): I
  * Filters the provided list of books to match the book status and reader provided.
  *
  * @param status The status of the book (read, unread, or either).
- * @param reader Name of the selected reader (or group of readers).
+ * @param reader Id of the selected reader (or name of the group of readers).
  * @param readerCount Total number of readers.
  * @param list List of books.
  */
@@ -78,7 +78,7 @@ export const filterList = (
  * Retrieves the number of read, unread, and total books for a reader or group of readers.
  *
  * @param list List of books.
- * @param reader Name of the selected reader (or group of readers).
+ * @param reader Id of the selected reader (or name of the group of readers).
  * @param readerCount Total number of readers.
  * @returns Totals for all, read, and unread books.
  */

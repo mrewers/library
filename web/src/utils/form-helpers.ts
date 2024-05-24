@@ -15,8 +15,8 @@ export const handleFormInput = (
   let val;
 
   switch (name) {
-    case 'read':
-      val = toggleArrayValues(item.read, value)
+    case 'readBy':
+      val = toggleArrayValues(item.readBy, value)
       break;
     default:
       val = value;

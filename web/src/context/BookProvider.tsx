@@ -13,6 +13,7 @@ interface IBookProviderProps {
 }
 
 interface IBookListObject {
+  readonly id?: string
   readonly name?: string
   readonly read: IBook[]
   readonly unread: IBook[]
@@ -54,7 +55,7 @@ const createNewBook = (): IBook => {
   return {
     author: '',
     dateAcquired: getDateString(),
-    read: [],
+    readBy: [],
     retired: false,
     title: '',
   }
@@ -88,9 +89,10 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
         unread: getUnread(active, 'any', readerCount()),
       },
       filtered: readerList.map(r => ({
+        id: r.id,
         name: r.name,
-        read: getRead(active, r.name, readerCount()),
-        unread: getUnread(active, r.name, readerCount()),
+        read: getRead(active, r.id, readerCount()),
+        unread: getUnread(active, r.id, readerCount()),
       })),
       retired: {
         all: {
@@ -102,9 +104,10 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
           unread: getUnread(retired, 'any', readerCount()),
         },
         filtered: readerList.map(r => ({
+          id: r.id,
           name: r.name,
-          read: getRead(retired, r.name, readerCount()),
-          unread: getUnread(retired, r.name, readerCount()),
+          read: getRead(retired, r.id, readerCount()),
+          unread: getUnread(retired, r.id, readerCount()),
         }))
       },
       fullList: {

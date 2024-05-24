@@ -63,7 +63,7 @@ const Filter: Component = () => {
             <option value="all">All Readers</option>
             <For each={readerList}>
               { (r): JSX.Element => (
-                <option value={r.name}>
+                <option value={r.id}>
                   {r.name}
                 </option>
               ) }

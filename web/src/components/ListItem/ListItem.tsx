@@ -30,7 +30,7 @@ const ListItem: Component<IListItemProps> = (props) => {
           when={isCollective()}
           fallback={
             <Checkmark
-              checked={containsReader(props.item.read, filters.reader())}
+              checked={containsReader(props.item.readBy, filters.reader())}
               color={getSelectedReaderData(readerList, filters.reader()).color}
               id={props.item.id}
             />
@@ -39,7 +39,7 @@ const ListItem: Component<IListItemProps> = (props) => {
           <For each={readerList}>{
             (r): JSX.Element => (
               <Checkmark
-                checked={containsReader(props.item.read, r.name)}
+                checked={containsReader(props.item.readBy, r.id)}
                 color={r.color}
                 id={props.item.id}
               />

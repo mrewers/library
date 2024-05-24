@@ -11,7 +11,7 @@ import { useFilters } from 'context/FilterProvider';
 import s from './Pages.module.scss';
 
 const Books: Component = () => {
-  const [bookList] = useBooks();
+  const [bookList, { isBooksLoading }] = useBooks();
   const [filters] = useFilters();
 
   const [readList] = createStore(() => {
@@ -19,7 +19,7 @@ const Books: Component = () => {
       return filters.reader();
     }
     
-    return bookList().filtered.findIndex(i => i.name === filters.reader());
+    return bookList().filtered.findIndex(i => i.id === filters.reader());
   })
 
   return (
@@ -40,10 +40,8 @@ const Books: Component = () => {
             ? bookList().filtered[readList() as number].read
             : bookList()[readList() as 'all' | 'any'].read
           }
+          loading={isBooksLoading()}
         />
-      </Show>
-      <Show when={bookList().fullList.active.length === 0}>
-        <div class={s['list-placeholder']}>No Books to Display</div>
       </Show>
     </Layout>
   )
