@@ -53,6 +53,17 @@ const AddBook: Component<IAddBookProps> = (props) => {
   };
 
   /**
+   * Handles the selection/removal of an author using the author type-ahead component.
+   * @param ids A list of author ids to be associated with the book.
+   */
+  const onAuthor = (ids: string[]): void => {
+    setBook({
+      ...book(),
+      author: ids,
+    });
+  }
+
+  /**
    * Handle the request to save form inputs.
    * @param e A button click event.
    */
@@ -90,6 +101,7 @@ const AddBook: Component<IAddBookProps> = (props) => {
       label={props.label}
       overlayText={overlayText()}
       saving={saving()}
+      onAuthor={onAuthor}
       onCancel={onCancel}
       onInput={onInput}
       onSubmit={onSubmit}

@@ -3,6 +3,8 @@ import type { Component, JSX } from 'solid-js';
 
 import Button from 'components/Button/Button';
 import Overlay from 'components/Overlay/Overlay';
+import TypeAhead from 'components/TypeAhead/TypeAhead';
+
 import { useReaders } from 'context/ReaderProvider';
 
 import s from './Form.module.scss';
@@ -12,6 +14,7 @@ interface IBookBaseProps {
   readonly classes?: string;
   readonly label?: string;
   readonly loading?: boolean;
+  readonly onAuthor: (ids: string[]) => void;
   readonly onCancel?: () => void;
   readonly onDelete?: (e: MouseEvent) => void;
   readonly onInput: (e: InputEvent) => void;
@@ -42,14 +45,11 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         />
       </label>
       <label class={s.label} for="author">
-        Author:
-        <input
-          id="author"
+        Author(s):
+        <TypeAhead
           name="author"
-          readonly={props.readonly || false}
-          type="text"
-          value={props.book.author}
-          onInput={props.onInput}
+          suggestions={sug}
+          onChange={props.onAuthor}
         />
       </label>
       <label class={s.label} for="date-acquired">

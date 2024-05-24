@@ -5,8 +5,12 @@
 @mixin label-grid {
   align-items: center;
   display: grid;
-  grid-template-columns: 7rem 1fr;
+  grid-template-columns: 1fr;
   margin: 0.7rem 0;
+
+  @include breakpoint('tablet') {
+    grid-template-columns: 7rem 1fr;
+  }
 }
 
 @mixin label-text {
@@ -93,13 +97,19 @@
     grid-template-columns: 5rem 1fr;
   }
 
-  > input {
-    margin: 0 0.5rem;
-    width: calc(100% - 0.5rem);
-  
-    &:read-only {
-      color: $greyDark;
+  > input,
+  > div {
+    margin: 0.5rem 0;
+    width: 100%;
+
+    @include breakpoint('tablet') {
+      margin: 0 0.5rem;
+      width: calc(100% - 0.5rem);
     }
+  }
+
+  > input:read-only {
+    color: $greyDark;
   }
 }
 
@@ -123,6 +133,11 @@
   &-column {
     display: flex;
     flex-direction: column;
+    margin: 0.5rem 0;
+
+    @include breakpoint('tablet') {
+      margin: 0;
+    }
   }
 
   &-container {

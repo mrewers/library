@@ -59,6 +59,17 @@ const EditBook: Component<IEditBookProps> = (props) => {
   };
 
   /**
+   * Handles the selection/removal of an author using the author type-ahead component.
+   * @param ids A list of author ids to be associated with the book.
+   */
+  const onAuthor = (ids: string[]): void => {
+    setBook({
+      ...book(),
+      author: ids,
+    });
+  }
+
+  /**
    * Retrieve the values for all the fields that have been updated.
    * @returns An object with all the updated values.
    */
@@ -148,6 +159,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
       label={props.label}
       overlayText={overlayText()}
       saving={saving()}
+      onAuthor={onAuthor}
       onCancel={onCancel}
       onDelete={onDelete}
       onInput={onInput}

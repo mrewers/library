@@ -1,0 +1,67 @@
+@import 'style/colors.scss';
+@import 'style/mixins.scss';
+
+.container {  
+  > input {
+    width: 100%;
+  }
+}
+
+.suggestions {
+  position: relative;
+}
+
+.list {
+  background-color: white;
+  list-style: none;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding-inline-start: 0;
+  position: absolute;
+  text-align: left;
+  z-index: 1000; // Arbitrarily high number to ensure that the options sit on top of any background elements.
+
+  &-option {
+    border: 2px solid transparent;
+    border-radius: 0%;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    text-align: left;
+    width: 100%;
+  }
+
+  &-option:hover,
+  .active {
+    border: 2px solid $blueDark;
+  }
+
+  .active {
+    background-color: gainsboro;
+  }
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0.75rem 0;
+  min-height: 1.4rem;
+
+  > span {
+    padding: 0.2rem 0;
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  .pill {
+    @include button-reset;
+    background-color: $blueLight;
+    border-radius: 10px;
+    padding: .2rem .75rem;
+    margin-left: 0.5rem;
+    font-style: italic;
+
+  }
+}
+
