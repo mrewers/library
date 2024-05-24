@@ -54,3 +54,12 @@
     justify-content: center;
   }
 }
+
+.list-placeholder {
+  @include border-light-shadow;
+  background-color: $white;
+  height: 70vh;
+  margin: 1rem;
+  padding-top: 7rem;
+  text-align: center;
+}

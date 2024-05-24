@@ -8,6 +8,7 @@ import { useReaders } from './ReaderProvider';
 
 interface IBookProviderProps {
   readonly books: IBook[]
+  readonly loading: boolean
   readonly children: JSX.Element
 }
 
@@ -39,6 +40,7 @@ type TBookStore = [
     addBook: (book: IBook) => void,
     createNewBook: () => IBook,
     getBook: (id: string) => IBook,
+    isBooksLoading: () => boolean,
     removeBook: (id: string) => void,
     retireBook: (id: string) => void,
     updateBook: (id: string, value: IBook) => void,
@@ -62,11 +64,16 @@ const BookContext = createContext();
 
 const BookProvider: Component<IBookProviderProps> = (props) => {
   const [readerList] = useReaders();
-
-  const [fullList, setFullList] = createStore(props.books as IBook[]);
   const [readerCount, setReaderCount] = createSignal(0);
 
+  const [isBooksLoading, setIsBooksLoading] = createSignal(true);
+  const [fullList, setFullList] = createStore([] as IBook[]);
+
   createEffect(() => setReaderCount(readerList.length));
+
+  createEffect(() => setFullList(props.books));
+
+  createEffect(() => setIsBooksLoading(props.loading));
   
   const [bookList] = createStore(createMemo(() => {
     const [active, retired] = filterRetired(fullList);
@@ -167,6 +174,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
       addBook,
       createNewBook,
       getBook,
+      isBooksLoading,
       removeBook,
       retireBook,
       updateBook,

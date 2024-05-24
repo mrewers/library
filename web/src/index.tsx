@@ -10,7 +10,6 @@ import { BookProvider } from 'context/BookProvider';
 import { FilterProvider } from 'context/FilterProvider';
 import { ReaderProvider } from 'context/ReaderProvider';
 
-import { mockBooks } from 'mocks/data';
 import { buildQuery } from 'utils/api';
 
 const root = document.getElementById('root');
@@ -41,15 +40,14 @@ const Library = () => {
     const { data } = await buildQuery('books', null);
 
     if ( data ) {
+      setBooks(data);
       setLoadingBooks(false);
     }
-
-    setBooks(mockBooks);
   });
 
   return (
   <ReaderProvider loading={loadingReaders()} readers={readers()}>
-    <BookProvider books={mockBooks}>
+    <BookProvider loading={loadingBooks()} books={books()}>
       <FilterProvider>
         <App />
       </FilterProvider>

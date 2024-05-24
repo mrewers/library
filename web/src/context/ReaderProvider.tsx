@@ -37,16 +37,12 @@ const createNewReader = (idx: number = 4): IReader => {
 const ReaderContext = createContext();
 
 const ReaderProvider: Component<IReaderProviderProps> = (props) => {
-  const [isReadersLoading, setIsReadersLoading] = createSignal(true)
+  const [isReadersLoading, setIsReadersLoading] = createSignal(true);
   const [readerList, setReaderList] = createStore([] as IReader[]);
 
-  createEffect(() => {
-    setReaderList(props.readers);
-  })
+  createEffect(() => setReaderList(props.readers));
 
-  createEffect(() => {
-    setIsReadersLoading(props.loading);
-  })
+  createEffect(() => setIsReadersLoading(props.loading));
 
   /**
    * Adds new reader data to the list of readers.

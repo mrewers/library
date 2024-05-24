@@ -42,6 +42,9 @@ const Books: Component = () => {
           }
         />
       </Show>
+      <Show when={bookList().fullList.active.length === 0}>
+        <div class={s['list-placeholder']}>No Books to Display</div>
+      </Show>
     </Layout>
   )
 };
