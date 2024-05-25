@@ -27,12 +27,19 @@ interface IBookBaseProps {
 
 const BookBase: Component<IBookBaseProps> = (props) => {
   const [readerList] = useReaders();
+  const sug = [{id: '1', name: 'Test'}, {id: '2', name: 'Author'}, {id: '3', name: 'Test2'}]
 
   return (
     <form class={props.classes ? `${s.form} ${s[props.classes]}` : s.form}>
-      {props.loading && <Overlay text="Loading Book Data..." />}
-      {props.saving && <Overlay text={props.overlayText || 'Saving...'} />}
-      {typeof props.label !== 'undefined' && <h3 class={s.title}>{props.label}</h3>}
+      <Show when={props.loading}>
+        <Overlay text="Loading Book Data..." />
+      </Show>
+      <Show when={props.saving}>
+        <Overlay text={props.overlayText || 'Saving...'} />
+      </Show>
+      <Show when={typeof props.label !== 'undefined'}>
+        <h3 class={s.title}>{props.label}</h3>
+      </Show>
       <label class={s.label} for="title">
         Title:
         <input
@@ -50,6 +57,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           name="author"
           suggestions={sug}
           onChange={props.onAuthor}
+          disabled={props.readonly || false}
         />
       </label>
       <label class={s.label} for="date-acquired">

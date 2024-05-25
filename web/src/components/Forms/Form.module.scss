@@ -2,17 +2,6 @@
 @import 'style/mixins.scss';
 @import 'style/typography.scss';
 
-@mixin label-grid {
-  align-items: center;
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 0.7rem 0;
-
-  @include breakpoint('tablet') {
-    grid-template-columns: 7rem 1fr;
-  }
-}
-
 @mixin label-text {
   font-family: $fontFamilyHeadings;
   font-size: $fontSizeNormal;

@@ -1,4 +1,10 @@
 import { createEffect, createSignal, For, Show } from 'solid-js';
+
+import Button from 'components/Button/Button';
+import Overlay from 'components/Overlay/Overlay';
+
+import { buildQuery } from 'utils/api';
+
 import type { Component } from 'solid-js';
 
 import s from './TypeAhead.module.scss';
@@ -9,6 +15,7 @@ interface ISuggestion {
 }
 
 interface ITypeAheadProps {
+  disabled?: boolean
   name: string
   onChange: (selected: string[]) => void
   suggestions: ISuggestion[]
@@ -21,6 +28,7 @@ interface ITypeAheadProps {
  * Modelled after the ARIA Authoring Practices Guide suggestions for
  * creating an [accessible listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/).
  * 
+ * @param props.disabled Whether or not to disable user inputs.
  * @param props.name The value by which to reference this input.
  * @param props.onChange A function that passes user inputs to the parent.
  * @param props.suggestions The list of options for the type-ahead.
@@ -31,6 +39,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   // State to manage user input and selections.
   const [userInput, setUserInput] = createSignal('');
   const [selected, setSelected] = createSignal([] as ISuggestion[]);
+  const [nestedInput, setNestedInput] = createSignal({} as {firstName: string, lastName: string})
 
   // State to manage the options in the suggestions dropdown.
   const [availableSuggestions, setAvailableSuggestions] = createSignal([] as ISuggestion[]);
@@ -39,6 +48,9 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   // State to manage the UI.
   const [activeSuggestion, setActiveSuggestion] = createSignal(0);
   const [showSuggestions, setShowSuggestions] = createSignal(false);
+  const [showNestedForm, setShowNestedForm] = createSignal(false);
+  const [nestedSaving, setNestedSaving] = createSignal(false);
+  const [nestedError, setNestedError] = createSignal(false);
 
   createEffect(() => setAvailableSuggestions(props.suggestions));
 
@@ -93,6 +105,43 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
     setShowSuggestions(true);
   }
 
+  const openNestedForm = () => {
+    setUserInput('');
+    setShowNestedForm(true);
+  }
+
+  const closeNestedForm = () => {
+    setShowNestedForm(false);
+    setNestedError(false);
+    setNestedInput( { firstName: "", lastName: "" } );
+  }
+
+  const handleNestedInput = ({currentTarget}: Event) => {
+    const { name, value } = currentTarget as HTMLInputElement;
+
+    setNestedInput( {...nestedInput(), [name]: value } );
+  }
+
+  const saveAuthor = async () => {
+    setNestedSaving(true);
+
+    const { data } = await buildQuery( 'author', nestedInput(), 'POST' );
+
+    setNestedSaving(false);
+
+    if ( data?.id ) {
+      const author = {
+        id: data.id,
+        name: `${nestedInput().firstName} ${nestedInput().lastName}`
+      }
+
+      setSelected([...selected(), author]);
+      closeNestedForm();
+    } else {
+      setNestedError(false);
+    }
+  }
+
   /**
    * Allow the user to navigate through the suggested options using their keyboard.
    * @param e A keydown event on the input field.
@@ -135,7 +184,12 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
 
     // Select the highlighted suggestion.
     if ( key === 'Enter' ) {
-      selectSuggestion(filteredSuggestions()[activeSuggestion()].id)
+      if ( activeSuggestion() === filteredSuggestions().length ) {
+        openNestedForm();
+      } else {
+        selectSuggestion(filteredSuggestions()[activeSuggestion()].id);
+      }
+
       resetUI();
     }
 
@@ -203,20 +257,23 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
           )
         }</For>
       </div>
-      <input
-        autocomplete="off"
-        class={s.input}
-        id="type-ahead"
-        name={props.name}
-        placeholder={props.placeholder || ""}
-        type="text"
-        value={userInput()}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-      />
+      <Show when={!showNestedForm()}>
+        <input
+          autocomplete="off"
+          class={s.input}
+          id="type-ahead"
+          name={props.name}
+          placeholder={props.placeholder || ""}
+          readonly={props.disabled || false}
+          type="text"
+          value={userInput()}
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+        />
+      </Show>
       <div class={s.suggestions}>
         {/* Only show the suggestions if they exist and the user has entered some input. */}
-        <Show when={showSuggestions() && userInput()}>
+        <Show when={showSuggestions() && userInput() && !showNestedForm()}>
           <ul class={s.list} role='listbox'>
             { filteredSuggestions().map((item, idx) => (
               <li
@@ -242,11 +299,42 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
               }
               data-name="add-new"
               role='option'
-              onClick={handleSuggestionClick}
+              onClick={openNestedForm}
             >
               Add New
             </li>
           </ul>
+        </Show>
+        <Show when={showNestedForm()}>
+          <form class={s['nested-form']}>
+            <Show when={nestedSaving()}>
+              <Overlay nested text="Saving..." />
+            </Show>
+            <div class={s['nested-content']}>
+              <label>
+                First Name:
+                <input autofocus name="firstName" type="text" onInput={handleNestedInput}/>
+              </label>
+              <label>
+                Last Name:
+                <input name="lastName" type="text" onInput={handleNestedInput}/>
+              </label>
+            </div>
+            <Show when={nestedError()}>
+              <span>Something went wrong, failed to save.</span>
+            </Show>
+            <div class={s['nested-controls']}>
+              <Button
+                label="Add Author"
+                onClick={saveAuthor}
+              />
+              <Button
+                label="Cancel"
+                onClick={closeNestedForm}
+                color='plain'
+              />
+            </div>
+          </form>
         </Show>
       </div>
     </div>

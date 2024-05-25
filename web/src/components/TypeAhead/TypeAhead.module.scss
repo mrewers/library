@@ -1,3 +1,4 @@
+@import 'style/breakpoints.scss';
 @import 'style/colors.scss';
 @import 'style/mixins.scss';
 
@@ -65,3 +66,26 @@
   }
 }
 
+.nested-form {
+
+  .nested-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @include breakpoint('tablet') {
+      grid-template-columns: repeat(2, calc(50% - .75rem));
+    }
+
+    > label {
+      @include label-grid;
+    }
+  }
+
+  .nested-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 0 0.25rem 0.2rem 0;
+  }
+}

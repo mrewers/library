@@ -3,6 +3,13 @@ declare module '*.scss';
 declare module '*.svg';
 
 declare global {
+  interface IAuthor {
+    readonly id: string;
+    readonly firstName: string;
+    readonly fullName: string;
+    readonly lastName: string;
+  }
+
   interface IBook {
     readonly id?: string;
     readonly author?: string[];

@@ -51,3 +51,14 @@
   padding: 1rem;
   position: relative;
 }
+
+@mixin label-grid {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0.7rem 0;
+
+  @include breakpoint('tablet') {
+    grid-template-columns: 7rem 1fr;
+  }
+}

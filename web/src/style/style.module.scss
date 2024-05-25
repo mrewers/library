@@ -85,8 +85,12 @@ select {
   line-height: 1.5;
   padding: 0.1rem 0.3rem;
 
-  &:focus {
+  &:not(:read-only):focus {
     box-shadow: $focusShadow;
+    outline: none;
+  }
+
+  &:read-only:focus {
     outline: none;
   }
 }

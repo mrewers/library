@@ -14,13 +14,16 @@
   font-weight: 600;
   height: 100%;
   justify-content: center;
-  margin: -1rem -0.5rem;
   opacity: 0.9;
   position: absolute;
   text-align: center;
   width: 100%;
 
-  @include breakpoint(laptop) {
-    margin: -1rem;
+  &:not(.nested) {
+    margin: -1rem -0.5rem;
+
+    @include breakpoint(laptop) {
+      margin: -1rem;
+    }
   }
 }
