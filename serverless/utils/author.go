@@ -7,8 +7,9 @@ import (
 )
 
 type Author struct {
-	NameFirst    string `json:"firstName,omitempty"`
-	NameLast     string `json:"lastName,omitempty"`
+	NameFirst    string `json:"nameFirst,omitempty"`
+	NameFull     string `json:"nameFull,omitempty"`
+	NameLast     string `json:"nameLast,omitempty"`
 	DateCreated  string `json:"dateCreated,omitempty"`
 	DateModified string `json:"dateModified,omitempty"`
 }

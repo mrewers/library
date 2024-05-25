@@ -16,6 +16,9 @@ rm zips/*
 # Build the post-author function.
 build author/post post-author
 
+# Build the get-authors function.
+build authors/get get-authors
+
 # Build the delete-book function.
 build book/delete delete-book
 

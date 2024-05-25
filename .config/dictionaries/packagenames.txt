@@ -4,6 +4,7 @@ addbook
 addreaders
 deletebook
 deletereader
+getauthors
 getbooks
 getreaders
 updatebook

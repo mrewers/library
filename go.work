@@ -3,6 +3,7 @@ go 1.22.1
 use (
 	./serverless
 	./serverless/author/post
+	./serverless/authors/get
 	./serverless/book/delete
 	./serverless/book/patch
 	./serverless/book/post
