@@ -54,6 +54,38 @@ resource "google_api_gateway_api_config" "api_config" {
                 }
               }
             }
+            "/authors" : {
+              get : {
+                description : "Retrieves a list of authors from the database."
+                operationId : "getAuthors"
+                x-google-backend : {
+                  address : "${var.get_authors_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "A list of authors"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+              options : {
+                description : "Return headers required for CORS."
+                operationId : "optionsAuthors"
+                x-google-backend : {
+                  address : "${var.options_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "CORS success"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+            }
             "/book" : {
               delete : {
                 description : "Deletes a given book from the database."
