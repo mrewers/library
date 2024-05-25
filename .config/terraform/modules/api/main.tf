@@ -22,6 +22,38 @@ resource "google_api_gateway_api_config" "api_config" {
             description : "Routes for used by the library client application to interact with the serverless backend."
           }
           "paths" : {
+            "/author" : {
+              post : {
+                description : "Submits an author to be added to the database."
+                operationId : "postAuthor"
+                x-google-backend : {
+                  address : "${var.post_author_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "The id of the author"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+              options : {
+                description : "Return headers required for CORS."
+                operationId : "optionsAuthor"
+                x-google-backend : {
+                  address : "${var.options_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "CORS success"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+            }
             "/book" : {
               delete : {
                 description : "Deletes a given book from the database."

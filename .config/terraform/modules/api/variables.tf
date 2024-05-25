@@ -23,6 +23,11 @@ variable "patch_book_url" {
   type        = string
 }
 
+variable "post_author_url" {
+  description = "The invokation URL for the post-author cloud function."
+  type        = string
+}
+
 variable "post_book_url" {
   description = "The invokation URL for the post-book cloud function."
   type        = string

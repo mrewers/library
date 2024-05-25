@@ -2,7 +2,6 @@ package addauthor
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -20,13 +19,17 @@ func postAuthor(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Print("Error decoding request body.")
-		fmt.Fprint(w, "Unable to decode body.")
+		log.Print(err.Error())
+		utils.SendResponse("Unable to decode body.", w)
 		return
 	}
 
-	body.AddAuthor()
+	id := body.AddAuthor()
 
-	fmt.Fprint(w, "book")
+	utils.SendResponse(
+		map[string]interface{}{"id": id},
+		w,
+	)
 }
 
 func init() {

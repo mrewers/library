@@ -23,6 +23,11 @@ output "patch_book_url" {
   value       = google_cloudfunctions2_function.patch_book.url
 }
 
+output "post_author_url" {
+  description = "The invokation URL for the post-author cloud function."
+  value       = module.post_author.invokation_url
+}
+
 output "post_book_url" {
   description = "The invokation URL for the post-book cloud function."
   value       = google_cloudfunctions2_function.post_book.url

@@ -60,6 +60,7 @@ module "api" {
   get_books_url     = module.functions.get_books_url
   get_readers_url   = module.functions.get_readers_url
   patch_book_url    = module.functions.patch_book_url
+  post_author_url   = module.functions.post_author_url
   post_book_url     = module.functions.post_book_url
   post_readers_url  = module.functions.post_readers_url
   put_readers_url   = module.functions.put_readers_url
