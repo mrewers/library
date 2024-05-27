@@ -1,0 +1,7 @@
+{
+  "name": "@mrewers/library",
+  "packageManager": "yarn@4.2.2",
+  "workspaces": [
+    "web"
+  ]
+}
