@@ -4,9 +4,12 @@ import { A } from '@solidjs/router';
 
 import Checkmark from 'components/Checkmark/Checkmark';
 
-import { containsReader, getSelectedReaderData } from 'utils/readers';
+import { useAuthors } from 'context/AuthorProvider';
 import { useFilters } from 'context/FilterProvider';
 import { useReaders } from 'context/ReaderProvider';
+
+import { containsReader, getSelectedReaderData } from 'utils/readers';
+import { getAuthorFullNames } from 'utils/authors';
 
 import s from './ListItem.module.scss';
 
@@ -15,6 +18,7 @@ interface IListItemProps {
 }
 
 const ListItem: Component<IListItemProps> = (props) => {
+  const [authorList] = useAuthors();
   const [filters] = useFilters();
   const [readerList] = useReaders();
 
@@ -48,9 +52,11 @@ const ListItem: Component<IListItemProps> = (props) => {
         </Show>
         <p class={s.text} id={props.item.id}>
           <strong id={props.item.id}>{props.item.title}</strong>
-          { props.item.author && (
-            <span class={s.author} id={props.item.id}>{` - ${props.item.author}`}</span>
-          ) }
+          <Show when={props.item.author && props.item.author?.length > 0 }>
+            <span class={s.author} id={props.item.id}>
+              {` - ${getAuthorFullNames(props.item.author || [], authorList)}`}
+            </span>
+          </Show>
         </p>
       </A>
     </article>

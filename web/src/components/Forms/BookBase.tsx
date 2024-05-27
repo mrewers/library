@@ -6,6 +6,9 @@ import Overlay from 'components/Overlay/Overlay';
 import TypeAhead from 'components/TypeAhead/TypeAhead';
 
 import { useReaders } from 'context/ReaderProvider';
+import { useAuthors } from 'context/AuthorProvider';
+
+import { authorSuggestions, getAuthorFullNames } from 'utils/authors';
 
 import s from './Form.module.scss';
 
@@ -26,8 +29,8 @@ interface IBookBaseProps {
 }
 
 const BookBase: Component<IBookBaseProps> = (props) => {
+  const [authorList] = useAuthors();
   const [readerList] = useReaders();
-  const sug = [{id: '1', name: 'Test'}, {id: '2', name: 'Author'}, {id: '3', name: 'Test2'}]
 
   return (
     <form class={props.classes ? `${s.form} ${s[props.classes]}` : s.form}>
@@ -51,11 +54,12 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           onInput={props.onInput}
         />
       </label>
-      <label class={s.label} for="author">
+      <label class={s.label} for="type-ahead-author">
         Author(s):
         <TypeAhead
           name="author"
-          suggestions={sug}
+          selected={authorSuggestions.fromIds(props.book.author || [], authorList)}
+          suggestions={authorSuggestions.fromAuthors(authorList)}
           onChange={props.onAuthor}
           disabled={props.readonly || false}
         />

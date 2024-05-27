@@ -9,16 +9,12 @@ import type { Component } from 'solid-js';
 
 import s from './TypeAhead.module.scss';
 
-interface ISuggestion {
-  id: string
-  name: string
-}
-
 interface ITypeAheadProps {
   disabled?: boolean
   name: string
   onChange: (selected: string[]) => void
-  suggestions: ISuggestion[]
+  selected: ITypeAheadSuggestion[]
+  suggestions: ITypeAheadSuggestion[]
   placeholder?: string
 }
 
@@ -31,6 +27,7 @@ interface ITypeAheadProps {
  * @param props.disabled Whether or not to disable user inputs.
  * @param props.name The value by which to reference this input.
  * @param props.onChange A function that passes user inputs to the parent.
+ * @param props.selected The list of pre-selected options for the type-ahead.
  * @param props.suggestions The list of options for the type-ahead.
  * @param props.placeholder The optional sample text that should appear in the input field when empty.
  * @returns A JSX component.
@@ -38,12 +35,12 @@ interface ITypeAheadProps {
 const TypeAhead: Component<ITypeAheadProps> = (props) => {
   // State to manage user input and selections.
   const [userInput, setUserInput] = createSignal('');
-  const [selected, setSelected] = createSignal([] as ISuggestion[]);
-  const [nestedInput, setNestedInput] = createSignal({} as {firstName: string, lastName: string})
+  const [selected, setSelected] = createSignal([] as ITypeAheadSuggestion[]);
+  const [nestedInput, setNestedInput] = createSignal({} as {nameFirst: string, nameLast: string})
 
   // State to manage the options in the suggestions dropdown.
-  const [availableSuggestions, setAvailableSuggestions] = createSignal([] as ISuggestion[]);
-  const [filteredSuggestions, setFilteredSuggestions] = createSignal([] as ISuggestion[]);
+  const [availableSuggestions, setAvailableSuggestions] = createSignal([] as ITypeAheadSuggestion[]);
+  const [filteredSuggestions, setFilteredSuggestions] = createSignal([] as ITypeAheadSuggestion[]);
 
   // State to manage the UI.
   const [activeSuggestion, setActiveSuggestion] = createSignal(0);
@@ -53,6 +50,8 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   const [nestedError, setNestedError] = createSignal(false);
 
   createEffect(() => setAvailableSuggestions(props.suggestions));
+
+  createEffect(() => setSelected(props.selected));
 
   /**
    * Hide the suggestions dropdown.
@@ -113,7 +112,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   const closeNestedForm = () => {
     setShowNestedForm(false);
     setNestedError(false);
-    setNestedInput( { firstName: "", lastName: "" } );
+    setNestedInput( { nameFirst: "", nameLast: "" } );
   }
 
   const handleNestedInput = ({currentTarget}: Event) => {
@@ -132,7 +131,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
     if ( data?.id ) {
       const author = {
         id: data.id,
-        name: `${nestedInput().firstName} ${nestedInput().lastName}`
+        name: `${nestedInput().nameFirst} ${nestedInput().nameLast}`
       }
 
       setSelected([...selected(), author]);
@@ -261,7 +260,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
         <input
           autocomplete="off"
           class={s.input}
-          id="type-ahead"
+          id={`type-ahead-${props.name}`}
           name={props.name}
           placeholder={props.placeholder || ""}
           readonly={props.disabled || false}
@@ -313,11 +312,11 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
             <div class={s['nested-content']}>
               <label>
                 First Name:
-                <input autofocus name="firstName" type="text" onInput={handleNestedInput}/>
+                <input autofocus name="nameFirst" type="text" onInput={handleNestedInput}/>
               </label>
               <label>
                 Last Name:
-                <input name="lastName" type="text" onInput={handleNestedInput}/>
+                <input name="nameLast" type="text" onInput={handleNestedInput}/>
               </label>
             </div>
             <Show when={nestedError()}>

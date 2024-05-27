@@ -5,9 +5,9 @@ declare module '*.svg';
 declare global {
   interface IAuthor {
     readonly id: string;
-    readonly firstName: string;
-    readonly fullName: string;
-    readonly lastName: string;
+    readonly nameFirst?: string;
+    readonly nameFull?: string;
+    readonly nameLast?: string;
   }
 
   interface IBook {
@@ -36,6 +36,11 @@ declare global {
     readonly all: number;
     readonly read: number;
     readonly unread: number;
+  }
+
+  interface ITypeAheadSuggestion {
+    id: string
+    name: string
   }
 
   /* eslint-disable @typescript-eslint/no-type-alias */

@@ -66,11 +66,7 @@ const ReaderProvider: Component<IReaderProviderProps> = (props) => {
    * Retrieves the data for a given reader from the reader list by id.
    * @param id The unique id for a given reader.
    */
-  const getReader = (id:string) => {
-    const reader = readerList.filter(r => r.id === id);
-
-    return reader[0];
-  }
+  const getReader = (id:string) => readerList.find(r => r.id === id);
 
   /**
    * Updates an existing reader in the list with new data.

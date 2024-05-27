@@ -63,6 +63,10 @@ const EditBook: Component<IEditBookProps> = (props) => {
    * @param ids A list of author ids to be associated with the book.
    */
   const onAuthor = (ids: string[]): void => {
+    if (!modifiedFields().includes('author')) {
+      setModifiedFields([...modifiedFields(), 'author'])
+    }
+
     setBook({
       ...book(),
       author: ids,

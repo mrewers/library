@@ -53,7 +53,7 @@ type TBookStore = [
  */
 const createNewBook = (): IBook => {
   return {
-    author: '',
+    author: [],
     dateAcquired: getDateString(),
     readBy: [],
     retired: false,
@@ -130,11 +130,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
    * Retrieves the data for a given book from the full list by id.
    * @param id The unique id for a given book.
    */
-  const getBook = (id:string) => {
-    const book = fullList.filter(b => b.id === id);
-
-    return book[0];
-  }
+  const getBook = (id:string) => fullList.find(b => b.id === id);
 
   /**
    * Removes the book with a given id from the full list of books.

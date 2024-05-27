@@ -6,6 +6,7 @@ import { createEffect, createSignal } from 'solid-js';
 
 import App from 'components/App';
 
+import { AuthorProvider } from 'context/AuthorProvider';
 import { BookProvider } from 'context/BookProvider';
 import { FilterProvider } from 'context/FilterProvider';
 import { ReaderProvider } from 'context/ReaderProvider';
@@ -21,9 +22,11 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 }
 
 const Library = () => {
+  const [authors, setAuthors] = createSignal([] as IAuthor[])
   const [books, setBooks] = createSignal([] as IBook[])
   const [readers, setReaders] = createSignal([] as IReader[])
 
+  const [loadingAuthors, setLoadingAuthors] = createSignal(true);
   const [loadingBooks, setLoadingBooks] = createSignal(true);
   const [loadingReaders, setLoadingReaders] = createSignal(true);
 
@@ -33,6 +36,15 @@ const Library = () => {
     if (data) {
       setReaders(data);
       setLoadingReaders(false);
+    }
+  });
+
+  createEffect(async () => {
+    const { data } = await buildQuery('authors', null);
+
+    if (data) {
+      setAuthors(data);
+      setLoadingAuthors(false);
     }
   });
 
@@ -48,9 +60,11 @@ const Library = () => {
   return (
   <ReaderProvider loading={loadingReaders()} readers={readers()}>
     <BookProvider loading={loadingBooks()} books={books()}>
-      <FilterProvider>
-        <App />
-      </FilterProvider>
+      <AuthorProvider loading={loadingAuthors()} authors={authors()}>
+        <FilterProvider>
+          <App />
+        </FilterProvider>
+      </AuthorProvider>
     </BookProvider>
   </ReaderProvider>
 )};
