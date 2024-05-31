@@ -56,6 +56,11 @@ declare global {
       NODE_ENV: 'development' | 'production' | 'test';
     }
   }
+
+  // Extend the window object to allow for easy access to our debugger function.
+  interface Window {
+    debug: (data?: any, note?: string) => void;
+  }
 }
 
 export {};

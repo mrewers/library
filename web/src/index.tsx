@@ -12,6 +12,7 @@ import { FilterProvider } from 'context/FilterProvider';
 import { ReaderProvider } from 'context/ReaderProvider';
 
 import { buildQuery } from 'utils/api';
+import { debug } from 'utils/debug';
 
 const root = document.getElementById('root');
 
@@ -22,6 +23,11 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 }
 
 const Library = () => {
+  // Add our custom debugger function to the window object when in development mode.
+  if ( import.meta.env.DEV ) {
+    window.debug = debug;
+  }
+
   const [authors, setAuthors] = createSignal([] as IAuthor[])
   const [books, setBooks] = createSignal([] as IBook[])
   const [readers, setReaders] = createSignal([] as IReader[])
