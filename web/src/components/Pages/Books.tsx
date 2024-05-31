@@ -1,12 +1,14 @@
-import type { Component } from 'solid-js';
 import { Show } from 'solid-js'
 import { createStore } from 'solid-js/store';
 
 import Filter from 'components/Filter/Filter';
 import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
+
 import { useBooks } from 'context/BookProvider';
 import { useFilters } from 'context/FilterProvider';
+
+import type { Component } from 'solid-js';
 
 import s from './Pages.module.scss';
 
@@ -20,7 +22,7 @@ const Books: Component = () => {
     }
     
     return bookList().filtered.findIndex(i => i.id === filters.reader());
-  })
+  });
 
   return (
     <Layout>

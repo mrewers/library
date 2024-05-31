@@ -98,6 +98,7 @@ const AddBook: Component<IAddBookProps> = (props) => {
     <BookBase
       book={book()}
       classes="add"
+      isModified={!!book().title}
       label={props.label}
       overlayText={overlayText()}
       saving={saving()}

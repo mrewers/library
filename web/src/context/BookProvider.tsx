@@ -1,10 +1,12 @@
 import { createContext, createEffect, createMemo, createSignal, useContext } from 'solid-js';
 import {createStore} from 'solid-js/store';
-import type { Component, JSX } from 'solid-js';
+
+import { useReaders } from './ReaderProvider';
 
 import { getDateString } from 'utils/dates';
 import { filterRetired, getRead, getUnread } from 'utils/list-filters';
-import { useReaders } from './ReaderProvider';
+
+import type { Component, JSX } from 'solid-js';
 
 interface IBookProviderProps {
   readonly books: IBook[]
@@ -43,7 +45,6 @@ type TBookStore = [
     getBook: (id: string) => IBook,
     isBooksLoading: () => boolean,
     removeBook: (id: string) => void,
-    retireBook: (id: string) => void,
     updateBook: (id: string, value: IBook) => void,
   }
 ]
@@ -75,7 +76,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
   createEffect(() => setFullList(props.books));
 
   createEffect(() => setIsBooksLoading(props.loading));
-  
+
   const [bookList] = createStore(createMemo(() => {
     const [active, retired] = filterRetired(fullList);
 
@@ -146,7 +147,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
    * @param value The updated book data.
    */
   const updateBook = (id: string, value: IBook) => {
-    const attributes = Object.entries(value).slice(1);
+    const attributes = Object.entries(value);
 
     attributes.forEach( attr => {
       setFullList(
@@ -155,16 +156,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
         attr[0],
         attr[1]
       )
-    })
-  }
-
-  const retireBook = (id: string) => {
-    setFullList(
-      book => book.id === id,
-      // @ts-ignore
-      'retired',
-      true
-    )
+    });
   }
 
   const bookStore = [
@@ -175,7 +167,6 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
       getBook,
       isBooksLoading,
       removeBook,
-      retireBook,
       updateBook,
     }
   ]

@@ -3,9 +3,11 @@ import { createSignal } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 
 import BookBase from './BookBase';
+
+import { useBooks } from 'context/BookProvider';
+
 import { buildQuery } from 'utils/api';
 import { handleFormInput } from 'utils/form-helpers';
-import { useBooks } from 'context/BookProvider';
 
 interface IEditBookProps {
   readonly id: string;
@@ -19,7 +21,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
   const [overlayText, setOverlayText] = createSignal('Saving..');
   const [saving, setSaving] = createSignal(false);
 
-  const [_, {getBook, removeBook, retireBook, updateBook}] = useBooks();
+  const [_, {getBook, removeBook, updateBook}] = useBooks();
 
   const [book, setBook] = createSignal(getBook(props.id));
   const [modifiedFields, setModifiedFields] = createSignal([] as string[])
@@ -161,15 +163,16 @@ const EditBook: Component<IEditBookProps> = (props) => {
     <BookBase
       book={book()}
       label={props.label}
-      overlayText={overlayText()}
-      saving={saving()}
+      isModified={modifiedFields().length > 0}
       onAuthor={onAuthor}
       onCancel={onCancel}
       onDelete={onDelete}
       onInput={onInput}
       onRetire={onRetire}
       onSubmit={onSubmit}
+      overlayText={overlayText()}
       readonly={props.readonly}
+      saving={saving()}
     />
   );
 };

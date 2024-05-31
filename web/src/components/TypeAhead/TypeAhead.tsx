@@ -1,21 +1,19 @@
 import { createEffect, createSignal, For, Show } from 'solid-js';
 
-import Button from 'components/Button/Button';
-import Overlay from 'components/Overlay/Overlay';
+import Author from 'components/Forms/Author';
 
-import { buildQuery } from 'utils/api';
-
-import type { Component } from 'solid-js';
+import type { Component, JSX } from 'solid-js';
 
 import s from './TypeAhead.module.scss';
 
 interface ITypeAheadProps {
-  disabled?: boolean
-  name: string
-  onChange: (selected: string[]) => void
-  selected: ITypeAheadSuggestion[]
-  suggestions: ITypeAheadSuggestion[]
-  placeholder?: string
+  readonly children?: JSX.Element
+  readonly disabled?: boolean
+  readonly name: string
+  readonly onChange: (selected: string[]) => void
+  readonly selected: ITypeAheadSuggestion[]
+  readonly suggestions: ITypeAheadSuggestion[]
+  readonly placeholder?: string
 }
 
 /**
@@ -36,7 +34,6 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   // State to manage user input and selections.
   const [userInput, setUserInput] = createSignal('');
   const [selected, setSelected] = createSignal([] as ITypeAheadSuggestion[]);
-  const [nestedInput, setNestedInput] = createSignal({} as {nameFirst: string, nameLast: string})
 
   // State to manage the options in the suggestions dropdown.
   const [availableSuggestions, setAvailableSuggestions] = createSignal([] as ITypeAheadSuggestion[]);
@@ -46,10 +43,21 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   const [activeSuggestion, setActiveSuggestion] = createSignal(0);
   const [showSuggestions, setShowSuggestions] = createSignal(false);
   const [showNestedForm, setShowNestedForm] = createSignal(false);
-  const [nestedSaving, setNestedSaving] = createSignal(false);
-  const [nestedError, setNestedError] = createSignal(false);
 
-  createEffect(() => setAvailableSuggestions(props.suggestions));
+  createEffect(() => {
+    let suggestions = [];
+
+    // Filter out already selected suggestions.
+    if (props.selected && props.selected.length > 0) {
+      const ids = props.selected.map( s => s.id );
+
+      suggestions = props.suggestions.filter( s => !ids.includes(s.id));
+    } else {
+      suggestions = props.suggestions;
+    }
+
+    setAvailableSuggestions(suggestions)
+  });
 
   createEffect(() => setSelected(props.selected));
 
@@ -67,6 +75,21 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
   const resetUI = () => {
     resetSuggestions();
     setUserInput('');
+  }
+
+  /**
+   * Displays the nested form.
+   */
+  const openNestedForm = () => {
+    setShowNestedForm(true);
+  }
+
+  /**
+   * Hides the nested form and resets the user input.
+   */
+  const closeNestedForm = () => {
+    setUserInput('');
+    setShowNestedForm(false);
   }
 
   /**
@@ -102,43 +125,6 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
     // Activate the suggestions dropdown.
     setActiveSuggestion(0);
     setShowSuggestions(true);
-  }
-
-  const openNestedForm = () => {
-    setUserInput('');
-    setShowNestedForm(true);
-  }
-
-  const closeNestedForm = () => {
-    setShowNestedForm(false);
-    setNestedError(false);
-    setNestedInput( { nameFirst: "", nameLast: "" } );
-  }
-
-  const handleNestedInput = ({currentTarget}: Event) => {
-    const { name, value } = currentTarget as HTMLInputElement;
-
-    setNestedInput( {...nestedInput(), [name]: value } );
-  }
-
-  const saveAuthor = async () => {
-    setNestedSaving(true);
-
-    const { data } = await buildQuery( 'author', nestedInput(), 'POST' );
-
-    setNestedSaving(false);
-
-    if ( data?.id ) {
-      const author = {
-        id: data.id,
-        name: `${nestedInput().nameFirst} ${nestedInput().nameLast}`
-      }
-
-      setSelected([...selected(), author]);
-      closeNestedForm();
-    } else {
-      setNestedError(false);
-    }
   }
 
   /**
@@ -239,6 +225,17 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
     }
   }
 
+  /**
+   * Updates the local UI and context with the selected author.
+   * @param author The author selected from the dropdown suggestion list.
+   */
+  const handleNewAuthor = (author: ITypeAheadSuggestion) => {
+    setSelected([...selected(), author]);
+    setAvailableSuggestions(availableSuggestions().filter( sug => sug.id !== author.id));
+
+    props.onChange(selected().map( sel => sel.id ));
+  }
+
   return (
     <div class={s.container}>
       <div class={s.pills}>
@@ -305,35 +302,11 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
           </ul>
         </Show>
         <Show when={showNestedForm()}>
-          <form class={s['nested-form']}>
-            <Show when={nestedSaving()}>
-              <Overlay nested text="Saving..." />
-            </Show>
-            <div class={s['nested-content']}>
-              <label>
-                First Name:
-                <input autofocus name="nameFirst" type="text" onInput={handleNestedInput}/>
-              </label>
-              <label>
-                Last Name:
-                <input name="nameLast" type="text" onInput={handleNestedInput}/>
-              </label>
-            </div>
-            <Show when={nestedError()}>
-              <span>Something went wrong, failed to save.</span>
-            </Show>
-            <div class={s['nested-controls']}>
-              <Button
-                label="Add Author"
-                onClick={saveAuthor}
-              />
-              <Button
-                label="Cancel"
-                onClick={closeNestedForm}
-                color='plain'
-              />
-            </div>
-          </form>
+          <Author
+            input={userInput()}
+            onClose={closeNestedForm}
+            onSave={handleNewAuthor}
+          />
         </Show>
       </div>
     </div>

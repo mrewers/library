@@ -14,6 +14,11 @@ import (
 func prepUpdates(book utils.Book) []firestore.Update {
 	var updates []firestore.Update
 
+	if book.Author != nil {
+		update := utils.FirestorePrepUpdate("author", book.Author)
+		updates = append(updates, update)
+	}
+
 	if book.DateAcquired != "" {
 		update := utils.FirestorePrepUpdate("dateAcquired", book.NormalizeDate())
 		updates = append(updates, update)

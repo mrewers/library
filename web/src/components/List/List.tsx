@@ -1,9 +1,10 @@
 import { For, Show } from 'solid-js';
-import type { Component, JSX } from 'solid-js';
 
 import ListItem from 'components/ListItem/ListItem';
 
 import s from './List.module.scss';
+
+import type { Component, JSX } from 'solid-js';
 
 interface IListProps {
   readonly list: IBook[];

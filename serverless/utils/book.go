@@ -8,6 +8,7 @@ import (
 )
 
 type Book struct {
+	Author       []string   `json:"author,omitempty"`
 	DateAcquired string     `json:"dateAcquired,omitempty"`
 	DateCreated  string     `json:"dateCreated,omitempty"`
 	DateModified string     `json:"dateModified,omitempty"`
@@ -23,6 +24,7 @@ func (b Book) AddBook() string {
 	ts := time.Now()
 
 	doc := map[string]interface{}{
+		"author":       b.Author,
 		"dateAcquired": b.NormalizeDate(),
 		"dateCreated":  ts,
 		"dateModified": ts,

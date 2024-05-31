@@ -8,13 +8,14 @@ import TypeAhead from 'components/TypeAhead/TypeAhead';
 import { useReaders } from 'context/ReaderProvider';
 import { useAuthors } from 'context/AuthorProvider';
 
-import { authorSuggestions, getAuthorFullNames } from 'utils/authors';
+import { authorSuggestions } from 'utils/authors';
 
 import s from './Form.module.scss';
 
 interface IBookBaseProps {
   readonly book: IBook;
   readonly classes?: string;
+  readonly isModified: boolean;
   readonly label?: string;
   readonly loading?: boolean;
   readonly onAuthor: (ids: string[]) => void;
@@ -31,6 +32,14 @@ interface IBookBaseProps {
 const BookBase: Component<IBookBaseProps> = (props) => {
   const [authorList] = useAuthors();
   const [readerList] = useReaders();
+
+  const disableSubmit = () => {
+    if ( props.readonly || !props.isModified ) {
+      return true;
+    }
+
+    return false
+  }
 
   return (
     <form class={props.classes ? `${s.form} ${s[props.classes]}` : s.form}>
@@ -132,7 +141,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           <Button
             classes={s.button}
             color="light"
-            disabled={props.readonly || false}
+            disabled={disableSubmit()}
             label="Submit"
             type="submit"
             onClick={props.onSubmit}
