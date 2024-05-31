@@ -1,16 +1,17 @@
-import { useLocation } from "@solidjs/router";
 import { Show } from 'solid-js';
-import type { Component } from 'solid-js';
+import { useLocation } from "@solidjs/router";
 
-import { calcPercentOf, getReaders } from 'utils/stats';
-import { getListStats } from 'utils/list-filters';
-import { getReaderName } from 'utils/readers';
 import { useBooks } from 'context/BookProvider';
 import { useFilters } from 'context/FilterProvider';
 import { useReaders } from 'context/ReaderProvider';
 
-import s from './StatsWidget.module.scss';
+import { calcPercentOf, getReaders } from 'utils/stats';
+import { getListStats } from 'utils/list-filters';
+import { getReaderName } from 'utils/readers';
 
+import type { Component } from 'solid-js';
+
+import s from './StatsWidget.module.scss';
 
 const StatsWidget: Component = () => {
   const [bookList] = useBooks();

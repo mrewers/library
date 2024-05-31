@@ -1,11 +1,11 @@
 import { For } from 'solid-js';
-import type { Component, JSX } from 'solid-js';
 
 import Layout from 'components/Layout/Layout';
 
 import { useReaders } from 'context/ReaderProvider';
 import { useBooks } from 'context/BookProvider';
-import { getListStats } from 'utils/list-filters';
+
+import type { Component, JSX } from 'solid-js';
 
 import s from './Pages.module.scss';
 
@@ -30,7 +30,7 @@ const Stats: Component = () => {
             <tbody>
               <For each={readerList}>
                 { (r): JSX.Element => {
-                  const readerIndex = bookList().filtered.findIndex(i => i.name === r.name)
+                  const readerIndex = bookList().filtered.findIndex(i => i.name === r.name);
 
                   const read = bookList().filtered[readerIndex].read.length;
                   const unread = bookList().filtered[readerIndex].unread.length;

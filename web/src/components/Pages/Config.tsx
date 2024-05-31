@@ -1,11 +1,12 @@
 import { createEffect, createSignal, Show } from 'solid-js';
-import type { Component } from 'solid-js';
 
 import Readers from 'components/Forms/Readers';
 import Layout from 'components/Layout/Layout';
 import LoginPrompt from 'components/LoginPrompt/LoginPrompt';
 
 import { isLoggedIn } from 'utils/auth';
+
+import type { Component } from 'solid-js';
 
 import s from './Pages.module.scss';
 

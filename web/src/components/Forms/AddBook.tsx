@@ -72,7 +72,7 @@ const AddBook: Component<IAddBookProps> = (props) => {
 
     setSaving(true);
 
-    const { data } = await buildQuery('book', {...book()}, 'POST')
+    const { data } = await buildQuery('book', {...book()}, 'POST');
 
     setSaving(false);
 

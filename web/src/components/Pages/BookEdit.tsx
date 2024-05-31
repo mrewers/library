@@ -1,12 +1,13 @@
 import { createEffect, createSignal, Show } from 'solid-js';
 import { useParams } from "@solidjs/router";
-import type { Component } from 'solid-js';
 
 import EditBook from 'components/Forms/EditBook';
 import Layout from 'components/Layout/Layout';
 import LoginPrompt from 'components/LoginPrompt/LoginPrompt';
 
 import { isLoggedIn } from 'utils/auth';
+
+import type { Component } from 'solid-js';
 
 import s from './Pages.module.scss';
 

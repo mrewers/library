@@ -56,7 +56,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
       suggestions = props.suggestions;
     }
 
-    setAvailableSuggestions(suggestions)
+    setAvailableSuggestions(suggestions);
   });
 
   createEffect(() => setSelected(props.selected));
@@ -154,7 +154,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
         ? filteredSuggestions().length // If reached the first item, loop to the bottom of list.
         : activeSuggestion() - 1;
 
-      setActiveSuggestion(newIndex)
+      setActiveSuggestion(newIndex);
     }
 
     // Navigate directly to the start of the suggestions list.

@@ -33,12 +33,16 @@ const BookBase: Component<IBookBaseProps> = (props) => {
   const [authorList] = useAuthors();
   const [readerList] = useReaders();
 
+  /**
+   * Determine whether the form submit button is enabled.
+   * @returns Whether or not to disable the submit button.
+   */
   const disableSubmit = () => {
     if ( props.readonly || !props.isModified ) {
       return true;
     }
 
-    return false
+    return false;
   }
 
   return (

@@ -23,5 +23,5 @@ export const handleFormInput = (
       break;
   }
 
-  return [name, val]
+  return [name, val];
 }

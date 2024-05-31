@@ -20,7 +20,7 @@ const Books: Component = () => {
     if ( filters.reader() === 'all' || filters.reader() === 'any' ) {
       return filters.reader();
     }
-    
+
     return bookList().filtered.findIndex(i => i.id === filters.reader());
   });
 

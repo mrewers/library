@@ -82,7 +82,7 @@ const ReaderProvider: Component<IReaderProviderProps> = (props) => {
         // @ts-ignore
         attr[0],
         attr[1]
-      )
+      );
     });
   }
 
@@ -109,5 +109,5 @@ const useReaders = () => useContext(ReaderContext) as TReaderStore;
 
 export {
   ReaderProvider,
-  useReaders
+  useReaders,
 };

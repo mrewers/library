@@ -58,15 +58,16 @@ const Library = () => {
   });
 
   return (
-  <ReaderProvider loading={loadingReaders()} readers={readers()}>
-    <BookProvider loading={loadingBooks()} books={books()}>
-      <AuthorProvider loading={loadingAuthors()} authors={authors()}>
-        <FilterProvider>
-          <App />
-        </FilterProvider>
-      </AuthorProvider>
-    </BookProvider>
-  </ReaderProvider>
-)};
+    <ReaderProvider loading={loadingReaders()} readers={readers()}>
+      <BookProvider loading={loadingBooks()} books={books()}>
+        <AuthorProvider loading={loadingAuthors()} authors={authors()}>
+          <FilterProvider>
+            <App />
+          </FilterProvider>
+        </AuthorProvider>
+      </BookProvider>
+    </ReaderProvider>
+  )
+};
 
 render( Library, root! );

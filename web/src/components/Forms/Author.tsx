@@ -79,7 +79,7 @@ const Author: Component<IAuthorProps> = (props) => {
 
       addAuthor({...input(), id: data.id, nameFull});
 
-      props.onSave(author)
+      props.onSave(author);
 
       closeForm();
     } else {
@@ -95,7 +95,8 @@ const Author: Component<IAuthorProps> = (props) => {
       <div class={s['nested-content']}>
         <label>
           First Name:
-          <input autofocus 
+          <input
+            autofocus
             name="nameFirst"
             type="text"
             value={input().nameFirst}

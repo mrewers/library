@@ -24,7 +24,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
   const [_, {getBook, removeBook, updateBook}] = useBooks();
 
   const [book, setBook] = createSignal(getBook(props.id));
-  const [modifiedFields, setModifiedFields] = createSignal([] as string[])
+  const [modifiedFields, setModifiedFields] = createSignal([] as string[]);
 
   // const resetOverlay = (msg: string, close = false): void => {
   //   setOverlayText(msg);
@@ -51,7 +51,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
 
     // Keep track of which fields have been updated.
     if (!modifiedFields().includes(name)) {
-      setModifiedFields([...modifiedFields(), name])
+      setModifiedFields([...modifiedFields(), name]);
     }
 
     setBook({
@@ -66,7 +66,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
    */
   const onAuthor = (ids: string[]): void => {
     if (!modifiedFields().includes('author')) {
-      setModifiedFields([...modifiedFields(), 'author'])
+      setModifiedFields([...modifiedFields(), 'author']);
     }
 
     setBook({
@@ -144,7 +144,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
 
     await buildQuery(`book?id=${props.id}`, null, 'DELETE');
 
-    removeBook(props.id)
+    removeBook(props.id);
 
     // resetOverlay('Successfully Deleted!', true);
     setSaving(false);
