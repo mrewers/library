@@ -23,6 +23,29 @@ resource "google_api_gateway_api_config" "api_config" {
           }
           "paths" : {
             "/author" : {
+              patch : {
+                description : "Updates a given author in the database."
+                operationId : "patchAuthor"
+                x-google-backend : {
+                  address : "${var.patch_author_url}"
+                }
+                parameters : [
+                  {
+                    in : "query"
+                    name : "id"
+                    required : true
+                    type : "string"
+                  }
+                ]
+                responses : {
+                  "200" : {
+                    description : "A success message."
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
               post : {
                 description : "Submits an author to be added to the database."
                 operationId : "postAuthor"

@@ -23,6 +23,11 @@ variable "get_readers_url" {
   type        = string
 }
 
+variable "patch_author_url" {
+  description = "The invocation URL for the patch-author cloud function."
+  type        = string
+}
+
 variable "patch_book_url" {
   description = "The invocation URL for the patch-book cloud function."
   type        = string
