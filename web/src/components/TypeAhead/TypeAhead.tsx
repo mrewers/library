@@ -169,6 +169,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
 
     // Select the highlighted suggestion.
     if ( key === 'Enter' ) {
+      e.preventDefault();
       if ( activeSuggestion() === filteredSuggestions().length ) {
         openNestedForm();
       } else {
