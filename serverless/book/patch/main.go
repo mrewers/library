@@ -11,7 +11,7 @@ import (
 	"github.com/mrewers/library/serverless/utils"
 )
 
-func prepUpdates(book utils.Book) []firestore.Update {
+func prepBookUpdates(book utils.Book) []firestore.Update {
 	var updates []firestore.Update
 
 	if book.Author != nil {
@@ -61,8 +61,8 @@ func patchBook(w http.ResponseWriter, r *http.Request) {
 	id := params.Get("id")
 
 	if id == "" {
-		log.Print("Error retrieving readers")
-		utils.SendResponse("Not id provided", w)
+		log.Print("Error retrieving book")
+		utils.SendResponse("No id provided", w)
 	}
 
 	// Parse the updates.
@@ -77,7 +77,7 @@ func patchBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = utils.UpdateBook(id, prepUpdates(body))
+	err = utils.UpdateBook(id, prepBookUpdates(body))
 
 	if err != nil {
 		log.Printf("Failed to update book - %s.", id)

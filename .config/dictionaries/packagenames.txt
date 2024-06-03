@@ -7,5 +7,6 @@ deletereader
 getauthors
 getbooks
 getreaders
+updateauthor
 updatebook
 updatereaders

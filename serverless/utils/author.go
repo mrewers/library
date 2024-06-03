@@ -4,14 +4,17 @@ import (
 	"fmt"
 	"log"
 	"time"
+
+	"cloud.google.com/go/firestore"
 )
 
 type Author struct {
-	NameFirst    string `json:"nameFirst,omitempty"`
-	NameFull     string `json:"nameFull,omitempty"`
-	NameLast     string `json:"nameLast,omitempty"`
-	DateCreated  string `json:"dateCreated,omitempty"`
-	DateModified string `json:"dateModified,omitempty"`
+	Books        []string `json:"books,omitempty"`
+	NameFirst    string   `json:"nameFirst,omitempty"`
+	NameFull     string   `json:"nameFull,omitempty"`
+	NameLast     string   `json:"nameLast,omitempty"`
+	DateCreated  string   `json:"dateCreated,omitempty"`
+	DateModified string   `json:"dateModified,omitempty"`
 }
 
 func (a Author) AddAuthor() string {
@@ -20,6 +23,7 @@ func (a Author) AddAuthor() string {
 	ts := time.Now()
 
 	doc := map[string]interface{}{
+		"books":        a.Books,
 		"dateCreated":  ts,
 		"dateModified": ts,
 		"nameFirst":    a.NameFirst,
@@ -48,4 +52,15 @@ func (a Author) FullName() string {
 	}
 
 	return first + last
+}
+
+// UpdateAuthor incrementally updates the author at the specified id with the provided values.
+func UpdateAuthor(id string, updates []firestore.Update) error {
+	err := firestoreUpdateDocument(id, updates, "authors")
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	return err
 }

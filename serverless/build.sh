@@ -13,6 +13,9 @@ function build {
 # Clear out old zip files.
 rm zips/*
 
+# Build the patch-author function.
+build author/patch patch-author
+
 # Build the post-author function.
 build author/post post-author
 
