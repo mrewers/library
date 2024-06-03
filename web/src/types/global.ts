@@ -5,6 +5,7 @@ declare module '*.svg';
 declare global {
   interface IAuthor {
     readonly id: string;
+    readonly books: string[];
     readonly nameFirst?: string;
     readonly nameFull?: string;
     readonly nameLast?: string;

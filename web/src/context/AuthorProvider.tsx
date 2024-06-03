@@ -1,8 +1,10 @@
 import { createContext, createEffect, createSignal, useContext } from 'solid-js';
 import {createStore} from 'solid-js/store';
-import type { Component, JSX } from 'solid-js';
 
 import { generateUuid } from 'utils/crypto';
+import { buildQuery } from 'utils/api';
+
+import type { Component, JSX } from 'solid-js';
 
 interface IAuthorProviderProps {
   readonly loading: boolean;
@@ -19,6 +21,7 @@ type TAuthorStore = [
     getAuthor: (id: string) => IAuthor,
     isAuthorsLoading: () => boolean,
     updateAuthor: (id: string, value: IAuthor) => void,
+    updateAuthorBooks: (id: string, bookId: string) => void,
   }
 ]
 
@@ -28,6 +31,7 @@ type TAuthorStore = [
 const createNewAuthor = (): IAuthor => {
   return {
     id: generateUuid(),
+    books: [],
     nameFirst: '',
     nameLast: '',
   }
@@ -85,6 +89,47 @@ const AuthorProvider: Component<IAuthorProviderProps> = (props) => {
     });
   }
 
+  /**
+   * Updates the list of books associated with an existing author in the list.
+   * If the author's list of books already contains the provided book it is
+   * removed, otherwise it is added.
+   * @param id The author's unique identifier.
+   * @param bookId The unique identifier of a book.
+   */
+  const updateAuthorBooks = async ( id: string, bookId: string ) => {
+    const author = authorList.find(a => a.id === id);
+
+    if ( !author?.books ) {
+      await buildQuery(`author?id=${id}`, {books: [bookId]}, 'PATCH')
+
+      setAuthorList(
+        author => author.id === id,
+        // @ts-ignore
+        'books',
+        [bookId],
+      );
+
+      return;
+    }
+
+    let update = [...author.books];
+
+    if ( update.includes( bookId ) ) {
+      update.splice( update.indexOf( bookId ) );
+    } else {
+      update.push( bookId );
+    }
+
+    await buildQuery(`author?id=${id}`, {books: update}, 'PATCH')
+
+    setAuthorList(
+      author => author.id === id,
+      // @ts-ignore
+      'books',
+      update,
+    );
+  }
+
   const authorStore = [
     authorList,
     {
@@ -94,6 +139,7 @@ const AuthorProvider: Component<IAuthorProviderProps> = (props) => {
       getAuthor,
       isAuthorsLoading,
       updateAuthor,
+      updateAuthorBooks,
     }
   ];
   

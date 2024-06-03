@@ -4,6 +4,7 @@ import { useNavigate } from '@solidjs/router';
 
 import BookBase from './BookBase';
 
+import { useAuthors } from 'context/AuthorProvider';
 import { useBooks } from 'context/BookProvider';
 
 import { buildQuery } from 'utils/api';
@@ -22,8 +23,10 @@ const EditBook: Component<IEditBookProps> = (props) => {
   const [saving, setSaving] = createSignal(false);
 
   const [_, {getBook, removeBook, updateBook}] = useBooks();
+  const [__, {updateAuthorBooks}] = useAuthors();
 
   const [book, setBook] = createSignal(getBook(props.id));
+  const [initialAuthors] = createSignal(getBook(props.id).author)
   const [modifiedFields, setModifiedFields] = createSignal([] as string[]);
 
   // const resetOverlay = (msg: string, close = false): void => {
@@ -88,6 +91,29 @@ const EditBook: Component<IEditBookProps> = (props) => {
   }
 
   /**
+   * Identify the authors that have been added to/removed from
+   * the book and update their respective list of books.
+   */
+  const updateAuthorAssociation = async () => {
+    const authors = book().author || [];
+    const initial = initialAuthors() || [];
+
+    const added = initial.length > 0
+      ? authors.filter(a => !initial.includes(a))
+      : authors;
+
+    const removed = initial.length > 0
+      ? initial.filter(a => !authors.includes(a))
+      : initial;
+
+    const merged = [...added, ...removed];
+
+    merged?.forEach( async a => {
+      await updateAuthorBooks(a, props.id);
+    });
+  }
+
+  /**
    * Handle the request to save form inputs.
    * @param e A button click event.
    */
@@ -101,7 +127,12 @@ const EditBook: Component<IEditBookProps> = (props) => {
 
       updateBook(props.id, book());
 
+      if ( modifiedFields().includes('author') ) {
+        await updateAuthorAssociation();
+      }
+
       setSaving(false);
+      setModifiedFields([]);
     }
   };
 
@@ -131,7 +162,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
 
   //   resetOverlay('Successfully Jettisoned!', true);
 
-    setSaving(true);
+    setSaving(false);
     navigate(retired ? '/retired' : '/');
   };
 
@@ -144,6 +175,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
 
     await buildQuery(`book?id=${props.id}`, null, 'DELETE');
 
+    await updateAuthorAssociation();
     removeBook(props.id);
 
     // resetOverlay('Successfully Deleted!', true);

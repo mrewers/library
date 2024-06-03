@@ -1,11 +1,15 @@
-import type { Component } from 'solid-js';
 import { createSignal } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 
 import BookBase from './BookBase';
+
 import { useBooks } from 'context/BookProvider';
+import { useAuthors } from 'context/AuthorProvider';
+
 import { buildQuery } from 'utils/api';
 import { handleFormInput } from 'utils/form-helpers';
+
+import type { Component } from 'solid-js';
 
 interface IAddBookProps {
   readonly label?: string;
@@ -15,6 +19,7 @@ const AddBook: Component<IAddBookProps> = (props) => {
   const navigate = useNavigate();
 
   const [_, { addBook, createNewBook }] = useBooks();
+  const [__, {updateAuthorBooks}] = useAuthors();
 
   const [book, setBook] = createSignal(createNewBook());
 
@@ -74,8 +79,6 @@ const AddBook: Component<IAddBookProps> = (props) => {
 
     const { data } = await buildQuery('book', {...book()}, 'POST');
 
-    setSaving(false);
-
     if ( data?.id ) {
       setBook({
         ...book(),
@@ -83,6 +86,15 @@ const AddBook: Component<IAddBookProps> = (props) => {
       });
 
       addBook(book());
+
+      if ( book().author ) {
+        book().author||[].forEach( async a => {
+          await updateAuthorBooks(a, data.id);
+        });
+      }
+
+      setSaving(false);
+
       navigate(`/book/${data.id}`);
     }
   };
