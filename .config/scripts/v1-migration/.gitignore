@@ -1,0 +1,8 @@
+# Compiled binary
+v1-migration
+
+# Credentials
+serviceAccountKey.json
+
+# Data
+raw-data.json
