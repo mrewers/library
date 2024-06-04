@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	filename = "raw-data.json"
+	exportFile = "data/raw.json"
 )
 
 // writeDocsToData retrieves all documents withing a given collection and appended them to the data object.
@@ -27,7 +27,7 @@ func writeDocsToData(data map[string]interface{}, collection string) map[string]
 // exportFirebaseToJSON retrieves the contents of all of the Firestore collections that make up
 // the v1 datastore. The contents of each collection are appended to a data object under a
 // property matching the collection name. This data object is then written to a JSON file name
-// 'raw-data.json' and stored in this directory.
+// 'raw.json' and stored in this data folder in this directory.
 func exportFirebaseToJSON() {
 	data := make(map[string]interface{})
 
@@ -41,7 +41,7 @@ func exportFirebaseToJSON() {
 		fmt.Println(err.Error())
 	}
 
-	fmt.Printf("\nWriting data to the file './%s'...", filename)
+	fmt.Printf("\nWriting data to the file './%s'...", exportFile)
 
-	os.WriteFile(filename, bytes, os.ModePerm)
+	os.WriteFile(exportFile, bytes, os.ModePerm)
 }

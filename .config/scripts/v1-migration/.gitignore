@@ -5,4 +5,4 @@ v1-migration
 serviceAccountKey.json
 
 # Data
-raw-data.json
+data/*.json

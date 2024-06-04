@@ -10,9 +10,9 @@ import (
 	"google.golang.org/api/option"
 )
 
-// openFirebaseConn uses a Firebase service account credentials to connect to Firestore.
-// The credentials should be provided as a JSON file called serviceAccountKey.json
-// in this package's directory.
+// openFirebaseConn uses a Firebase service account credentials to connect to the original
+// Firestore database for v1 of the application. The credentials should be provided as a
+// JSON file called serviceAccountKey.json in this package's directory.
 func openFirebaseConn(ctx context.Context) (*firestore.Client, error) {
 	opt := option.WithCredentialsFile("./serviceAccountKey.json")
 
