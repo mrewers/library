@@ -1,6 +1,14 @@
 package main
 
-import "strings"
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"slices"
+	"strings"
+
+	"github.com/mrewers/library/serverless/utils"
+)
 
 type V1Author struct {
 	NameFirst string
@@ -75,4 +83,64 @@ func extractAuthors(books []V1Book) []V1Author {
 	}
 
 	return authors
+}
+
+func findAuthorIndex(authors []utils.Author, name string) int {
+	for idx, author := range authors {
+		if author.NameFull == name {
+			return idx
+		}
+	}
+
+	return -1
+}
+
+// deDupAuthors iterates over a list of authors from the v1 database and merges those that
+// are listed multiple times, with each book added to an array of ids as expected by v2.
+func deDupAuthors() {
+	contents, err := os.ReadFile(authorFile)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	var authors []V1Author
+
+	err = json.Unmarshal(contents, &authors)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	var processed []string
+	var deduped []utils.Author
+
+	for _, author := range authors {
+		if !slices.Contains(processed, author.NameFull) {
+			// Author not found in processed list, add as is.
+			v2 := utils.Author{
+				NameFirst: author.NameFirst,
+				NameFull:  author.NameFull,
+				NameLast:  author.NameLast,
+				Books: []string{
+					author.Book,
+				},
+			}
+			deduped = append(deduped, v2)
+			processed = append(processed, author.NameFull)
+		} else {
+			// Author already processed, update it's books list.
+			index := findAuthorIndex(deduped, author.NameFull)
+
+			if index == -1 {
+				continue
+			} else {
+				deduped[index].Books = append(deduped[index].Books, author.Book)
+			}
+		}
+	}
+
+	writeDataFile(deduped, deDupAuthorFile, "de-duplicated authors")
 }

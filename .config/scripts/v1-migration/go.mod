@@ -2,9 +2,12 @@ module github.com/mrewers/library/scripts/v1-migration
 
 go 1.22.1
 
+replace github.com/mrewers/library/serverless => ../../../serverless
+
 require (
 	cloud.google.com/go/firestore v1.15.0
 	firebase.google.com/go v3.13.0+incompatible
+	github.com/mrewers/library/serverless v0.0.0-00010101000000-000000000000
 	google.golang.org/api v0.182.0
 )
 

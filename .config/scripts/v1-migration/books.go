@@ -7,9 +7,14 @@ import (
 	"github.com/mrewers/library/serverless/utils"
 )
 
+type BookListItem struct {
+	Id   string
+	Data utils.Book
+}
+
 // transformBookData converts a book's data retrieved from the v1 application
 // to the data structure expected for a book by v2 of the application.
-func transformBookData(book V1Book) utils.Book {
+func transformBookData(book V1Book) BookListItem {
 	// If the book was not added to the collection after initial setup,
 	// set the acquisition date to the some arbitrary date prior to v1 release.
 	acquired := "2020-01-01"
@@ -54,13 +59,16 @@ func transformBookData(book V1Book) utils.Book {
 		v2.Retired = &retired
 	}
 
-	return v2
+	return BookListItem{
+		Id:   book.Id,
+		Data: v2,
+	}
 }
 
 // createV2BookList converts the full list of books from
 // the v1 application to one that is compatible with v2.
-func createV2BookList(v1 AllBooks) []utils.Book {
-	var books []utils.Book
+func createV2BookList(v1 AllBooks) []BookListItem {
+	var books []BookListItem
 
 	// Transform all active books.
 	for _, book := range v1.Active {

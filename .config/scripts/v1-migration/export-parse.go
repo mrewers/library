@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	authorFile = "data/authors.json"
-	bookFile   = "data/books.json"
+	authorFile      = "data/authors.json"
+	deDupAuthorFile = "data/authors-deduped.json"
+	bookFile        = "data/books.json"
 )
 
 type V1Book struct {
@@ -34,6 +35,8 @@ func parseAuthors(books AllBooks) {
 	allAuthors := append(activeAuthors, retiredAuthors...)
 
 	writeDataFile(allAuthors, authorFile, "authors")
+
+	deDupAuthors()
 }
 
 // parseBooks generates a JSON file containing books in a format conforming to the v2 application.
@@ -49,6 +52,7 @@ func parseExportFile() {
 
 	if err != nil {
 		fmt.Println(err.Error())
+		return
 	}
 
 	var books AllBooks
