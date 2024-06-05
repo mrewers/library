@@ -4,6 +4,7 @@ import "strings"
 
 type V1Author struct {
 	NameFirst string
+	NameFull  string
 	NameLast  string
 	Book      string
 }
@@ -57,12 +58,13 @@ func extractAuthors(books []V1Book) []V1Author {
 		}
 
 		// Some books have multiple authors in a comma separated string.
-		list := strings.Split(book.Author, ", ")
+		list := strings.Split(strings.TrimSpace(book.Author), ", ")
 
 		for _, item := range list {
 			first, last := breakUpAuthorName(item)
 
 			author := V1Author{
+				NameFull:  item,
 				NameFirst: first,
 				NameLast:  last,
 				Book:      book.Id,

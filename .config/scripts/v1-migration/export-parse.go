@@ -8,6 +8,7 @@ import (
 
 const (
 	authorFile = "data/authors.json"
+	bookFile   = "data/books.json"
 )
 
 type V1Book struct {
@@ -25,6 +26,24 @@ type AllBooks struct {
 	Retired []V1Book `json:"retired,omitempty"`
 }
 
+// parseAuthors generates a JSON file containing authors in a format conforming to the v2 application.
+func parseAuthors(books AllBooks) {
+	activeAuthors := extractAuthors(books.Active)
+	retiredAuthors := extractAuthors(books.Retired)
+
+	allAuthors := append(activeAuthors, retiredAuthors...)
+
+	writeDataFile(allAuthors, authorFile, "authors")
+}
+
+// parseBooks generates a JSON file containing books in a format conforming to the v2 application.
+func parseBooks(books AllBooks) {
+	bookList := createV2BookList(books)
+
+	writeDataFile(bookList, bookFile, "books")
+}
+
+// parseExportFile transforms the raw export file into data usable by the v2 application.
 func parseExportFile() {
 	exportContents, err := os.ReadFile(exportFile)
 
@@ -38,20 +57,9 @@ func parseExportFile() {
 
 	if err != nil {
 		fmt.Println(err.Error())
+		return
 	}
 
-	activeAuthors := extractAuthors(books.Active)
-	retiredAuthors := extractAuthors(books.Retired)
-
-	allAuthors := append(activeAuthors, retiredAuthors...)
-
-	bytes, err := json.MarshalIndent(allAuthors, "", "  ")
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	fmt.Printf("\nWriting data to the file './%s'...", authorFile)
-
-	os.WriteFile(authorFile, bytes, os.ModePerm)
+	parseAuthors(books)
+	parseBooks(books)
 }

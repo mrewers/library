@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 )
 
 const (
@@ -35,13 +33,5 @@ func exportFirebaseToJSON() {
 	data = writeDocsToData(data, "retired")
 	data = writeDocsToData(data, "readers")
 
-	bytes, err := json.MarshalIndent(data, "", "  ")
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	fmt.Printf("\nWriting data to the file './%s'...", exportFile)
-
-	os.WriteFile(exportFile, bytes, os.ModePerm)
+	writeDataFile(data, exportFile, "raw export")
 }

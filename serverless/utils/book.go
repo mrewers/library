@@ -10,8 +10,8 @@ import (
 type Book struct {
 	Author       []string   `json:"author,omitempty"`
 	DateAcquired string     `json:"dateAcquired,omitempty"`
-	DateCreated  string     `json:"dateCreated,omitempty"`
-	DateModified string     `json:"dateModified,omitempty"`
+	DateCreated  *time.Time `json:"dateCreated,omitempty"`
+	DateModified *time.Time `json:"dateModified,omitempty"`
 	DateRestored *time.Time `json:"dateRestored,omitempty"`
 	DateRetired  *time.Time `json:"dateRetired,omitempty"`
 	ReadBy       []string   `json:"readBy,omitempty"`
@@ -45,19 +45,7 @@ func (b Book) AddBook() string {
 // NormalizeDate converts the book's acquired date to from the YYYY-MM-DD
 // format used by the client into a time.Time representation.
 func (b Book) NormalizeDate() time.Time {
-	var acquired time.Time
-
-	// Convert the provided acquisition date into a timestamp.
-	da, err := time.Parse("2006-01-02", b.DateAcquired)
-
-	if err != nil {
-		log.Println(err.Error())
-		acquired = time.Now()
-	} else {
-		acquired = da
-	}
-
-	return acquired
+	return ConvertStringToTime(b.DateAcquired)
 }
 
 // RemoveBook deletes the book at the specified id from the Firestore database.
