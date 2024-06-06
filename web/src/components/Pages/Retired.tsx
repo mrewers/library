@@ -11,7 +11,7 @@ import { useBooks } from 'context/BookProvider';
 import s from './Pages.module.scss';
 
 const Retired: Component = () => {
-  const [bookList] = useBooks();
+  const [bookList, { isBooksLoading }] = useBooks();
   const [filters] = useFilters();
 
   const [readList] = createStore(() => {
@@ -21,15 +21,6 @@ const Retired: Component = () => {
     
     return bookList().retired.filtered.findIndex(i => i.name === filters.reader());
   })
-
-  // useEffect(() => {
-  //   // Fetch reader data
-  //   fetchData('retired')
-  //     .then((data: IRetiredResponse) =>
-  //       dispatch({ type: 'UPDATE_RETIRED', payload: { retired: data.retired } })
-  //     )
-  //     .catch(err => console.error(err));
-  // }, [dispatch]);
 
   return (
     <Layout>
@@ -48,9 +39,11 @@ const Retired: Component = () => {
           ? bookList().retired.filtered[readList() as number].read
           : bookList().retired[readList() as 'all' | 'any'].read
         }
+        loading={isBooksLoading()}
       />
     </Layout>
   );
 };
+
 
 export default Retired;

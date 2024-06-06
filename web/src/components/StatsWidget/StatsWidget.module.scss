@@ -31,7 +31,7 @@
   }
 
   @include breakpoint(laptop) {
-    margin-left: calc(102% - calc(20vw + 3rem));
+    margin-left: calc(102% - calc(20vw + 3.5rem));
     padding-top: 0rem;
     position: sticky;
     top: 1rem;

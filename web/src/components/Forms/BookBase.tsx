@@ -45,6 +45,19 @@ const BookBase: Component<IBookBaseProps> = (props) => {
     return false;
   }
 
+  /**
+   * Disable form fields on retired books.
+   * We can't just set the whole form to readonly because we want the 'Restore' button to be enabled.
+   * @returns Whether or not to disable the form fields.
+   */
+  const disableFields = () => {
+    if ( props.readonly || props.book.retired ) {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
     <form class={props.classes ? `${s.form} ${s[props.classes]}` : s.form}>
       <Show when={props.loading}>
@@ -61,7 +74,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         <input
           id="title"
           name="title"
-          readonly={props.readonly || false}
+          readonly={disableFields()}
           type="text"
           value={props.book.title}
           onInput={props.onInput}
@@ -70,11 +83,12 @@ const BookBase: Component<IBookBaseProps> = (props) => {
       <label class={s.label} for="type-ahead-author">
         Author(s):
         <TypeAhead
+          disabled={disableFields()}
           name="author"
+          placeholder="Begin typing to search for author..."
           selected={authorSuggestions.fromIds(props.book.author || [], authorList)}
           suggestions={authorSuggestions.fromAuthors(authorList)}
           onChange={props.onAuthor}
-          disabled={props.readonly || false}
         />
       </label>
       <label class={s.label} for="date-acquired">
@@ -82,7 +96,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         <input
           id="date-acquired"
           name="dateAcquired"
-          readonly={props.readonly || false}
+          readonly={disableFields()}
           type="date"
           value={props.book.dateAcquired}
           onInput={props.onInput}
@@ -96,7 +110,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
               <label class={s['sub-label']} for={`reader-${reader.id}`}>
                 <input
                   checked={props.book.readBy.includes(reader.id)}
-                  disabled={props.readonly || false}
+                  disabled={disableFields()}
                   id={`reader-${reader.id}`}
                   name="readBy"
                   type="checkbox"
@@ -115,7 +129,7 @@ const BookBase: Component<IBookBaseProps> = (props) => {
             <Button
               classes={s.button}
               color="plain"
-              disabled={props.readonly || false}
+              disabled={disableFields()}
               label="Delete"
               type="button"
               onClick={props.onDelete}
