@@ -246,6 +246,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
             <button
               class={s.pill}
               data-id={item.id}
+              disabled={props.disabled}
               type="button"
               onClick={handlePillClick}
             >
@@ -296,6 +297,7 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
               }
               data-name="add-new"
               role='option'
+              style={{ "font-style": "italic" }}
               onClick={openNestedForm}
             >
               Add New
