@@ -1,8 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"strings"
-	"time"
 
 	"github.com/mrewers/library/serverless/utils"
 )
@@ -11,6 +11,10 @@ type BookListItem struct {
 	Id   string
 	Data utils.Book
 }
+
+const (
+	bookIdFile = "data/books-ids.json"
+)
 
 // transformBookData converts a book's data retrieved from the v1 application
 // to the data structure expected for a book by v2 of the application.
@@ -31,16 +35,11 @@ func transformBookData(book V1Book) BookListItem {
 		authorArr = []string{}
 	}
 
-	// Generate created and updated dates.
-	created := utils.ConvertStringToTime(book.Date)
-	ts := time.Now()
-
 	// Initialize common fields.
 	v2 := utils.Book{
 		Author:       authorArr,
-		DateAcquired: utils.ConvertStringToTime(acquired).String(),
-		DateCreated:  &created,
-		DateModified: &ts,
+		DateAcquired: acquired,
+		DateCreated:  book.Date,
 		ReadBy:       book.Read,
 		Title:        strings.TrimSpace(book.Title),
 	}
@@ -49,10 +48,9 @@ func transformBookData(book V1Book) BookListItem {
 	// so here we set the book properties pertaining to retired books.
 	if book.DateRetired != "" {
 		retired := true
-		date := utils.ConvertStringToTime(book.DateRetired)
 
 		v2.Retired = &retired
-		v2.DateRetired = &date
+		v2.DateRetired = book.DateRetired
 	} else {
 		retired := false
 
@@ -91,12 +89,7 @@ func setReaderIds(books []BookListItem) []BookListItem {
 
 		book.Data.ReadBy = idArr
 
-		update := BookListItem{
-			Id:   book.Id,
-			Data: book.Data,
-		}
-
-		updated = append(updated, update)
+		updated = append(updated, book)
 	}
 
 	return updated
@@ -125,4 +118,43 @@ func createV2BookList(v1 AllBooks) []BookListItem {
 	books = setReaderIds(books)
 
 	return books
+}
+
+// setAuthorIds iterates over a list of books and replaces the 'Author' array of names
+// with an array of corresponding author ids pulled from the authors-ids.json file.
+func setAuthorIds(books []BookListItem) {
+	fmt.Println("\nReplacing author names with ids in the book list...")
+
+	var updated []BookListItem
+
+	authors, err := readInAuthorIdList()
+
+	if err != nil {
+		fmt.Printf("Failure reading the contents of %s", authorIdFile)
+		return
+	}
+
+	for _, book := range books {
+		var idArr []string
+
+		nameArr := book.Data.Author
+
+		for _, name := range nameArr {
+			var id string
+
+			for _, author := range authors {
+				if author.NameFull == name {
+					id = author.Id
+				}
+			}
+
+			idArr = append(idArr, id)
+		}
+
+		book.Data.Author = idArr
+
+		updated = append(updated, book)
+	}
+
+	writeDataFile(updated, bookIdFile, "books with author ids")
 }

@@ -24,12 +24,12 @@ func prepBookUpdates(book utils.Book) []firestore.Update {
 		updates = append(updates, update)
 	}
 
-	if book.DateRestored != nil {
+	if book.DateRestored != "" {
 		update := utils.FirestorePrepUpdate("dateRestored", book.DateRestored)
 		updates = append(updates, update)
 	}
 
-	if book.DateRetired != nil {
+	if book.DateRetired != "" {
 		update := utils.FirestorePrepUpdate("dateRetired", book.DateRetired)
 		updates = append(updates, update)
 	}

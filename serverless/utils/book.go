@@ -8,15 +8,15 @@ import (
 )
 
 type Book struct {
-	Author       []string   `json:"author,omitempty"`
-	DateAcquired string     `json:"dateAcquired,omitempty"`
-	DateCreated  *time.Time `json:"dateCreated,omitempty"`
-	DateModified *time.Time `json:"dateModified,omitempty"`
-	DateRestored *time.Time `json:"dateRestored,omitempty"`
-	DateRetired  *time.Time `json:"dateRetired,omitempty"`
-	ReadBy       []string   `json:"readBy,omitempty"`
-	Retired      *bool      `json:"retired,omitempty"`
-	Title        string     `json:"title,omitempty"`
+	Author       []string `json:"author,omitempty"`
+	DateAcquired string   `json:"dateAcquired,omitempty"`
+	DateCreated  string   `json:"dateCreated,omitempty"`
+	DateModified string   `json:"dateModified,omitempty"`
+	DateRestored string   `json:"dateRestored,omitempty"`
+	DateRetired  string   `json:"dateRetired,omitempty"`
+	ReadBy       []string `json:"readBy,omitempty"`
+	Retired      *bool    `json:"retired,omitempty"`
+	Title        string   `json:"title,omitempty"`
 }
 
 // AddBook creates a Firestore document corresponding to the given Book.

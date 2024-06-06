@@ -4,44 +4,26 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/mrewers/library/serverless/utils"
 )
 
 type AuthorListItem struct {
-	Id   string
-	Data utils.Author
+	Id       string
+	NameFull string
+	Data     utils.Author
 }
 
 const (
-	authorIdFile = "data/author-ids.json"
+	authorIdFile = "data/authors-ids.json"
 )
-
-// readInAuthorList gets the de-duplicated list of authors from the file authors-deduped.json.
-func readInAuthorList() ([]utils.Author, error) {
-	var authors []utils.Author
-
-	contents, err := os.ReadFile(deDupAuthorFile)
-
-	if err != nil {
-		fmt.Println(err.Error())
-		return authors, err
-	}
-
-	err = json.Unmarshal(contents, &authors)
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	return authors, err
-}
 
 // uploadAuthors iterates over the list of authors uploading each to
 // Firestore and saving the id generated for each one in a new list.
 func uploadAuthors() {
+	fmt.Println("\nUploading authors to v2 database...")
+
 	authors, err := readInAuthorList()
 
 	if err != nil {
@@ -103,10 +85,13 @@ func uploadAuthors() {
 		full.Books = author.Books
 
 		uploaded = append(uploaded, AuthorListItem{
-			Id:   ref.ID,
-			Data: full,
+			Id:       ref.ID,
+			NameFull: author.NameFull,
+			Data:     full,
 		})
 	}
 
-	writeDataFile(uploaded, authorIdFile, "authors with their ids")
+	fmt.Println("\nAuthors upload complete.")
+
+	writeDataFile(uploaded, authorIdFile, "uploaded authors with their ids")
 }

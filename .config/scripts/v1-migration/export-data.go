@@ -27,6 +27,8 @@ func writeDocsToData(data map[string]interface{}, collection string) map[string]
 // property matching the collection name. This data object is then written to a JSON file name
 // 'raw.json' and stored in this data folder in this directory.
 func exportFirebaseToJSON() {
+	fmt.Println("\nExporting v1 data from Firebase...")
+
 	data := make(map[string]interface{})
 
 	data = writeDocsToData(data, "books")

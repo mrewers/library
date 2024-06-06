@@ -48,6 +48,7 @@ func parseBooks(books AllBooks) {
 
 // parseExportFile transforms the raw export file into data usable by the v2 application.
 func parseExportFile() {
+	fmt.Println("\nTransforming v1 data for use in v2...")
 	exportContents, err := os.ReadFile(exportFile)
 
 	if err != nil {
@@ -64,6 +65,11 @@ func parseExportFile() {
 		return
 	}
 
+	fmt.Println("\nTransforming authors:")
 	parseAuthors(books)
+
+	fmt.Println("\n\nTransforming books:")
 	parseBooks(books)
+
+	fmt.Println("\n\nInitial transformation complete.")
 }
