@@ -1,4 +1,3 @@
-import { Show } from 'solid-js'
 import { createStore } from 'solid-js/store';
 
 import Filter from 'components/Filter/Filter';
@@ -28,23 +27,21 @@ const Books: Component = () => {
     <Layout>
       <h1 class={s.subhead}>Inventory</h1>
       <Filter />
-      <Show when={bookList().fullList.active.length > 0}>
-        <List
-          list={
-            filters.readStatus() === 'all'
-            ? bookList().fullList.active
-            : typeof readList() === 'number'
-              ? bookList().filtered[readList() as number][filters.readStatus() as 'read' | 'unread']
-              : bookList()[readList() as 'all' | 'any'][filters.readStatus() as 'read' | 'unread']
-          }
-          read={
-            typeof readList() === 'number' 
-            ? bookList().filtered[readList() as number].read
-            : bookList()[readList() as 'all' | 'any'].read
-          }
-          loading={isBooksLoading()}
-        />
-      </Show>
+      <List
+        list={
+          filters.readStatus() === 'all'
+          ? bookList().fullList.active
+          : typeof readList() === 'number'
+            ? bookList().filtered[readList() as number][filters.readStatus() as 'read' | 'unread']
+            : bookList()[readList() as 'all' | 'any'][filters.readStatus() as 'read' | 'unread']
+        }
+        read={
+          typeof readList() === 'number'
+          ? bookList().filtered[readList() as number].read
+          : bookList()[readList() as 'all' | 'any'].read
+        }
+        loading={isBooksLoading()}
+      />
     </Layout>
   )
 };

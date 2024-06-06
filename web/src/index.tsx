@@ -41,8 +41,9 @@ const Library = () => {
 
     if (data) {
       setReaders(data);
-      setLoadingReaders(false);
     }
+
+    setLoadingReaders(false);
   });
 
   createEffect(async () => {
@@ -50,8 +51,9 @@ const Library = () => {
 
     if (data) {
       setAuthors(data);
-      setLoadingAuthors(false);
     }
+
+    setLoadingAuthors(false);
   });
 
   createEffect(async () => {
@@ -59,8 +61,9 @@ const Library = () => {
 
     if ( data ) {
       setBooks(data);
-      setLoadingBooks(false);
     }
+
+    setLoadingBooks(false);
   });
 
   return (
