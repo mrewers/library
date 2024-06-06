@@ -9,12 +9,12 @@ import (
 )
 
 type Author struct {
-	Books        []string `json:"books,omitempty"`
-	NameFirst    string   `json:"nameFirst,omitempty"`
-	NameFull     string   `json:"nameFull,omitempty"`
-	NameLast     string   `json:"nameLast,omitempty"`
-	DateCreated  string   `json:"dateCreated,omitempty"`
-	DateModified string   `json:"dateModified,omitempty"`
+	Books        []string  `json:"books,omitempty"`
+	NameFirst    string    `json:"nameFirst,omitempty"`
+	NameFull     string    `json:"nameFull,omitempty"`
+	NameLast     string    `json:"nameLast,omitempty"`
+	DateCreated  time.Time `json:"dateCreated,omitempty"`
+	DateModified time.Time `json:"dateModified,omitempty"`
 }
 
 func (a Author) AddAuthor() string {

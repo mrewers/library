@@ -65,6 +65,43 @@ func transformBookData(book V1Book) BookListItem {
 	}
 }
 
+// setReaderIds iterates over a list of books and replaces the 'ReadBy' array
+// of names with an array of corresponding reader ids pulled from Firestore.
+func setReaderIds(books []BookListItem) []BookListItem {
+	var updated []BookListItem
+
+	readers := getReaders()
+
+	for _, book := range books {
+		var idArr []string
+
+		nameArr := book.Data.ReadBy
+
+		for _, name := range nameArr {
+			var id string
+
+			for _, reader := range readers {
+				if reader.Name == name {
+					id = reader.Id
+				}
+			}
+
+			idArr = append(idArr, id)
+		}
+
+		book.Data.ReadBy = idArr
+
+		update := BookListItem{
+			Id:   book.Id,
+			Data: book.Data,
+		}
+
+		updated = append(updated, update)
+	}
+
+	return updated
+}
+
 // createV2BookList converts the full list of books from
 // the v1 application to one that is compatible with v2.
 func createV2BookList(v1 AllBooks) []BookListItem {
@@ -83,6 +120,9 @@ func createV2BookList(v1 AllBooks) []BookListItem {
 
 		books = append(books, v2)
 	}
+
+	// Replace reader names with ids
+	books = setReaderIds(books)
 
 	return books
 }
