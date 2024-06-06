@@ -16,9 +16,7 @@ func main() {
 	// Save the transformed v1 data to the v2 Firestore database.
 	uploadAuthors()
 	uploadBooks()
-
-	// Update author list with book ids -> authors-final.json
-	// Update each author with its book ids
+	updateAuthorsWithBookIds()
 
 	fmt.Println("\n\nv1-migration script complete!")
 }

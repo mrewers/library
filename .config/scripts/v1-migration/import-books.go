@@ -17,7 +17,7 @@ func prepBooksForUpload() {
 	books, err := readInBookList(bookFile)
 
 	if err != nil {
-		fmt.Printf("Failure reading the contents of %s", bookFile)
+		fmt.Printf("\nFailure reading the contents of %s", bookFile)
 		return
 	}
 
@@ -34,7 +34,7 @@ func uploadBooks() {
 	books, err := readInBookList(bookIdFile)
 
 	if err != nil {
-		fmt.Printf("Failure reading the contents of %s", bookIdFile)
+		fmt.Printf("\nFailure reading the contents of %s", bookIdFile)
 		return
 	}
 
@@ -91,6 +91,7 @@ func uploadBooks() {
 		// Replace the v1 id for this book with the v2 id.
 		uploaded = append(uploaded, BookListItem{
 			Id:   ref.ID,
+			V1Id: book.V1Id,
 			Data: book.Data,
 		})
 	}

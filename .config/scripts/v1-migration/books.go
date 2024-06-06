@@ -9,6 +9,7 @@ import (
 
 type BookListItem struct {
 	Id   string
+	V1Id string
 	Data utils.Book
 }
 
@@ -58,7 +59,7 @@ func transformBookData(book V1Book) BookListItem {
 	}
 
 	return BookListItem{
-		Id:   book.Id,
+		V1Id: book.Id,
 		Data: v2,
 	}
 }
@@ -130,7 +131,7 @@ func setAuthorIds(books []BookListItem) {
 	authors, err := readInAuthorIdList()
 
 	if err != nil {
-		fmt.Printf("Failure reading the contents of %s", authorIdFile)
+		fmt.Printf("\nFailure reading the contents of %s", authorIdFile)
 		return
 	}
 

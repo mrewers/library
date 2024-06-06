@@ -27,7 +27,7 @@ func uploadAuthors() {
 	authors, err := readInAuthorList()
 
 	if err != nil {
-		fmt.Printf("Failure reading the contents of %s", deDupAuthorFile)
+		fmt.Printf("\nFailure reading the contents of %s", deDupAuthorFile)
 		return
 	}
 
