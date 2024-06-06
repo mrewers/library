@@ -20,6 +20,10 @@
   }
 }
 
+.active {
+  @include link-hover-blue;
+}
+
 .link:hover {
   @include link-hover-white;
 }

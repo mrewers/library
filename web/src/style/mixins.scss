@@ -34,6 +34,12 @@
   background-image: $gradientTransparentWhite;
 }
 
+@mixin link-hover-blue {
+  @include link-hover;
+
+  background-image: $gradientTransparentBlueDark;
+}
+
 @mixin page-width {
   margin: 0 auto;
   max-width: 1200px;
