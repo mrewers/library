@@ -2,7 +2,7 @@
 v1-migration
 
 # Credentials
-serviceAccountKey.json
+serviceAccountKey*.json
 
 # Data
 data/*.json

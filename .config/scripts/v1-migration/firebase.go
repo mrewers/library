@@ -12,9 +12,9 @@ import (
 
 // openFirebaseConn uses a Firebase service account credentials to connect to the original
 // Firestore database for v1 of the application. The credentials should be provided as a
-// JSON file called serviceAccountKey.json in this package's directory.
+// JSON file called serviceAccountKey-v1.json in this package's directory.
 func openFirebaseConn(ctx context.Context) (*firestore.Client, error) {
-	opt := option.WithCredentialsFile("./serviceAccountKey.json")
+	opt := option.WithCredentialsFile("./serviceAccountKey-v1.json")
 
 	app, err := firebase.NewApp(ctx, nil, opt)
 
