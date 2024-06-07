@@ -7,7 +7,7 @@ resource "google_api_gateway_api" "api" {
 resource "google_api_gateway_api_config" "api_config" {
   provider      = google-beta
   api           = google_api_gateway_api.api.api_id
-  api_config_id = "library-api-config-${formatdate("YYYYMMDDhhmmss", timestamp())}"
+  api_config_id = "library-api-config"
   display_name  = "library-api-config"
 
   openapi_documents {
@@ -328,6 +328,23 @@ resource "google_api_gateway_api_config" "api_config" {
               options : {
                 description : "Return headers required for CORS."
                 operationId : "optionsReaders"
+                x-google-backend : {
+                  address : "${var.options_url}"
+                }
+                responses : {
+                  "200" : {
+                    description : "CORS success"
+                    schema : {
+                      type : "string"
+                    }
+                  }
+                }
+              }
+            }
+            "/ping" : {
+              options : {
+                description : "Return headers required for CORS."
+                operationId : "optionsPing"
                 x-google-backend : {
                   address : "${var.options_url}"
                 }

@@ -74,3 +74,10 @@ module "firestore" {
 
   region = var.region
 }
+
+
+module "scheduler" {
+  source = "./modules/scheduler"
+
+  gateway_url = module.api.gateway_url
+}
