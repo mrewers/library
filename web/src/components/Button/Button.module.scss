@@ -36,6 +36,12 @@
   background-color: $blueLight;
 }
 
+.link {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 .plain {
   color: $blueDark;
   background-color: $greyLight;

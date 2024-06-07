@@ -10,12 +10,12 @@ import type { Component } from 'solid-js';
 import s from './Navigation.module.scss';
 
 const Navigation: Component = () => {
+  // Identify the current page in order to highlight the active nav link.
   const location = useLocation();
-
   const pathname = createMemo(() => location.pathname);
 
   return (
-    <nav class={s.nav}>
+    <nav class={s.nav} role="navigation">
       <ul class={s.items}>
         <li>
           <A class={`${s.link} ${pathname() === "/" ? s.active : ""}`} href="/">

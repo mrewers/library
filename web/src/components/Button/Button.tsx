@@ -4,7 +4,7 @@ import s from './Button.module.scss';
 
 interface IButton {
   readonly classes?: string;
-  readonly color?: 'accent' | 'dark' | 'light' | 'plain' | 'white';
+  readonly color?: 'accent' | 'dark' | 'light' | 'link' | 'plain' | 'white';
   readonly data?: { name: string, value: string }[];
   readonly disabled?: boolean,
   readonly label: string;

@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.18.0",
+    "@solid-primitives/scroll": "^2.0.23",
     "@solidjs/router": "^0.13.3",
     "auth0-js": "^9.22.1",
     "jsonwebtoken": "^8.5.1",

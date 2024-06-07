@@ -1552,6 +1552,7 @@ __metadata:
     "@cryptopapers/commitlint-config": "npm:^1.0.0"
     "@cryptopapers/eslint-config": "npm:^2.1.0"
     "@cryptopapers/prettier-config": "npm:^1.1.0"
+    "@solid-primitives/scroll": "npm:^2.0.23"
     "@solidjs/router": "npm:^0.13.3"
     "@testing-library/jest-dom": "npm:^5.14.1"
     "@types/auth0-js": "npm:^9.14.5"
@@ -1960,6 +1961,19 @@ __metadata:
   peerDependencies:
     solid-js: ^1.6.12
   checksum: 10/23aa615ee4f3131f427855e158e7682d6ae925a9be4e1b58f2a57fc0ee1f7d5ec170da6e8f6f27f05bb8882abdd20ca9c910eaa336348a16f71c0e1f018db1c4
+  languageName: node
+  linkType: hard
+
+"@solid-primitives/scroll@npm:^2.0.23":
+  version: 2.0.23
+  resolution: "@solid-primitives/scroll@npm:2.0.23"
+  dependencies:
+    "@solid-primitives/event-listener": "npm:^2.3.3"
+    "@solid-primitives/rootless": "npm:^1.4.5"
+    "@solid-primitives/static-store": "npm:^0.0.8"
+  peerDependencies:
+    solid-js: ^1.6.12
+  checksum: 10/4ff8d56e6a0794e1e08c3e9e3c717afb6e4c090adf19f9be615b3f4a5fca746dda7173c6ec09593d2c1434bf8513dc1c9b5d03e41f8b718476b4c43da1476aad
   languageName: node
   linkType: hard
 

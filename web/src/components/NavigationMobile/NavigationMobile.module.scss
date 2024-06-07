@@ -1,0 +1,75 @@
+@import 'style/colors.scss';
+@import 'style/mixins.scss';
+
+.nav {
+  position: relative;
+
+  @include breakpoint(tablet) {
+    display: none;
+  }
+}
+
+.toggle {
+  position: fixed;
+  right: 0.7rem;
+  top: 0.7rem;
+  background: $blueLight;
+  border: none;
+  border-radius: 50%;
+  box-shadow: $boxShadowGreyDarkDeep;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  padding: 0.5rem;;
+
+  > span {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+}
+
+.items {
+  @include reset-ul;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  height: 50%;
+
+  > * {
+    margin: 1rem 0;
+  }
+
+  .link {
+    padding: 0.4rem 0.7rem;
+    font-family: $fontFamilyHeadings;
+    font-size: $fontSizeMedium;
+    font-weight: 600;
+  }
+
+  .active {
+    @include link-hover-blue;
+  }
+
+  .logout {
+    font-size: $fontSizeMedium;
+  }
+}
