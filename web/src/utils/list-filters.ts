@@ -51,30 +51,6 @@ export const getUnread = (list: IBook[], reader: string, readerCount: number): I
 };
 
 /**
- * Filters the provided list of books to match the book status and reader provided.
- *
- * @param status The status of the book (read, unread, or either).
- * @param reader Id of the selected reader (or name of the group of readers).
- * @param readerCount Total number of readers.
- * @param list List of books.
- */
-export const filterList = (
-  status: string,
-  reader: string,
-  readerCount: number,
-  list: IBook[]
-): IBook[] => {
-  switch (status) {
-    case 'read':
-      return getRead(list, reader, readerCount);
-    case 'unread':
-      return getUnread(list, reader, readerCount);
-    default:
-      return list;
-  }
-};
-
-/**
  * Retrieves the number of read, unread, and total books for a reader or group of readers.
  *
  * @param list List of books.

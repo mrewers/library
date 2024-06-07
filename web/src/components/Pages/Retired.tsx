@@ -19,13 +19,13 @@ const Retired: Component = () => {
       return filters.reader();
     }
     
-    return bookList().retired.filtered.findIndex(i => i.name === filters.reader());
-  })
+    return bookList().retired.filtered.findIndex(i => i.id === filters.reader());
+  });
 
   return (
     <Layout>
       <h1 class={s.subhead}>Jettisoned Books</h1>
-      <Filter />
+      <Filter retired />
       <List
         list={
           filters.readStatus() === 'all'

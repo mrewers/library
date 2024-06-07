@@ -1,42 +1,5 @@
-import { filterList, getListStats, getRead } from '../list-filters';
+import { getListStats, getRead } from '../list-filters';
 import { books } from 'mocks/books';
-
-describe('filterList()', () => {
-  it('returns the books read by the specified reader when the status is "read"', () => {
-    const read = filterList('read', 'Alice', 2, books);
-
-    expect(read).toHaveLength(2);
-    expect(read[0].id).toStrictEqual('abcd');
-    expect(read[1].id).toStrictEqual('efgh');
-  });
-
-  it('returns the books not read by the specified reader when the status is "unread"', () => {
-    const unreadAlice = filterList('unread', 'Alice', 2, books);
-
-    expect(unreadAlice).toHaveLength(1);
-    expect(unreadAlice[0].id).toStrictEqual('ijkl');
-
-    const unreadAll = filterList('unread', 'all', 2, books);
-
-    expect(unreadAll).toHaveLength(1);
-    expect(unreadAll[0].id).toStrictEqual('ijkl');
-
-    const unreadAny = filterList('unread', 'any', 2, books);
-
-    expect(unreadAny).toHaveLength(2);
-    expect(unreadAny[0].id).toStrictEqual('abcd');
-    expect(unreadAny[1].id).toStrictEqual('ijkl');
-  });
-
-  it('returns the full book list when an invalid status is provided', () => {
-    const invalid = filterList('invalid', 'Alice', 2, books);
-
-    expect(invalid).toHaveLength(3);
-    expect(invalid[0].id).toStrictEqual('abcd');
-    expect(invalid[1].id).toStrictEqual('efgh');
-    expect(invalid[2].id).toStrictEqual('ijkl');
-  });
-});
 
 describe('getRead()', () => {
   it('returns the books read by the specified reader', () => {
