@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import { createSignal } from 'solid-js';
+import { createEffect, createSignal } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 
 import BookBase from './BookBase';
@@ -22,12 +22,34 @@ const EditBook: Component<IEditBookProps> = (props) => {
   const [overlayText, setOverlayText] = createSignal('Saving..');
   const [saving, setSaving] = createSignal(false);
 
-  const [_, {getBook, removeBook, updateBook}] = useBooks();
+  const [
+    _,
+    {
+      getBook,
+      initialBookState,
+      isBooksLoading,
+      removeBook,
+      updateBook
+    }
+  ] = useBooks();
   const [__, {updateAuthorBooks}] = useAuthors();
 
-  const [book, setBook] = createSignal(getBook(props.id));
-  const [initialAuthors] = createSignal(getBook(props.id).author)
+  // Initialize the book form with blank data.
+  const [book, setBook] = createSignal(initialBookState());
+  const [initialAuthors, setInitialAuthors] = createSignal([] as string[]);
   const [modifiedFields, setModifiedFields] = createSignal([] as string[]);
+
+  createEffect(() => {
+    // Replace the initial book placeholder with data from the API.
+    const setBookData = async () => {
+      const initial = await getBook(props.id);
+
+      setBook(initial);
+      setInitialAuthors(initial.author || []);
+    }
+
+    setBookData();
+  });
 
   // const resetOverlay = (msg: string, close = false): void => {
   //   setOverlayText(msg);
@@ -204,6 +226,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
       onSubmit={onSubmit}
       overlayText={overlayText()}
       readonly={props.readonly}
+      loading={isBooksLoading()}
       saving={saving()}
     />
   );

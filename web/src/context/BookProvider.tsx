@@ -43,6 +43,7 @@ type TBookStore = [
     addBook: (book: IBook) => void,
     createNewBook: () => IBook,
     getBook: (id: string) => IBook,
+    initialBookState: () => IBook,
     isBooksLoading: () => boolean,
     removeBook: (id: string) => void,
     updateBook: (id: string, value: IBook) => void,
@@ -50,16 +51,22 @@ type TBookStore = [
 ]
 
 /**
+ * Creates a blank book.
+ * @returns A book placeholder object.
+ */
+const initialBookState = () => ({
+  author: [],
+  dateAcquired: getDateString(),
+  readBy: [],
+  retired: false,
+  title: '',
+});
+
+/**
  * Generates a new book object with placeholder data.
  */
 const createNewBook = (): IBook => {
-  return {
-    author: [],
-    dateAcquired: getDateString(),
-    readBy: [],
-    retired: false,
-    title: '',
-  }
+  return initialBookState();
 };
 
 const BookContext = createContext();
@@ -131,7 +138,15 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
    * Retrieves the data for a given book from the full list by id.
    * @param id The unique id for a given book.
    */
-  const getBook = (id:string) => fullList.find(b => b.id === id);
+  const getBook = async (id:string) => {
+    const book = fullList.find(b => b.id === id);
+
+    if (book) {
+      return book;
+    }
+
+    return initialBookState();
+  };
 
   /**
    * Removes the book with a given id from the full list of books.
@@ -165,6 +180,7 @@ const BookProvider: Component<IBookProviderProps> = (props) => {
       addBook,
       createNewBook,
       getBook,
+      initialBookState,
       isBooksLoading,
       removeBook,
       updateBook,
