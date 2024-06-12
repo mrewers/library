@@ -4,7 +4,7 @@
 .nav {
   position: relative;
 
-  @include breakpoint(tablet) {
+  @include breakpoint('tablet') {
     display: none;
   }
 }
@@ -56,6 +56,10 @@
 
   > * {
     margin: 1rem 0;
+  }
+
+  .item {
+    position: relative;
   }
 
   .link {

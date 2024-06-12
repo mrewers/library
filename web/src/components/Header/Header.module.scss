@@ -9,7 +9,7 @@ header {
   color: $blueDark;
   padding: 0.1rem 0;
 
-  @include breakpoint(laptop) {
+  @include breakpoint('laptop') {
     margin-bottom: 1.5rem;
   }
 }
@@ -25,7 +25,12 @@ header {
   margin: 2rem 0 1rem;
   text-align: center;
 
-  @include breakpoint(tablet) {
+  @include breakpoint('tablet') {
     text-align: left;
+  }
+
+  > a {
+    padding: 0.3rem;
+    @include border-blue-focus;
   }
 }

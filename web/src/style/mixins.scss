@@ -23,21 +23,32 @@
 }
 
 @mixin link-hover {
-  background-color: transparent;
-  transition: background-size 0.25s ease;
-  background-size: 100% 100%;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 5px;
+    transform: skew(-20deg);
+    z-index: 1;
+  }
 }
 
 @mixin link-hover-white {
   @include link-hover;
 
-  background-image: $gradientTransparentWhite;
+  &::before {
+    background: $white30;
+  }
 }
 
 @mixin link-hover-blue {
   @include link-hover;
 
-  background-image: $gradientTransparentBlueDark;
+  &::before {
+    background: $blueDark25;
+  }
 }
 
 @mixin page-width {

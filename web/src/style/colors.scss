@@ -15,10 +15,14 @@ $greyMedium: #bdbdbd;
 $white: #ffffff;
 
 // Opacities
+$blueDark25: rgba($blueDark, 0.25);
+$blueDark50: rgba($blueDark, 0.5);
+$blueLight20: rgba($blueLight, 0.2);
 $black25: rgba($black, 0.25);
 $black95: rgba($black, 0.95);
 $greyDark25: rgba($greyDark, 0.25);
 $greyLight50: rgba($greyLight, 0.5);
+$white30: rgba($white, 0.3);
 
 // Gradients
 $gradientPinkBlueLight: radial-gradient(
@@ -82,4 +86,15 @@ $focusShadowStrongAlternate: 0 0 5px $blueDark;
 @mixin border-medium-shadow {
   @include border-medium;
   @include border-shadow;
+}
+
+@mixin border-blue-focus {
+  border: 2px solid transparent;
+
+  &:focus-visible {
+    border: 2px solid $blueDark;
+    border-radius: 5px;
+    box-shadow: none;
+    outline: none;
+  }
 }

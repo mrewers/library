@@ -81,7 +81,7 @@ const Navigation: Component = () => {
       <Show when={showNav()}>
         <div class={s.drawer}>
           <ul class={s.items} id="mobile-menu">
-            <li>
+            <li class={s.item}>
               <A
                 class={`${s.link} ${pathname() === "/" ? s.active : ""}`}
                 href="/"
@@ -90,7 +90,7 @@ const Navigation: Component = () => {
               </A>
             </li>
             <Show when={isLoggedIn()}>
-              <li>
+              <li class={s.item}>
                 <A
                   class={`${s.link} ${pathname() === "/add" ? s.active : ""}`}
                   href="/add"
@@ -99,7 +99,7 @@ const Navigation: Component = () => {
                 </A>
               </li>
             </Show>
-            <li>
+            <li class={s.item}>
               <A
                 class={`${s.link} ${pathname() === "/retired" ? s.active : ""}`}
                 href="/retired"
@@ -107,7 +107,7 @@ const Navigation: Component = () => {
                 Jettisoned
               </A>
             </li>
-            <li>
+            <li class={s.item}>
             <Show
               when={isLoggedIn()}
               fallback={

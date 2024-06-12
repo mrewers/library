@@ -17,19 +17,19 @@ const Navigation: Component = () => {
   return (
     <nav class={s.nav} role="navigation">
       <ul class={s.items}>
-        <li>
+        <li class={s.item}>
           <A class={`${s.link} ${pathname() === "/" ? s.active : ""}`} href="/">
             Home
           </A>
         </li>
         <Show when={isLoggedIn()}>
-          <li>
+          <li class={s.item}>
             <A class={`${s.link} ${pathname() === "/add" ? s.active : ""}`} href="/add">
               Add New
             </A>
           </li>
         </Show>
-        <li>
+        <li class={s.item}>
           <A class={`${s.link} ${pathname() === "/retired" ? s.active : ""}`} href="/retired">
             Jettisoned
           </A>
@@ -38,10 +38,10 @@ const Navigation: Component = () => {
       <Show
         when={isLoggedIn()}
         fallback={
-          <Button color="plain" label="Log In" type="button" onClick={(): void => login()} />
+          <Button color="link" label="Log In" type="button" onClick={() => login()} />
         }
       >
-        <Button color="plain" label="Log Out" type="button" onClick={(): void => logout()} />
+        <Button color="link" label="Log Out" type="button" onClick={() => logout()} />
       </Show>
     </nav>
   )

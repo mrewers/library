@@ -39,7 +39,7 @@
   text-align: center;
 
   &.input-header {
-    @include breakpoint(laptop) {
+    @include breakpoint('laptop') {
       margin-left: 5rem;
       width: calc(70% - 5rem);
     }
@@ -52,5 +52,17 @@
   &-wrapper {
     display: flex;
     justify-content: center;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  @include breakpoint('laptop') {
+    flex-direction: row;
+    margin-top: 5rem;
   }
 }

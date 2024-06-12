@@ -14,6 +14,13 @@
 .items {
   @include reset-ul;
   display: flex;
+  font-family: $fontFamilyHeadings;
+  font-size: $fontSizeNormal;
+  font-weight: 600;
+
+  .item {
+    position: relative;
+  }
 
   > li:not(:first-of-type) {
     margin-left: 1rem;
@@ -24,6 +31,12 @@
   @include link-hover-blue;
 }
 
-.link:hover {
-  @include link-hover-white;
+.link {
+  @include border-blue-focus;
+
+  padding: 0.4rem;
+
+  &:hover {
+    @include link-hover-white;
+  }
 }
