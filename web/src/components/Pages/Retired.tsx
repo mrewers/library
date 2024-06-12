@@ -1,6 +1,3 @@
-import type { Component } from 'solid-js';
-import { createStore } from 'solid-js/store';
-
 import Filter from 'components/Filter/Filter';
 import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
@@ -10,22 +7,20 @@ import { useAuthors } from 'context/AuthorProvider';
 import { useBooks } from 'context/BookProvider';
 import { useFilters } from 'context/FilterProvider';
 
-import { pickBookSubList, filterSearched } from 'utils/list-filters';
+import { filterSearched, getBookSubList } from 'utils/list-filters';
+
+import type { Component } from 'solid-js';
 
 import s from './Pages.module.scss';
 
+/**
+ * A page that displays a list of retired books as well as controls to filter the list.
+ * @returns A SolidJS JSX component.
+ */
 const Retired: Component = () => {
   const [bookList, { isBooksLoading }] = useBooks();
   const [filters] = useFilters();
   const [authors] = useAuthors();
-
-  const [readList] = createStore(() => {
-    if ( filters.reader() === 'all' || filters.reader() === 'any' ) {
-      return filters.reader() as 'all' || 'any';
-    }
-    
-    return bookList().retired.filtered.findIndex(i => i.id === filters.reader());
-  });
 
   return (
     <Layout>
@@ -38,19 +33,22 @@ const Retired: Component = () => {
         list={
           filterSearched(
             filters.search(),
-            pickBookSubList(
+            getBookSubList(
               bookList(),
               filters.readStatus(),
-              readList(),
+              filters.reader(),
               true,
             ),
             authors,
           )
         }
         read={
-          typeof readList() === 'number' 
-          ? bookList().retired.filtered[readList() as number].read
-          : bookList().retired[readList() as 'all' | 'any'].read
+          getBookSubList(
+            bookList(),
+            'read',
+            filters.reader(),
+            true,
+          )
         }
         loading={isBooksLoading()}
       />

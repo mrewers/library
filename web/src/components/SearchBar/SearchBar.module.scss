@@ -1,5 +1,6 @@
 @import 'style/colors.scss';
 @import 'style/breakpoints.scss';
+@import 'style/mixins.scss';
 
 .container {
   margin: 1rem;
@@ -19,7 +20,8 @@
     overflow: hidden;
     width: 100%;
 
-    &:has(input:focus) {
+    &:has(input:focus),
+    &:has(.clear:focus) {
       background-color: $blueLight20;
       border: 2px solid $blueDark;
     }
@@ -52,7 +54,29 @@
   }
 
   @include breakpoint('tablet') {
-    width: 325px;
+    width: 270px;
+  }
+}
+
+.clear {
+  @include button-reset;
+
+  border: 1px solid transparent;
+  padding: 0.3rem 0.7rem;
+  display: flex;
+  color: $blueDark;
+  cursor: pointer;
+  min-width: calc(24px + 1.4rem + 2px); // child icon width + padding + border
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    background-color: $blueDark;
+    border-color: $blueDark;
+    color: $white;
+    outline: none;
   }
 }
 
@@ -63,7 +87,7 @@
   border-radius: 0;
   box-shadow: none;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: $blueDark;
     color: $white;
   }

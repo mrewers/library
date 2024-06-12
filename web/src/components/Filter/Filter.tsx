@@ -1,9 +1,13 @@
 import { createEffect, createSignal, For } from 'solid-js';
-import type { Component, JSX } from 'solid-js';
 
+import { useAuthors } from 'context/AuthorProvider';
 import { useBooks } from 'context/BookProvider';
 import { useFilters } from 'context/FilterProvider';
 import { useReaders } from 'context/ReaderProvider';
+
+import { filterSearched, getBookSubList } from 'utils/list-filters';
+
+import type { Component, JSX } from 'solid-js';
 
 import s from './Filter.module.scss';
 
@@ -11,9 +15,16 @@ interface IFilterProps {
   readonly retired?: boolean
 }
 
+/**
+ * A set of dropdowns to used to update the criteria used by the filter context to narrow down the list of books.
+ * @param props.retired Optional - whether the filters should operate on the retired book list (as opposed to the active list).
+ * @returns A SolidJS JSX component.
+ */
 const Filter: Component<IFilterProps> = (props) => {
   const [readerList] = useReaders();
   const [bookList] = useBooks();
+  const [authors] = useAuthors();
+
   const [filters, { updateReaderFilters, updateReadStatusFilter }] = useFilters();
   const [matches, setMatches] = createSignal(0)
 
@@ -22,28 +33,11 @@ const Filter: Component<IFilterProps> = (props) => {
    * @returns A count of books that match the selected filter criteria.
    */
   const updateMatches = () => {
-    const activeStatus = props.retired ? 'retired' : 'active';
-    const reader = filters.reader();
-    const readStatus = filters.readStatus() as "all" | "read" | "unread";
-
-    if (readStatus === 'all' ) {
-      setMatches(bookList().fullList[activeStatus].length);
-      return;
-    }
-
-    const mainList = props.retired ? bookList().retired : bookList();
-
-    let subList = [];
-
-    if ( reader === 'all' || reader === 'any' ) {
-      subList = mainList[reader][readStatus];
-    } else {
-      const personalList = mainList.filtered.find(i => i.id === reader);
-
-      if (personalList) {
-        subList = personalList[readStatus];
-      }
-    }
+    const subList = filterSearched(
+      filters.search(),
+      getBookSubList(bookList(), filters.readStatus(), filters.reader(), props.retired),
+      authors,
+    );
 
     setMatches(subList.length)
   }
@@ -62,11 +56,11 @@ const Filter: Component<IFilterProps> = (props) => {
 
     const { name, value } = currentTarget as HTMLSelectElement;
 
-    if (name === 'read-status' && typeof value === 'string') {
-      updateReadStatusFilter( value )
+    if ( name === 'read-status' ) {
+      updateReadStatusFilter( value );
     }
 
-    if (name === 'reader' && typeof value === 'string') {
+    if ( name === 'reader' ) {
       updateReaderFilters( value );
     }
 

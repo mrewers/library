@@ -96,5 +96,6 @@ $focusShadowStrongAlternate: 0 0 5px $blueDark;
     border-radius: 5px;
     box-shadow: none;
     outline: none;
+    transition: border 0.3s;
   }
 }

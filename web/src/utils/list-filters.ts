@@ -16,6 +16,23 @@ export const filterRetired = (list: IBook[]) => {
 }
 
 /**
+ * Determine which sub-list from the book provider should be used.
+ * @param reader The identifier for the reader or reader collective the sub-list pertains to.
+ * @param books The BookProvider store, which contains the various book list groupings.
+ * @param retired Whether or not to retrieve books from the retired list - defaults to false.
+ * @returns The identifier for the that can be used to retrieve the desired subset of books.
+ */
+export const getSubListRef = (reader: string, books: IBookStoreState, retired: boolean = false) => {
+  if ( reader === 'all' || reader === 'any' ) {
+    return reader;
+  }
+
+  const subList = retired ? books.retired.filtered : books.filtered;
+
+  return subList.findIndex(i => i.id === reader);
+}
+
+/**
  * Determine which subset of the the book list should be used based on the provided filters.
  * @param list The BookProvider store, which contains the various book list groupings.
  * @param status The read status to search on - either 'read', 'unread' or 'all'.
@@ -23,10 +40,10 @@ export const filterRetired = (list: IBook[]) => {
  * @param retired Whether or not to limit the search to retired books - defaults to false.
  * @returns A list of books that match the provided criteria.
  */
-export const pickBookSubList = (
+export const getBookSubList = (
   list: IBookStoreState,
   status: 'all' | 'read' | 'unread',
-  reader: 'all' | 'any' | number,
+  reader: string,
   retired: boolean = false,
 ) => {
   // If all books is selected (regardless of the reader) return the full book list.
@@ -34,12 +51,14 @@ export const pickBookSubList = (
     return retired ? list.fullList.retired : list.fullList.active;
   }
 
+  const ref = getSubListRef(reader, list, retired);
+
   // If the value of readList is a number, it refers to the index of a filtered user-specific lists.
-  if ( typeof reader === 'number' ) {
-    return retired ? list.retired.filtered[reader][status] : list.filtered[reader][status];
+  if ( typeof ref === 'number' ) {
+    return retired ? list.retired.filtered[ref][status] : list.filtered[ref][status];
   }
 
-  return retired ? list.retired[reader][status] : list[reader][status];
+  return retired ? list.retired[ref][status] : list[ref][status];
 }
 
 /**

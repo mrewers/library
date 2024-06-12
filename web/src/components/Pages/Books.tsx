@@ -1,5 +1,3 @@
-import { createStore } from 'solid-js/store';
-
 import Filter from 'components/Filter/Filter';
 import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
@@ -9,24 +7,20 @@ import { useAuthors } from 'context/AuthorProvider';
 import { useBooks } from 'context/BookProvider';
 import { useFilters } from 'context/FilterProvider';
 
-import { pickBookSubList, filterSearched } from 'utils/list-filters';
+import { filterSearched, getBookSubList } from 'utils/list-filters';
 
 import type { Component } from 'solid-js';
 
 import s from './Pages.module.scss';
 
+/**
+ * A page that displays a list of active books as well as controls to filter the list.
+ * @returns A SolidJS JSX component.
+ */
 const Books: Component = () => {
   const [bookList, { isBooksLoading }] = useBooks();
   const [authors] = useAuthors();
   const [filters] = useFilters();
-
-  const [readList] = createStore(() => {
-    if ( filters.reader() === 'all' || filters.reader() === 'any' ) {
-      return filters.reader() as 'all' || 'any';
-    }
-
-    return bookList().filtered.findIndex(i => i.id === filters.reader());
-  });
 
   return (
     <Layout>
@@ -39,18 +33,20 @@ const Books: Component = () => {
         list={
           filterSearched(
             filters.search(),
-            pickBookSubList(
+            getBookSubList(
               bookList(),
               filters.readStatus(),
-              readList(),
+              filters.reader(),
             ),
             authors,
           )
         }
         read={
-          typeof readList() === 'number'
-          ? bookList().filtered[readList() as number].read
-          : bookList()[readList() as 'all' | 'any'].read
+          getBookSubList(
+            bookList(),
+            'read',
+            filters.reader(),
+          )
         }
         loading={isBooksLoading()}
       />

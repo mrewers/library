@@ -2,7 +2,7 @@ import { Show } from 'solid-js';
 
 import type { Component } from 'solid-js';
 
-interface IMenuIconProps {
+interface IXIconProps {
   readonly height?: string
   readonly width?: string
   readonly stroke?: string
@@ -11,7 +11,7 @@ interface IMenuIconProps {
 }
 
 /**
- * An SVG displaying three horizontal line stack one on top of the other.
+ * An SVG displaying an X.
  * @param props.height Optional - The height that the icon should take up. Defaults to 24px.
  * @param props.width Optional - The width that the icon should take up. Defaults to 24px.
  * @param props.stroke Optional - The thickness of the SVG line stroke. Defaults to 2px.
@@ -19,7 +19,7 @@ interface IMenuIconProps {
  * @param props.title Optional - A title to apply to the icon.
  * @returns A SolidJS JSX component.
  */
-const MenuIcon: Component<IMenuIconProps> = (props) => (
+const XIcon: Component<IXIconProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height={props.height || "24"}
@@ -30,15 +30,14 @@ const MenuIcon: Component<IMenuIconProps> = (props) => (
     stroke-width={props.stroke || "2"}
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="feather feather-menu"
+    class="feather feather-x"
   >
     <Show when={props.title}>
       <title>{props.title}</title>
     </Show>
-    <line x1="3" y1="12" x2="21" y2="12"></line>
-    <line x1="3" y1="6" x2="21" y2="6"></line>
-    <line x1="3" y1="18" x2="21" y2="18"></line>
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
   </svg>
 );
 
-export default MenuIcon;
+export default XIcon;
