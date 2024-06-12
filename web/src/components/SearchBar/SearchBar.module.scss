@@ -1,0 +1,76 @@
+@import 'style/colors.scss';
+@import 'style/breakpoints.scss';
+
+.container {
+  margin: 1rem;
+  width: calc(100% - 2rem);
+
+  @include breakpoint('tablet') {
+    width: unset;
+  }
+
+  > form {
+    @include border-light-shadow;
+
+    display: flex;
+    align-items: center;
+    border-width: 2px;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+
+    &:has(input:focus) {
+      background-color: $blueLight20;
+      border: 2px solid $blueDark;
+    }
+
+    &:has(button:focus) {
+      border: 2px solid $blueDark;
+    }
+  }
+}
+
+.label {
+  display: flex;
+
+  > svg {
+    margin: 0 0.3rem;
+  }
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.3rem 0.5rem;
+  width: 100%;
+
+  &:not(:read-only):focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  @include breakpoint('tablet') {
+    width: 325px;
+  }
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  border-left: 1px solid $greyLight;
+  border-radius: 0;
+  box-shadow: none;
+
+  &:hover {
+    background-color: $blueDark;
+    color: $white;
+  }
+
+  &:focus {
+    background-color: $blueDark;
+    box-shadow: none;
+    color: $white;
+  }
+}

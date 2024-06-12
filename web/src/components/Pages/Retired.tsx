@@ -4,19 +4,24 @@ import { createStore } from 'solid-js/store';
 import Filter from 'components/Filter/Filter';
 import Layout from 'components/Layout/Layout';
 import List from 'components/List/List';
+import SearchBar from 'components/SearchBar/SearchBar';
 
-import { useFilters } from 'context/FilterProvider';
+import { useAuthors } from 'context/AuthorProvider';
 import { useBooks } from 'context/BookProvider';
+import { useFilters } from 'context/FilterProvider';
+
+import { pickBookSubList, filterSearched } from 'utils/list-filters';
 
 import s from './Pages.module.scss';
 
 const Retired: Component = () => {
   const [bookList, { isBooksLoading }] = useBooks();
   const [filters] = useFilters();
+  const [authors] = useAuthors();
 
   const [readList] = createStore(() => {
     if ( filters.reader() === 'all' || filters.reader() === 'any' ) {
-      return filters.reader();
+      return filters.reader() as 'all' || 'any';
     }
     
     return bookList().retired.filtered.findIndex(i => i.id === filters.reader());
@@ -25,14 +30,22 @@ const Retired: Component = () => {
   return (
     <Layout>
       <h1 class={s.subhead}>Jettisoned Books</h1>
-      <Filter retired />
+      <div class={s.filters}>
+        <Filter retired />
+        <SearchBar />
+      </div>
       <List
         list={
-          filters.readStatus() === 'all'
-          ? bookList().fullList.retired
-          : typeof readList() === 'number'
-            ? bookList().retired.filtered[readList() as number][filters.readStatus() as 'read' | 'unread']
-            : bookList().retired[readList() as 'all' | 'any'][filters.readStatus() as 'read' | 'unread']
+          filterSearched(
+            filters.search(),
+            pickBookSubList(
+              bookList(),
+              filters.readStatus(),
+              readList(),
+              true,
+            ),
+            authors,
+          )
         }
         read={
           typeof readList() === 'number' 

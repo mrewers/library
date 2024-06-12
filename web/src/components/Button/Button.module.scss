@@ -5,7 +5,7 @@
   cursor: pointer;
   padding: 0.4rem 0.7rem;
 
-  &:focus {
+  &:focus-visible {
     box-shadow: $focusShadow;
     outline: none;
   }
@@ -20,7 +20,7 @@
   color: $blueDark;
   background-color: $pink;
 
-  &:focus {
+  &:focus-visible {
     box-shadow: $focusShadowStrong;
   }
 }

@@ -21,7 +21,7 @@ interface IBookListObject {
   readonly unread: IBook[]
 }
 
-interface IBookStoreState {
+export interface IBookStoreState {
   readonly all: IBookListObject
   readonly any: IBookListObject
   readonly filtered: IBookListObject[]
