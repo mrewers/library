@@ -27,22 +27,6 @@
   }
 }
 
-.active {
-  @include link-hover-blue;
-
-  // Shift the active link indicator down to match the bottom of the focus ring.
-  &:focus-visible::before {
-    bottom: -0.4rem;
-    transition: bottom 0.2s;
-  }
-
-  // Shift the active link indicator back when no longer in focus.
-  &::before {
-    bottom: -2px;
-    transition: bottom 0.2s;
-  }
-}
-
 .link {
   @include border-blue-focus;
 
@@ -51,6 +35,20 @@
   &:hover {
     @include link-hover-white;
   }
-}
 
+  &[aria-current="page"] {
+    @include link-hover-blue;
+
+    // Shift the active link indicator down to match the bottom of the focus ring.
+    &:focus-visible::before {
+      bottom: -0.4rem;
+      transition: bottom 0.2s;
+    }
+
+    // Shift the active link indicator back when no longer in focus.
+    &::before {
+      bottom: -2px;
+      transition: bottom 0.2s;
+    }
   }
+}
