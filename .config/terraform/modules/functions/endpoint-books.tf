@@ -1,10 +1,10 @@
-module "delete_reader" {
+module "get_books" {
   source = "../templates/function"
 
   # Endpoint specific variables.
-  description = "Deletes and individual reader by id."
-  endpoint    = "reader"
-  method      = "delete"
+  description = "Retrieves a list of all books."
+  endpoint    = "books"
+  method      = "get"
 
   # Shared variables.
   db_name       = var.db_name

@@ -1,71 +1,44 @@
-resource "google_cloudfunctions2_function" "delete_book" {
-  name        = "delete-book"
+module "delete_book" {
+  source = "../templates/function"
+
+  # Endpoint specific variables.
   description = "Deletes an existing book."
-  location    = var.region
+  endpoint    = "book"
+  method      = "delete"
 
-  build_config {
-    runtime     = "go121"
-    entry_point = "DeleteBook"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/delete-book.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
+  # Shared variables.
+  db_name       = var.db_name
+  deploy_bucket = var.deploy_bucket
+  project       = var.project
+  region        = var.region
 }
 
-resource "google_cloudfunctions2_function" "patch_book" {
-  name        = "patch-book"
+module "patch_book" {
+  source = "../templates/function"
+
+  # Endpoint specific variables.
   description = "Updates an existing book."
-  location    = var.region
+  endpoint    = "book"
+  method      = "patch"
 
-  build_config {
-    runtime     = "go121"
-    entry_point = "PatchBook"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/patch-book.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
+  # Shared variables.
+  db_name       = var.db_name
+  deploy_bucket = var.deploy_bucket
+  project       = var.project
+  region        = var.region
 }
 
-resource "google_cloudfunctions2_function" "post_book" {
-  name        = "post-book"
+module "post_book" {
+  source = "../templates/function"
+
+  # Endpoint specific variables.
   description = "Creates a new book."
-  location    = var.region
+  endpoint    = "book"
+  method      = "post"
 
-  build_config {
-    runtime     = "go121"
-    entry_point = "PostBook"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/post-book.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
+  # Shared variables.
+  db_name       = var.db_name
+  deploy_bucket = var.deploy_bucket
+  project       = var.project
+  region        = var.region
 }

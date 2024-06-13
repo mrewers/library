@@ -1,71 +1,44 @@
-resource "google_cloudfunctions2_function" "get_readers" {
-  name        = "get-readers"
+module "get_readers" {
+  source = "../templates/function"
+
+  # Endpoint specific variables.
   description = "Retrieve a list of readers."
-  location    = var.region
+  endpoint    = "readers"
+  method      = "get"
 
-  build_config {
-    runtime     = "go121"
-    entry_point = "GetReaders"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/get-readers.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
+  # Shared variables.
+  db_name       = var.db_name
+  deploy_bucket = var.deploy_bucket
+  project       = var.project
+  region        = var.region
 }
 
-resource "google_cloudfunctions2_function" "post_readers" {
-  name        = "post-readers"
+module "post_readers" {
+  source = "../templates/function"
+
+  # Endpoint specific variables.
   description = "Add multiple new readers to the list of readers."
-  location    = var.region
+  endpoint    = "readers"
+  method      = "post"
 
-  build_config {
-    runtime     = "go121"
-    entry_point = "PostReaders"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/post-readers.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
+  # Shared variables.
+  db_name       = var.db_name
+  deploy_bucket = var.deploy_bucket
+  project       = var.project
+  region        = var.region
 }
 
-resource "google_cloudfunctions2_function" "put_readers" {
-  name        = "put-readers"
+module "put_readers" {
+  source = "../templates/function"
+
+  # Endpoint specific variables.
   description = "Update multiple existing readers."
-  location    = var.region
+  endpoint    = "readers"
+  method      = "put"
 
-  build_config {
-    runtime     = "go121"
-    entry_point = "PutReaders"
-    source {
-      storage_source {
-        bucket = var.deploy_bucket
-        object = "functions/put-readers.zip"
-      }
-    }
-  }
-
-  service_config {
-    environment_variables = {
-      FIRESTORE_DB_NAME = var.db_name
-      PROJECT_ID        = var.project
-    }
-  }
+  # Shared variables.
+  db_name       = var.db_name
+  deploy_bucket = var.deploy_bucket
+  project       = var.project
+  region        = var.region
 }
