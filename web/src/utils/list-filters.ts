@@ -125,11 +125,11 @@ export const filterSearched = (term: string, list: IBook[], authors?: IAuthor[])
 export const getRead = (list: IBook[], reader: string, readerCount: number): IBook[] => {
   switch (reader) {
     case 'all':
-      return list.filter((item: IBook) => item.readBy.length === readerCount);
+      return list.filter((item: IBook) => item.readBy && item.readBy.length === readerCount);
     case 'any':
-      return list.filter((item: IBook) => item.readBy.length > 0);
+      return list.filter((item: IBook) => item.readBy && item.readBy.length > 0);
     default:
-      return list.filter((item: IBook) => item.readBy.includes(reader));
+      return list.filter((item: IBook) => item.readBy && item.readBy.includes(reader));
   }
 };
 
@@ -143,11 +143,11 @@ export const getRead = (list: IBook[], reader: string, readerCount: number): IBo
 export const getUnread = (list: IBook[], reader: string, readerCount: number): IBook[] => {
   switch (reader) {
     case 'all':
-      return list.filter((item: IBook) => item.readBy.length === 0);
+      return list.filter((item: IBook) => !item.readBy || item.readBy.length === 0);
     case 'any':
-      return list.filter((item: IBook) => item.readBy.length < readerCount);
+      return list.filter((item: IBook) => !item.readBy || item.readBy.length < readerCount);
     default:
-      return list.filter((item: IBook) => !item.readBy.includes(reader));
+      return list.filter((item: IBook) => !item.readBy || !item.readBy.includes(reader));
   }
 };
 
