@@ -1,3 +1,8 @@
+variable "client_domain" {
+  description = "The domain permitted by CORs to access the API resources."
+  type        = string
+}
+
 variable "db_name" {
   description = "The name of the Firestore database where the application data is saved."
   type        = string

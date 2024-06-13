@@ -7,6 +7,7 @@ module "delete_reader" {
   method      = "delete"
 
   # Shared variables.
+  cors_domain   = var.client_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project

@@ -1,3 +1,9 @@
+variable "cors_domain" {
+  description = "The domain permitted by CORs to access the API resources."
+  type        = string
+  default     = "*"
+}
+
 variable "db_name" {
   description = "The name of the Firestore database where the application data is saved."
   type        = string
@@ -7,7 +13,6 @@ variable "description" {
   description = "Describes the purpose of the function."
   type        = string
 }
-
 
 variable "deploy_bucket" {
   description = "The Google Cloud Storage bucket used to store deployment assets."

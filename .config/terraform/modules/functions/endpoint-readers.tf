@@ -7,6 +7,7 @@ module "get_readers" {
   method      = "get"
 
   # Shared variables.
+  cors_domain   = var.client_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project
@@ -22,6 +23,7 @@ module "post_readers" {
   method      = "post"
 
   # Shared variables.
+  cors_domain   = var.client_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project
@@ -37,6 +39,7 @@ module "put_readers" {
   method      = "put"
 
   # Shared variables.
+  cors_domain   = var.client_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project

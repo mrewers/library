@@ -7,6 +7,7 @@ module "get_authors" {
   method      = "get"
 
   # Shared variables.
+  cors_domain   = var.client_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project

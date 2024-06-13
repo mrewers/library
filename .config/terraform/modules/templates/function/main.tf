@@ -16,6 +16,7 @@ resource "google_cloudfunctions2_function" "api_gateway_function" {
 
   service_config {
     environment_variables = {
+      ALLOWED_ORIGIN    = var.cors_domain
       FIRESTORE_DB_NAME = var.db_name
       PROJECT_ID        = var.project
     }

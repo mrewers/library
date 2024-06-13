@@ -16,6 +16,7 @@ resource "google_cloudfunctions2_function" "init" {
 
   service_config {
     environment_variables = {
+      ALLOWED_ORIGIN    = var.client_domain
       FIRESTORE_DB_NAME = var.db_name
       PROJECT_ID        = var.project
     }
@@ -40,6 +41,7 @@ resource "google_cloudfunctions2_function" "options" {
 
   service_config {
     environment_variables = {
+      ALLOWED_ORIGIN    = var.client_domain
       FIRESTORE_DB_NAME = var.db_name
       PROJECT_ID        = var.project
     }
