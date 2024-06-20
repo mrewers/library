@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"cloud.google.com/go/firestore"
+	"github.com/mrewers/library/scripts/shared"
+
 	"github.com/mrewers/library/serverless/utils"
 )
 
@@ -35,7 +37,7 @@ func updateAuthorsWithBookIds() {
 	ctx := context.Background()
 
 	// Connect to the database.
-	client, err := connectToFirestore(ctx)
+	client, err := shared.ConnectToFirestore(ctx)
 
 	if err != nil {
 		fmt.Println(err.Error())

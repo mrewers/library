@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/mrewers/library/scripts/shared"
 	"github.com/mrewers/library/serverless/utils"
 )
 
@@ -69,7 +70,7 @@ func transformBookData(book V1Book) BookListItem {
 func setReaderIds(books []BookListItem) []BookListItem {
 	var updated []BookListItem
 
-	readers := getReaders()
+	readers := shared.GetReaders()
 
 	for _, book := range books {
 		var idArr []string

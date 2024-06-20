@@ -1,4 +1,4 @@
-package main
+package shared
 
 import (
 	"context"
@@ -12,13 +12,14 @@ type ReaderListItem struct {
 	Name string
 }
 
-func getReaders() []ReaderListItem {
+// GetReaders retrieves a list of readers from the database.
+func GetReaders() []ReaderListItem {
 	var readers []ReaderListItem
 
 	ctx := context.Background()
 
 	// Connect to the database.
-	client, err := connectToFirestore(ctx)
+	client, err := ConnectToFirestore(ctx)
 
 	if err != nil {
 		fmt.Println(err.Error())

@@ -1,4 +1,4 @@
-package main
+package shared
 
 import (
 	"context"
@@ -19,8 +19,12 @@ func loadEnvFile() {
 	}
 }
 
-// connectToFirestore creates a new Firestore client to interact with the database.
-func connectToFirestore(ctx context.Context) (*firestore.Client, error) {
+// ConnectToFirestore creates a new Firestore client to interact with the database.
+// In order to connect successfully, this function expects to find a .env file in the root
+// directory of the script. This file should define the following environment variables:
+//   - PROJECT_ID: Name of the Google Cloud Storage project where the application resides.
+//   - FIRESTORE_DB_NAME: Name of the database where the application data is stored.
+func ConnectToFirestore(ctx context.Context) (*firestore.Client, error) {
 	loadEnvFile()
 
 	projectId := os.Getenv("PROJECT_ID")
