@@ -11,9 +11,9 @@ import (
 )
 
 func postBook(w http.ResponseWriter, r *http.Request) {
-	var body utils.Book
+	var book utils.Book
 
-	err := json.NewDecoder(r.Body).Decode(&body)
+	err := json.NewDecoder(r.Body).Decode(&book)
 
 	utils.SetCorsHeaders(w, r)
 
@@ -24,7 +24,12 @@ func postBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id := body.AddBook()
+	id := book.AddBook()
+
+	// Add book to the 'read' list for each reader who has read it at time of adding.
+	for _, reader := range book.ReadBy {
+		utils.UpdateReadersBooks(reader, id)
+	}
 
 	utils.SendResponse(
 		map[string]interface{}{"id": id},
