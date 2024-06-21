@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"encoding/json"
 	"log"
 	"time"
 
@@ -46,6 +47,29 @@ func (b Book) AddBook() string {
 // format used by the client into a time.Time representation.
 func (b Book) NormalizeDate() time.Time {
 	return ConvertStringToTime(b.DateAcquired)
+}
+
+// GetBook retrieves the book with the specified id from the Firestore database.
+func GetBook(id string) (Book, error) {
+	var book Book
+
+	doc, err := FirestoreGetOne(id, "books")
+
+	if err != nil {
+		log.Println(err.Error())
+		return book, err
+	}
+
+	bytes, err := json.Marshal(doc)
+
+	if err != nil {
+		log.Println(err.Error())
+		return book, err
+	}
+
+	json.Unmarshal(bytes, &book)
+
+	return book, err
 }
 
 // RemoveBook deletes the book at the specified id from the Firestore database.

@@ -35,6 +35,33 @@ func FirestorePrepUpdate(path string, value interface{}) firestore.Update {
 	}
 }
 
+func FirestoreGetOne(id string, col string) (map[string]interface{}, error) {
+	var doc map[string]interface{}
+
+	ctx := context.Background()
+
+	client, err := openFirestoreConn(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+		return doc, err
+	}
+
+	defer client.Close()
+
+	snap, err := client.Collection(col).Doc(id).Get(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+		return doc, err
+	}
+
+	doc = snap.Data()
+	doc["id"] = snap.Ref.ID
+
+	return doc, err
+}
+
 // FirestoreGetAll retrieves all the items from the provided collection.
 func FirestoreGetAll(collection string, order string) ([]map[string]interface{}, error) {
 	var docs []map[string]interface{}
