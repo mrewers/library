@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"slices"
 	"time"
@@ -154,7 +155,37 @@ func RemoveReader(id string) error {
 		log.Println(err.Error())
 	}
 
-	// TODO on delete remove reader from all books readBy field.
+	// On delete remove reader from all books readBy field.
+	books, err := GetBooksReadBy(id)
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	for _, bookId := range books {
+		b, err := GetBook(bookId)
+
+		if err != nil {
+			log.Println(err.Error())
+			continue
+		}
+
+		updated := []string{}
+
+		for _, rb := range b.ReadBy {
+			if rb != id {
+				updated = append(updated, rb)
+			}
+		}
+
+		fmt.Println(updated)
+
+		updates := []firestore.Update{
+			FirestorePrepUpdate("readBy", updated),
+		}
+
+		UpdateBook(bookId, updates)
+	}
 
 	return err
 }

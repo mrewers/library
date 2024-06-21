@@ -1,11 +1,13 @@
 package utils
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"time"
 
 	"cloud.google.com/go/firestore"
+	"google.golang.org/api/iterator"
 )
 
 type Book struct {
@@ -70,6 +72,42 @@ func GetBook(id string) (Book, error) {
 	json.Unmarshal(bytes, &book)
 
 	return book, err
+}
+
+// GetBooksReadBy retrieves a list of ids representing the
+// books the user has with the provided id has read.
+func GetBooksReadBy(id string) ([]string, error) {
+	var books []string
+
+	ctx := context.Background()
+
+	client, err := openFirestoreConn(ctx)
+
+	if err != nil {
+		log.Println(err.Error())
+		return books, err
+	}
+
+	defer client.Close()
+
+	iter := client.Collection("books").Where("readBy", "array-contains", id).Documents(ctx)
+
+	for {
+		doc, err := iter.Next()
+
+		if err == iterator.Done {
+			break
+		}
+
+		if err != nil {
+			log.Println(err.Error())
+			return books, err
+		}
+
+		books = append(books, doc.Ref.ID)
+	}
+
+	return books, err
 }
 
 // RemoveBook deletes the book at the specified id from the Firestore database.
