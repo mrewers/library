@@ -8,10 +8,10 @@
     <g clip-path="url(#_clip2)">
         <g transform="matrix(0.930102,0,0,0.930102,0.907842,0.833155)">
             <g id="back" transform="matrix(1,0,0,1,2.05138,1.61328)">
-                <text x="2.739px" y="29px" style="font-family:'ProzaLibre-BoldItalic', 'Proza Libre';font-weight:700;font-style:italic;font-size:40px;fill:rgb(0,14,77);fill-opacity:0.35;">L</text>
+                <text x="2.739px" y="29px" style="font-family:'ProzaLibre-BoldItalic', 'Proza Libre', sans-serif;font-weight:700;font-style:italic;font-size:40px;fill:rgb(0,14,77);fill-opacity:0.35;">L</text>
             </g>
             <g id="front" transform="matrix(1,0,0,1,1.82481,0.980913)">
-                <text x="3.026px" y="29px" style="font-family:'ProzaLibre-BoldItalic', 'Proza Libre';font-weight:700;font-style:italic;font-size:39px;fill:white;">L</text>
+                <text x="3.026px" y="29px" style="font-family:'ProzaLibre-BoldItalic', 'Proza Libre', sans-serif;font-weight:700;font-style:italic;font-size:39px;fill:white;">L</text>
             </g>
         </g>
     </g>

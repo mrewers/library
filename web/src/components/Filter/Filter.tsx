@@ -69,42 +69,38 @@ const Filter: Component<IFilterProps> = (props) => {
   
   return (
     <p class={s.container}>
-      <span>
-        Show
-        <label class={s.dropdown} for="filter-read-status">
-          <select
-            id="filter-read-status"
-            name="read-status"
-            value={filters.readStatus()}
-            onChange={handleChange}
-          >
-            <option value="all">All Books</option>
-            <option value="read">Read Books</option>
-            <option value="unread">Unread Books</option>
-          </select>
-        </label>
-      </span>
-      <span>
-        For
-        <label class={s.dropdown} for="filter-reader">
-          <select
-            id="filter-reader"
-            name="reader"
-            value={filters.reader()}
-            onChange={handleChange}
-          >
-            <option value="any">Any Reader</option>
-            <option value="all">All Readers</option>
-            <For each={readerList}>
-              { (r): JSX.Element => (
-                <option value={r.id}>
-                  {r.name}
-                </option>
-              ) }
-            </For>
-          </select>
-        </label>
-      </span>
+      <label class={s.dropdown} for="filter-read-status">
+        <span>Show</span>
+        <select
+          id="filter-read-status"
+          name="read-status"
+          value={filters.readStatus()}
+          onChange={handleChange}
+        >
+          <option value="all">All Books</option>
+          <option value="read">Read Books</option>
+          <option value="unread">Unread Books</option>
+        </select>
+      </label>
+      <label class={s.dropdown} for="filter-reader">
+        <span>For</span>
+        <select
+          id="filter-reader"
+          name="reader"
+          value={filters.reader()}
+          onChange={handleChange}
+        >
+          <option value="any">Any Reader</option>
+          <option value="all">All Readers</option>
+          <For each={readerList}>
+            { (r): JSX.Element => (
+              <option value={r.id}>
+                {r.name}
+              </option>
+            ) }
+          </For>
+        </select>
+      </label>
       <span>
         <strong>{`${matches() || 0} matches`}</strong>
       </span>

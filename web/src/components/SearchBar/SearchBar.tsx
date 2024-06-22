@@ -63,7 +63,14 @@ const SearchBar: Component = () => {
           value={searchInput()}
           onInput={handleInput}
         />
+        <label
+          class={s['visually-hidden']}
+          for="clear-search"
+        >
+          <span id="label-text">Clear Search</span>
+        </label>
         <button
+          aria-labelledby="label-text"
           class={s.clear}
           disabled={searchInput() === ""}
           id="clear-search"
@@ -71,7 +78,7 @@ const SearchBar: Component = () => {
           onClick={handleClear}
         >
           <Show when={searchInput() !== ""}>
-            <XIcon title="Clear Search"/>
+            <XIcon hidden title="Clear Search"/>
           </Show>
         </button>
         <Button
