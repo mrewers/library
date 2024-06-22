@@ -63,7 +63,7 @@ func FirestoreGetOne(id string, col string) (map[string]interface{}, error) {
 }
 
 // FirestoreGetAll retrieves all the items from the provided collection.
-func FirestoreGetAll(collection string, order string) ([]map[string]interface{}, error) {
+func FirestoreGetAll(collection string, order string, fields []string) ([]map[string]interface{}, error) {
 	var docs []map[string]interface{}
 
 	ctx := context.Background()
@@ -77,7 +77,13 @@ func FirestoreGetAll(collection string, order string) ([]map[string]interface{},
 
 	defer client.Close()
 
-	iter := client.Collection(collection).OrderBy(order, firestore.Asc).Documents(ctx)
+	var iter *firestore.DocumentIterator
+
+	if fields == nil {
+		iter = client.Collection(collection).OrderBy(order, firestore.Asc).Documents(ctx)
+	} else {
+		iter = client.Collection(collection).Select(fields...).OrderBy(order, firestore.Asc).Documents(ctx)
+	}
 
 	for {
 		doc, err := iter.Next()

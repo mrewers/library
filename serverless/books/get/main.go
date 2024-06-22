@@ -11,7 +11,7 @@ import (
 )
 
 func getBooks(w http.ResponseWriter, r *http.Request) {
-	books, err := utils.FirestoreGetAll("books", "title")
+	books, err := utils.FirestoreGetAll("books", "title", nil)
 
 	utils.SetCorsHeaders(w, r)
 

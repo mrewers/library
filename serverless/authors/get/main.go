@@ -10,7 +10,7 @@ import (
 )
 
 func getAuthors(w http.ResponseWriter, r *http.Request) {
-	authors, err := utils.FirestoreGetAll("authors", "nameFirst")
+	authors, err := utils.FirestoreGetAll("authors", "nameFirst", nil)
 
 	utils.SetCorsHeaders(w, r)
 

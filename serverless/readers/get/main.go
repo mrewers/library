@@ -10,7 +10,13 @@ import (
 )
 
 func getReaders(w http.ResponseWriter, r *http.Request) {
-	readers, err := utils.FirestoreGetAll("readers", "name")
+	fields := []string{
+		"color",
+		"id",
+		"name",
+	}
+
+	readers, err := utils.FirestoreGetAll("readers", "name", fields)
 
 	utils.SetCorsHeaders(w, r)
 
