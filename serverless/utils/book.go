@@ -10,16 +10,21 @@ import (
 	"google.golang.org/api/iterator"
 )
 
+type BookFormat struct {
+	Type string `json:"type,omitempty"`
+}
+
 type Book struct {
-	Author       []string `json:"author,omitempty"`
-	DateAcquired string   `json:"dateAcquired,omitempty"`
-	DateCreated  string   `json:"dateCreated,omitempty"`
-	DateModified string   `json:"dateModified,omitempty"`
-	DateRestored string   `json:"dateRestored,omitempty"`
-	DateRetired  string   `json:"dateRetired,omitempty"`
-	ReadBy       []string `json:"readBy,omitempty"`
-	Retired      *bool    `json:"retired,omitempty"`
-	Title        string   `json:"title,omitempty"`
+	Author       []string   `json:"author,omitempty"`
+	DateAcquired string     `json:"dateAcquired,omitempty"`
+	DateCreated  string     `json:"dateCreated,omitempty"`
+	DateModified string     `json:"dateModified,omitempty"`
+	DateRestored string     `json:"dateRestored,omitempty"`
+	DateRetired  string     `json:"dateRetired,omitempty"`
+	Format       BookFormat `json:"format,omitempty"`
+	ReadBy       []string   `json:"readBy,omitempty"`
+	Retired      *bool      `json:"retired,omitempty"`
+	Title        string     `json:"title,omitempty"`
 }
 
 // AddBook creates a Firestore document corresponding to the given Book.
