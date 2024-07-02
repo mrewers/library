@@ -7,7 +7,7 @@ module "patch_author" {
   method      = "patch"
 
   # Shared variables.
-  cors_domain   = var.client_domain
+  cors_domain   = var.cors_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project
@@ -23,7 +23,7 @@ module "post_author" {
   method      = "post"
 
   # Shared variables.
-  cors_domain   = var.client_domain
+  cors_domain   = var.cors_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
   project       = var.project

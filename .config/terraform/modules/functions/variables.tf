@@ -1,4 +1,4 @@
-variable "client_domain" {
+variable "cors_domain" {
   description = "The domain permitted by CORs to access the API resources."
   type        = string
 }
