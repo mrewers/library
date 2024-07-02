@@ -2,6 +2,10 @@ terraform {
   backend "gcs" {}
 
   required_providers {
+    auth0 = {
+      source  = "auth0/auth0"
+      version = ">= 1.3.0"
+    }
     google = {
       source  = "hashicorp/google"
       version = "~> 5.12"
@@ -33,8 +37,23 @@ provider "google-beta" {
   }
 }
 
+provider "auth0" {
+  domain        = var.auth0_domain
+  client_id     = var.auth0_client
+  client_secret = var.auth0_secret
+}
+
 locals {
   deploy_bucket = "${var.project}-deployments"
+}
+
+module "auth" {
+  source = "./modules/auth0"
+
+  client_domain       = var.client_domain
+  email_whitelist     = var.email_whitelist
+  google_oauth_client = var.google_oauth_client
+  google_oauth_secret = var.google_oauth_secret
 }
 
 module "storage" {
@@ -47,7 +66,7 @@ module "functions" {
   source = "./modules/functions"
 
   deploy_bucket = local.deploy_bucket
-  client_domain = var.client_domain
+  cors_domain   = "*"
   db_name       = var.db_name
   project       = var.project
   region        = var.region
