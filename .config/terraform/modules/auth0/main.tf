@@ -8,7 +8,8 @@ terraform {
 }
 
 locals {
-  client_uri = "http://localhost:3000"
+  client_uri = "https://${var.client_domain}"
+  logo_uri   = "${local.client_uri}/assets/public/logo.png"
 }
 
 resource "auth0_client" "client" {
@@ -17,7 +18,7 @@ resource "auth0_client" "client" {
   # Basic client information
   app_type    = "spa"
   description = "Authentication service for the book inventory site at ${var.client_domain}"
-  logo_uri    = "https://${var.client_domain}/logo.png"
+  logo_uri    = local.logo_uri
 
   # Application URIs
   allowed_origins     = [local.client_uri]

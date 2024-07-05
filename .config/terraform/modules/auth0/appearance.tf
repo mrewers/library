@@ -1,5 +1,5 @@
 resource "auth0_branding" "brand" {
-  logo_url = "https://books.marek.dev/logo.png"
+  logo_url = local.logo_uri
 
   colors {
     primary         = "#000e4d"
@@ -10,7 +10,6 @@ resource "auth0_branding" "brand" {
 resource "auth0_prompt" "prompt" {
   universal_login_experience = "new"
 }
-
 
 resource "auth0_prompt_custom_text" "prompt_text" {
   body = jsonencode({
