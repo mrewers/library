@@ -60,6 +60,7 @@ module "storage" {
   source = "./modules/storage"
 
   deploy_bucket = local.deploy_bucket
+  static_bucket = var.client_domain
 }
 
 module "functions" {
