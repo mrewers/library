@@ -10,6 +10,7 @@ module "patch_author" {
   cors_domain   = var.cors_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
+  environment   = var.environment
   project       = var.project
   region        = var.region
 }
@@ -26,6 +27,7 @@ module "post_author" {
   cors_domain   = var.cors_domain
   db_name       = var.db_name
   deploy_bucket = var.deploy_bucket
+  environment   = var.environment
   project       = var.project
   region        = var.region
 }

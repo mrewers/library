@@ -24,6 +24,7 @@ provider "google" {
 
   default_labels = {
     application = "library"
+    environment = var.environment
   }
 }
 
@@ -34,6 +35,7 @@ provider "google-beta" {
 
   default_labels = {
     application = "library"
+    environment = var.environment
   }
 }
 
@@ -45,6 +47,7 @@ provider "auth0" {
 
 locals {
   deploy_bucket = "${var.project}-deployments"
+  db_name       = "${var.db_name}-${var.environment}"
 }
 
 module "auth" {
@@ -52,6 +55,7 @@ module "auth" {
 
   client_domain       = var.client_domain
   email_whitelist     = var.email_whitelist
+  environment         = var.environment
   google_oauth_client = var.google_oauth_client
   google_oauth_secret = var.google_oauth_secret
 }
@@ -60,6 +64,7 @@ module "storage" {
   source = "./modules/storage"
 
   deploy_bucket = local.deploy_bucket
+  environment   = var.environment
   static_bucket = var.client_domain
 }
 
@@ -67,8 +72,9 @@ module "functions" {
   source = "./modules/functions"
 
   deploy_bucket = local.deploy_bucket
-  cors_domain   = "*"
-  db_name       = var.db_name
+  cors_domain   = var.environment == "prod" ? "https://${var.client_domain}" : "*"
+  db_name       = local.db_name
+  environment   = var.environment
   project       = var.project
   region        = var.region
 }
@@ -76,6 +82,7 @@ module "functions" {
 module "api" {
   source = "./modules/api"
 
+  environment       = var.environment
   delete_book_url   = module.functions.delete_book_url
   delete_reader_url = module.functions.delete_reader_url
   get_books_url     = module.functions.get_books_url
@@ -93,7 +100,8 @@ module "api" {
 module "firestore" {
   source = "./modules/firestore"
 
-  region = var.region
+  db_name = local.db_name
+  region  = var.region
 }
 
 
@@ -101,4 +109,5 @@ module "scheduler" {
   source = "./modules/scheduler"
 
   gateway_url = module.api.gateway_url
+  environment = var.environment
 }

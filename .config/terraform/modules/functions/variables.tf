@@ -13,6 +13,12 @@ variable "deploy_bucket" {
   type        = string
 }
 
+variable "environment" {
+  description = "The build environment into which the the application is being deployed."
+  type        = string
+  default     = "dev"
+}
+
 variable "project" {
   description = "The GCP account project that owns this application."
   type        = string

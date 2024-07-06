@@ -4,7 +4,7 @@ resource "google_firestore_database" "database" {
   concurrency_mode                  = "PESSIMISTIC"
   delete_protection_state           = "DELETE_PROTECTION_ENABLED"
   location_id                       = var.region
-  name                              = "library"
+  name                              = var.db_name
   point_in_time_recovery_enablement = "POINT_IN_TIME_RECOVERY_DISABLED"
   type                              = "FIRESTORE_NATIVE"
 }

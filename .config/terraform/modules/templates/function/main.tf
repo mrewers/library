@@ -1,5 +1,5 @@
 resource "google_cloudfunctions2_function" "api_gateway_function" {
-  name        = "${var.method}-${var.endpoint}"
+  name        = "${var.environment}-${var.method}-${var.endpoint}"
   description = var.description
   location    = var.region
 
@@ -9,7 +9,7 @@ resource "google_cloudfunctions2_function" "api_gateway_function" {
     source {
       storage_source {
         bucket = var.deploy_bucket
-        object = "functions/${var.method}-${var.endpoint}.zip"
+        object = "functions/${var.environment}/${var.method}-${var.endpoint}.zip"
       }
     }
   }

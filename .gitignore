@@ -24,6 +24,8 @@ vendor
 
 # Environmental Variables
 .env
+.env.*
+!.env.template
 *.tfvars
 .config/terraform/backend-config/*.hcl
 !.config/terraform/backend-config/template.hcl

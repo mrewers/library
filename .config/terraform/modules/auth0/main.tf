@@ -8,16 +8,17 @@ terraform {
 }
 
 locals {
-  client_uri = "https://${var.client_domain}"
-  logo_uri   = "${local.client_uri}/assets/public/logo.png"
+  protocol   = var.environment == "prod" ? "https" : "http"
+  client_uri = "${local.protocol}://${var.client_domain}"
+  logo_uri   = var.environment == "prod" ? "${local.client_uri}/assets/public/logo.png" : ""
 }
 
 resource "auth0_client" "client" {
-  name = "Library Prod"
+  name = "Library ${title(var.environment)}"
 
   # Basic client information
   app_type    = "spa"
-  description = "Authentication service for the book inventory site at ${var.client_domain}"
+  description = "Authentication service for the ${var.environment} book inventory site at ${var.client_domain}"
   logo_uri    = local.logo_uri
 
   # Application URIs
@@ -45,7 +46,7 @@ resource "auth0_client" "client" {
 }
 
 resource "auth0_connection" "google_oauth2" {
-  name     = "Google-OAuth"
+  name     = "Google-OAuth-${title(var.environment)}"
   strategy = "google-oauth2"
 
   options {

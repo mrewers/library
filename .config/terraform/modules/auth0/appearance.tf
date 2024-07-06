@@ -1,4 +1,7 @@
 resource "auth0_branding" "brand" {
+  // Skip the Auth0 branding if not a production build.
+  count = var.environment == "prod" ? 1 : 0
+
   logo_url = local.logo_uri
 
   colors {

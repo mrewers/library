@@ -1,5 +1,5 @@
 resource "google_cloudfunctions2_function" "init" {
-  name        = "init"
+  name        = "${var.environment}-init"
   description = "Initialize the Firestore database."
   location    = var.region
 
@@ -9,7 +9,7 @@ resource "google_cloudfunctions2_function" "init" {
     source {
       storage_source {
         bucket = var.deploy_bucket
-        object = "functions/init.zip"
+        object = "functions/${var.environment}/init.zip"
       }
     }
   }
@@ -24,7 +24,7 @@ resource "google_cloudfunctions2_function" "init" {
 }
 
 resource "google_cloudfunctions2_function" "options" {
-  name        = "options"
+  name        = "${var.environment}-options"
   description = "Send success message with CORS headers."
   location    = var.region
 
@@ -34,7 +34,7 @@ resource "google_cloudfunctions2_function" "options" {
     source {
       storage_source {
         bucket = var.deploy_bucket
-        object = "functions/options.zip"
+        object = "functions/${var.environment}/options.zip"
       }
     }
   }

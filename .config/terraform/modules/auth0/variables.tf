@@ -8,6 +8,12 @@ variable "email_whitelist" {
   type        = list(string)
 }
 
+variable "environment" {
+  description = "The build environment into which the the application is being deployed."
+  type        = string
+  default     = "dev"
+}
+
 variable "google_oauth_client" {
   description = "The client ID for the Google OAuth integration."
   type        = string

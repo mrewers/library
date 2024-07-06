@@ -24,6 +24,12 @@ variable "endpoint" {
   type        = string
 }
 
+variable "environment" {
+  description = "The build environment into which the the application is being deployed."
+  type        = string
+  default     = "dev"
+}
+
 variable "method" {
   description = "The HTTP method that at the above endpoint that this function corresponds to."
   type        = string

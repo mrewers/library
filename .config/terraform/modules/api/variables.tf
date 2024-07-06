@@ -1,3 +1,9 @@
+variable "environment" {
+  description = "The build environment into which the the application is being deployed."
+  type        = string
+  default     = "dev"
+}
+
 variable "delete_book_url" {
   description = "The invocation URL for the delete-book cloud function."
   type        = string

@@ -1,9 +1,16 @@
 resource "google_storage_bucket" "deployment_bucket" {
+  // Skip static site bucket creation if not a production build.
+  count = var.environment == "prod" ? 1 : 0
+
   provider      = google
   name          = var.deploy_bucket
   force_destroy = false
   location      = "US"
   storage_class = "STANDARD"
+
+  labels = {
+    environment = "all"
+  }
 
   versioning {
     enabled = true
@@ -11,6 +18,9 @@ resource "google_storage_bucket" "deployment_bucket" {
 }
 
 resource "google_storage_bucket" "static_site" {
+  // Skip static site bucket creation if not a production build.
+  count = var.environment == "prod" ? 1 : 0
+
   provider                    = google
   name                        = var.static_bucket
   force_destroy               = false
@@ -32,7 +42,10 @@ resource "google_storage_bucket" "static_site" {
 }
 
 resource "google_storage_bucket_iam_binding" "public_access" {
-  bucket = google_storage_bucket.static_site.name
+  // Skip static site bucket creation if not a production build.
+  count = var.environment == "prod" ? 1 : 0
+
+  bucket = google_storage_bucket.static_site[0].name
   role   = "roles/storage.objectViewer"
   members = [
     "allUsers",

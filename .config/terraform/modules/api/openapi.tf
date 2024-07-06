@@ -2,7 +2,7 @@ locals {
   openapi_schema = jsonencode({
     swagger : "2.0"
     info : {
-      title : "Library API"
+      title : "Library API - ${title(var.environment)}"
       version : "1.0.0"
       description : "Routes for used by the library client application to interact with the serverless backend."
     }

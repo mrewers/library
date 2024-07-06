@@ -1,5 +1,5 @@
 resource "google_cloud_scheduler_job" "keep_alive" {
-  name        = "keep-alive"
+  name        = "${var.environment}-keep-alive"
   description = "Ping the API gateway every ten minutes to reduce cold start time."
   paused      = false
   schedule    = "*/10 * * * *"

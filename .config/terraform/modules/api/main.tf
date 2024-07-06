@@ -1,7 +1,7 @@
 resource "google_api_gateway_api" "api" {
   provider     = google-beta
-  api_id       = "library-api"
-  display_name = "library-api"
+  api_id       = "library-${var.environment}-api"
+  display_name = "library-${var.environment}-api"
 }
 
 resource "google_api_gateway_api_config" "api_config" {
@@ -9,8 +9,8 @@ resource "google_api_gateway_api_config" "api_config" {
   api      = google_api_gateway_api.api.api_id
   # API config id must be unique otherwise the deployment will fail. We use the hash of the OpenAPI schema to
   # determine this unique value. This ensures that the API is redeployed only when the configuration actually changes.
-  api_config_id = "library-api-config-${substr(sha256(local.openapi_schema), 0, 39)}"
-  display_name  = "library-api-config"
+  api_config_id = "library-${var.environment}-api-config-${substr(sha256(local.openapi_schema), 0, 39)}"
+  display_name  = "library-${var.environment}-api-config"
 
   openapi_documents {
     document {
@@ -27,5 +27,5 @@ resource "google_api_gateway_api_config" "api_config" {
 resource "google_api_gateway_gateway" "api_gateway" {
   provider   = google-beta
   api_config = google_api_gateway_api_config.api_config.id
-  gateway_id = "library-api-gateway"
+  gateway_id = "library-${var.environment}-api-gateway"
 }

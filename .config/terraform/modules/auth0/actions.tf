@@ -4,6 +4,9 @@ locals {
 }
 
 resource "auth0_action" "email_whitelist" {
+  // Skip custom auth flows on non-production builds.
+  count = var.environment == "prod" ? 1 : 0
+
   name    = "Email Whitelist"
   runtime = "node18"
   deploy  = true
@@ -40,11 +43,17 @@ resource "auth0_action" "email_whitelist" {
 }
 
 resource "auth0_trigger_action" "email_whitelist_trigger" {
+  // Skip custom auth flows on non-production builds.
+  count = var.environment == "prod" ? 1 : 0
+
   trigger   = "post-login"
-  action_id = auth0_action.email_whitelist.id
+  action_id = auth0_action.email_whitelist[0].id
 }
 
 resource "auth0_action" "user_registration" {
+  // Skip custom auth flows on non-production builds.
+  count = var.environment == "prod" ? 1 : 0
+
   name    = "User Registration Whitelist"
   runtime = "node18"
   deploy  = true
@@ -53,7 +62,7 @@ resource "auth0_action" "user_registration" {
     /**
      * Handler that will be called during the execution of a PreRegistration flow.
      *
-     * @param {Event} event - DDetails about registration event..
+     * @param {Event} event - Details about registration event.
      * @param {PreUserRegistrationAPI} api - Interface whose methods can be used to change the behavior of the registration.
      */
     exports.onExecutePreUserRegistration = async (event, api) => {
@@ -78,6 +87,9 @@ resource "auth0_action" "user_registration" {
 }
 
 resource "auth0_trigger_action" "user_registration_trigger" {
+  // Skip custom auth flows on non-production builds.
+  count = var.environment == "prod" ? 1 : 0
+
   trigger   = "pre-user-registration"
-  action_id = auth0_action.user_registration.id
+  action_id = auth0_action.user_registration[0].id
 }
