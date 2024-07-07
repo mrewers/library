@@ -17,6 +17,11 @@ declare global {
     readonly dateAcquired?: string;
     readonly dateRestored?: string;
     readonly dateRetired?: string;
+    readonly format?: {
+      readonly cover?: TBookCovers;
+      readonly platform?: TEbookPlatforms;
+      readonly type?: TBookFormats;
+    };
     readonly readBy: readonly string[];
     readonly retired: boolean;
     readonly title: string;

@@ -80,10 +80,9 @@ input,
 select {
   @include border-light;
   @include font-base;
+  background-color: $white;
   box-shadow: $boxShadowInset;
   font-size: $fontSizeNormal;
-  line-height: 1.5;
-  padding: 0.1rem 0.3rem;
 
   &:not(:read-only):focus {
     box-shadow: $focusShadow;
@@ -93,6 +92,16 @@ select {
   &:read-only:focus {
     outline: none;
   }
+}
+
+input {
+  padding: 0.1rem 0.3rem;
+  line-height: 1.5;
+}
+
+select {
+  // Adjust padding for selects so that it visually matches the line-height of the input.
+  padding: calc(0.1rem + 2px) 0.3rem;
 }
 
 strong {

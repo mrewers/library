@@ -1,5 +1,4 @@
-import { For, Show } from 'solid-js';
-import type { Component, JSX } from 'solid-js';
+import { createSignal, For, Show } from 'solid-js';
 
 import Button from 'components/Button/Button';
 import Overlay from 'components/Overlay/Overlay';
@@ -9,6 +8,10 @@ import { useReaders } from 'context/ReaderProvider';
 import { useAuthors } from 'context/AuthorProvider';
 
 import { authorSuggestions } from 'utils/authors';
+import { bookConstants } from 'utils/books';
+import { titleCase } from 'utils/strings';
+
+import type { Component, JSX } from 'solid-js';
 
 import s from './Form.module.scss';
 
@@ -23,6 +26,7 @@ interface IBookBaseProps {
   readonly onDelete?: (e: MouseEvent) => void;
   readonly onInput: (e: InputEvent) => void;
   readonly onRetire?: (e: MouseEvent) => void;
+  readonly onSelect: (e: Event) => void;
   readonly onSubmit: (e: Event) => void;
   readonly overlayText?: string;
   readonly readonly?: boolean;
@@ -32,6 +36,25 @@ interface IBookBaseProps {
 const BookBase: Component<IBookBaseProps> = (props) => {
   const [authorList] = useAuthors();
   const [readerList] = useReaders();
+
+  const [format, setFormat] = createSignal('print');
+
+  /**
+   * In addition to updating form values, the format dropdown toggles the visibility of the
+   * format sub-values, namely the cover type for print and the e-book platform for digital.
+   * @param e A selection event.
+   */
+  const updateFormat = (e: Event) => {
+    if (e.currentTarget === null) {
+      return;
+    }
+
+    const { value } = e.currentTarget as HTMLSelectElement;
+
+    setFormat( value );
+
+    props.onSelect( e );
+  }
 
   /**
    * Determine whether the form submit button is enabled.
@@ -101,7 +124,59 @@ const BookBase: Component<IBookBaseProps> = (props) => {
           value={props.book.dateAcquired}
           onInput={props.onInput}
         />
+      </label>
+      <label class={s.label} for="format-type">
+        Format:
+        <select
+          id="format-type"
+          name="format-type"
+          disabled={disableFields()}
+          value={props.book?.format?.type || 'print'}
+          onChange={updateFormat}
+        >
+          <For each={bookConstants.BOOK_FORMATS}>{
+              (format): JSX.Element => (
+                <option value={format}>{titleCase(format)}</option>
+              )
+            }</For>
+        </select>
+      </label>
+      <Show when={format() === 'print'}>
+        <label class={s.label} for="format-cover">
+          Cover:
+          <select
+            id="format-cover"
+            name="format-cover"
+            disabled={disableFields()}
+            value={props.book?.format?.cover || 'paperback'}
+            onChange={props.onSelect}
+          >
+            <For each={bookConstants.BOOK_COVER_TYPES}>{
+              (cover): JSX.Element => (
+                <option value={cover}>{titleCase(cover)}</option>
+              )
+            }</For>
+          </select>
         </label>
+      </Show>
+      <Show when={format() === 'digital'}>
+        <label class={s.label} for="format-cover">
+          Platform:
+          <select
+            id="format-cover"
+            name="format-cover"
+            disabled={disableFields()}
+            value={props.book?.format?.platform || 'kindle'}
+            onChange={props.onSelect}
+          >
+            <For each={bookConstants.EBOOK_PLATFORMS}>{
+              (platform): JSX.Element => (
+                <option value={platform}>{titleCase(platform)}</option>
+              )
+            }</For>
+          </select>
+        </label>
+      </Show>
       <div class={s['meta-label']}>
         <span class={s['meta-label-text']}>Read By:</span>
         <div class={s['sub-label-column']}>

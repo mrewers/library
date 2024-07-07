@@ -7,7 +7,7 @@ import { useBooks } from 'context/BookProvider';
 import { useAuthors } from 'context/AuthorProvider';
 
 import { buildQuery } from 'utils/api';
-import { handleFormInput } from 'utils/form-helpers';
+import { handleFormInput, handleFormSelect } from 'utils/form-helpers';
 
 import type { Component } from 'solid-js';
 
@@ -56,6 +56,28 @@ const AddBook: Component<IAddBookProps> = (props) => {
       [name]: val,
     });
   };
+
+    /**
+   * Handle user selections in the edit book form.
+   * @param e A selection event.
+   * @param e.currentTarget The select element that is being interacted with.
+   */
+    const onSelect = ({ currentTarget }: Event): void => {
+      if (currentTarget === null) {
+        return;
+      }
+  
+      const {field, val} = handleFormSelect(currentTarget as HTMLSelectElement, book());
+  
+      if ( val === undefined ) {
+        return;
+      }
+  
+      setBook({
+        ...book(),
+        [field]: val,
+      });
+    }
 
   /**
    * Handles the selection/removal of an author using the author type-ahead component.
@@ -117,6 +139,7 @@ const AddBook: Component<IAddBookProps> = (props) => {
       onAuthor={onAuthor}
       onCancel={onCancel}
       onInput={onInput}
+      onSelect={onSelect}
       onSubmit={onSubmit}
     />
   );

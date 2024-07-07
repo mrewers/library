@@ -8,7 +8,7 @@ import { useAuthors } from 'context/AuthorProvider';
 import { useBooks } from 'context/BookProvider';
 
 import { buildQuery } from 'utils/api';
-import { handleFormInput } from 'utils/form-helpers';
+import { handleFormInput, handleFormSelect } from 'utils/form-helpers';
 
 interface IEditBookProps {
   readonly id: string;
@@ -63,6 +63,16 @@ const EditBook: Component<IEditBookProps> = (props) => {
   // };
 
   /**
+   * Keep track of which fields have been updated.
+   * @param fieldName The name of the field that has been updated.
+   */
+  const trackModified = (fieldName: string) => {
+    if (!modifiedFields().includes(fieldName)) {
+      setModifiedFields([...modifiedFields(), fieldName]);
+    }
+  }
+
+  /**
    * Handle user inputs in the edit book form.
    * @param e An input event.
    * @param e.currentTarget The input element that is being interacted with.
@@ -74,10 +84,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
 
     const [name, val] = handleFormInput(currentTarget as HTMLInputElement, book());
 
-    // Keep track of which fields have been updated.
-    if (!modifiedFields().includes(name)) {
-      setModifiedFields([...modifiedFields(), name]);
-    }
+    trackModified(name);
 
     setBook({
       ...book(),
@@ -86,13 +93,35 @@ const EditBook: Component<IEditBookProps> = (props) => {
   };
 
   /**
+   * Handle user selections in the edit book form.
+   * @param e A selection event.
+   * @param e.currentTarget The select element that is being interacted with.
+   */
+  const onSelect = ({ currentTarget }: Event): void => {
+    if (currentTarget === null) {
+      return;
+    }
+
+    const {field, val} = handleFormSelect(currentTarget as HTMLSelectElement, book());
+
+    if ( val === undefined ) {
+      return;
+    }
+
+    trackModified(field);
+
+    setBook({
+      ...book(),
+      [field]: val,
+    });
+  }
+
+  /**
    * Handles the selection/removal of an author using the author type-ahead component.
    * @param ids A list of author ids to be associated with the book.
    */
   const onAuthor = (ids: string[]): void => {
-    if (!modifiedFields().includes('author')) {
-      setModifiedFields([...modifiedFields(), 'author']);
-    }
+    trackModified('author');
 
     setBook({
       ...book(),
@@ -223,6 +252,7 @@ const EditBook: Component<IEditBookProps> = (props) => {
       onDelete={onDelete}
       onInput={onInput}
       onRetire={onRetire}
+      onSelect={onSelect}
       onSubmit={onSubmit}
       overlayText={overlayText()}
       readonly={props.readonly}
