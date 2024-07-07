@@ -255,14 +255,13 @@ const TypeAhead: Component<ITypeAheadProps> = (props) => {
           )
         }</For>
       </div>
-      <Show when={!showNestedForm()}>
+      <Show when={!showNestedForm() && !props.disabled}>
         <input
           autocomplete="off"
           class={s.input}
           id={`type-ahead-${props.name}`}
           name={props.name}
           placeholder={props.placeholder || ""}
-          readonly={props.disabled || false}
           type="text"
           value={userInput()}
           onInput={handleInput}
