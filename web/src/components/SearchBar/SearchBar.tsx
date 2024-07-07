@@ -1,4 +1,4 @@
-import { createSignal, Show } from 'solid-js';
+import { createEffect, createSignal, Show } from 'solid-js';
 
 import Button from 'components/Button/Button';
 import SearchIcon from 'components/Icons/SearchIcon';
@@ -19,7 +19,13 @@ import s from './SearchBar.module.scss';
 const SearchBar: Component = () => {
   const [searchInput, setSearchInput] = createSignal('');
 
-  const [_, { updateSearchFilter }] = useFilters();
+  const [{ search }, { updateSearchFilter }] = useFilters();
+
+  createEffect(() => {
+    if (search() !== '') {
+      setSearchInput(search());
+    }
+  });
 
   /**
    * Update the search bar's value based on user inputs.
