@@ -1,4 +1,4 @@
-import { createSignal, For, Show } from 'solid-js';
+import { createEffect, createSignal, For, Show } from 'solid-js';
 
 import Button from 'components/Button/Button';
 import Overlay from 'components/Overlay/Overlay';
@@ -38,6 +38,12 @@ const BookBase: Component<IBookBaseProps> = (props) => {
   const [readerList] = useReaders();
 
   const [format, setFormat] = createSignal('print');
+
+  createEffect(() => {
+    if (props?.book?.format?.type) {
+      setFormat(props.book.format.type);
+    }
+  });
 
   /**
    * In addition to updating form values, the format dropdown toggles the visibility of the
@@ -160,11 +166,11 @@ const BookBase: Component<IBookBaseProps> = (props) => {
         </label>
       </Show>
       <Show when={format() === 'digital'}>
-        <label class={s.label} for="format-cover">
+        <label class={s.label} for="format-platform">
           Platform:
           <select
-            id="format-cover"
-            name="format-cover"
+            id="format-platform"
+            name="format-platform"
             disabled={disableFields()}
             value={props.book?.format?.platform || 'kindle'}
             onChange={props.onSelect}
