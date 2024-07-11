@@ -35,6 +35,44 @@ func prepBookUpdates(book utils.Book, id string) []firestore.Update {
 		updates = append(updates, update)
 	}
 
+	if book.Format.Type != "" {
+		bookType := utils.FirestorePrepUpdate("format.type", book.Format.Type)
+
+		updates = append(updates, bookType)
+
+		if book.Format.Type == "digital" {
+			// Set default cover platform.
+			platform := "kindle"
+
+			if book.Format.Platform != "" {
+				platform = book.Format.Platform
+			}
+
+			bookPlatform := utils.FirestorePrepUpdate("format.platform", platform)
+
+			// Digital books don't have covers so we clear this value out.
+			bookCover := utils.FirestorePrepUpdate("format.cover", firestore.Delete)
+
+			updates = append(updates, bookCover, bookPlatform)
+		}
+
+		if book.Format.Type == "print" {
+			// Set default cover type.
+			cover := "paperback"
+
+			if book.Format.Cover != "" {
+				cover = book.Format.Cover
+			}
+
+			bookCover := utils.FirestorePrepUpdate("format.cover", cover)
+
+			// Print books don't have a platform so we clear this value out.
+			bookPlatform := utils.FirestorePrepUpdate("format.platform", firestore.Delete)
+
+			updates = append(updates, bookCover, bookPlatform)
+		}
+	}
+
 	if book.Title != "" {
 		update := utils.FirestorePrepUpdate("title", book.Title)
 		updates = append(updates, update)

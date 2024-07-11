@@ -11,7 +11,9 @@ import (
 )
 
 type BookFormat struct {
-	Type string `json:"type,omitempty"`
+	Cover    string `json:"cover,omitempty"`
+	Platform string `json:"platform,omitempty"`
+	Type     string `json:"type,omitempty"`
 }
 
 type Book struct {
@@ -39,6 +41,11 @@ func (b Book) AddBook() string {
 		"readBy":       b.ReadBy,
 		"retired":      b.Retired,
 		"title":        b.Title,
+		"format": map[string]interface{}{
+			"cover":    b.Format.Cover,
+			"platform": b.Format.Platform,
+			"type":     b.Format.Type,
+		},
 	}
 
 	id, err := firestoreCreateDocument(doc, "books")
