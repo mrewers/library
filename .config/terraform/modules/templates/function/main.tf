@@ -4,8 +4,9 @@ resource "google_cloudfunctions2_function" "api_gateway_function" {
   location    = var.region
 
   build_config {
-    runtime     = "go121"
+    runtime     = "go122"
     entry_point = "${title(var.method)}${title(var.endpoint)}"
+
     source {
       storage_source {
         bucket = var.deploy_bucket
@@ -18,6 +19,7 @@ resource "google_cloudfunctions2_function" "api_gateway_function" {
     environment_variables = {
       ALLOWED_ORIGIN    = var.cors_domain
       FIRESTORE_DB_NAME = var.db_name
+      LOG_EXECUTION_ID  = false
       PROJECT_ID        = var.project
     }
   }

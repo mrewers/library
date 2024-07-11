@@ -4,7 +4,7 @@ resource "google_cloudfunctions2_function" "init" {
   location    = var.region
 
   build_config {
-    runtime     = "go121"
+    runtime     = "go122"
     entry_point = "Init"
     source {
       storage_source {
@@ -18,6 +18,7 @@ resource "google_cloudfunctions2_function" "init" {
     environment_variables = {
       ALLOWED_ORIGIN    = var.cors_domain
       FIRESTORE_DB_NAME = var.db_name
+      LOG_EXECUTION_ID  = false
       PROJECT_ID        = var.project
     }
   }
@@ -29,7 +30,7 @@ resource "google_cloudfunctions2_function" "options" {
   location    = var.region
 
   build_config {
-    runtime     = "go121"
+    runtime     = "go122"
     entry_point = "Options200"
     source {
       storage_source {
@@ -43,6 +44,7 @@ resource "google_cloudfunctions2_function" "options" {
     environment_variables = {
       ALLOWED_ORIGIN    = var.cors_domain
       FIRESTORE_DB_NAME = var.db_name
+      LOG_EXECUTION_ID  = false
       PROJECT_ID        = var.project
     }
   }
