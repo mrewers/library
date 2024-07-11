@@ -13,6 +13,12 @@ resource "google_cloudfunctions2_function" "api_gateway_function" {
         object = "functions/${var.environment}/${var.method}-${var.endpoint}.zip"
       }
     }
+
+    environment_variables = {
+      # We add a version based on the locally generated zip of the function source.
+      # This ensures that the function is redeployed when the source code is altered.
+      VERSION = substr(filesha256("${path.root}/zips/${var.method}-${var.endpoint}.zip"), 0, 39)
+    }
   }
 
   service_config {
