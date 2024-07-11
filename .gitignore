@@ -4,7 +4,7 @@
 *.tfstate
 *.tfstate.backup
 dist
-serverless/**/*.zip
+.config/terraform/**/*.zip
 
 # Dependencies
 .yarn/*

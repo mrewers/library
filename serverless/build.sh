@@ -1,17 +1,35 @@
 #!/bin/bash
 
+ENV="dev"
+
+while getopts e:p: flag
+do
+  case "${flag}" in
+    e) ENV=${OPTARG};;
+    p) PROJECT=${OPTARG};;
+  esac
+done
+
 BUILD_ROOT=$(pwd)
-ZIPS=$BUILD_ROOT/zips
+ZIPS=$BUILD_ROOT/../.config/terraform/zips
+BUCKET=gs://$PROJECT-deployments/functions/$ENV
 
 function build {
+  printf "Building $2..."
+
   cd $BUILD_ROOT/$1
   go mod tidy
   GOWORK=off go mod vendor
-  zip -r -q $ZIPS/$2.zip *
+
+  zip -r -q -X $ZIPS/$2.zip *
+
+  printf "\u2705\n"
 }
 
 # Clear out old zip files.
-rm zips/*
+printf "Removing old zip files..."
+rm $ZIPS/*.zip
+printf "\u2705\n \n"
 
 # Build the patch-author function.
 build author/patch patch-author
@@ -51,3 +69,14 @@ build readers/post post-readers
 
 # Build the put-readers function.
 build readers/put put-readers
+
+# Upload zip files to Google Cloud Storage.
+if [[ $PROJECT = "" ]] ; then
+  echo -e "\nPlease provide the GCP project name using the -p flag if you intend to deploy the functions."
+  exit 0
+fi
+
+echo -e "\nSyncing zip files to $BUCKET:\n"
+gsutil -m rsync -d -x ".gitkeep" $ZIPS $BUCKET
+
+echo -e "\nDone!!!"
