@@ -54,7 +54,7 @@
     "@solid-primitives/scroll": "^2.0.23",
     "@solidjs/router": "^0.13.3",
     "auth0-js": "^9.22.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jwt-decode": "^3.1.2",
     "solid-js": "^1.8.17"
   },
