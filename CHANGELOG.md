@@ -5,18 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/mrewers/library/compare/v1.0.0...HEAD)
+## [Unreleased](https://github.com/mrewers/library/compare/v2.0.0...HEAD)
 
 _This sections lists changes committed since most recent release_
 
+## [v2.0.0](https://github.com/mrewers/library/compare/v1.0.0...v2.0.0) - Complete Rewrite (2024-08-04)
+
+**Breaking:**
+
+- Replaced Typescript/Express API with serverless functions written in Go.
+- Switched frontend framework from Preact to SolidJS.
+- Altered the database schema:
+  - Add an authors collection so that authors are created as their own document and can be shared across multiple books.
+  - Use document ids to create many-to-many relationships connecting authors to books and readers to books. These relationships were previously simple strings and connections had to be inferred from these text values.
+  - Use the `retired` property on a book to indicate retired books rather than separating active and retired books into separate collections.
+  - Add `dateCreated` and `dateModified` properties on all documents. All books also have a `dateAcquired` date and when a book is marked as read, a `dateRead` value stored in the reader's profile.
+
 **Added:**
 
-- Support for unit testing with Jest and Preact Testing Library, initial unit tests
+- A search bar to narrow down the displayed results on the books/retired pages.
+- A mobile-specific navigation menu.
+- A type-ahead component used to add authors to a book.
+- A configuration page (`/config`) to manage site settings.
+- Integrated Terraform configurations to manage deployments.
+- Migration scripts to export data from the v1 Firebase database, transform it into the v2 schema, and import the updated data into the v2 database.
 
 **Changed:**
 
-- Adjust CSS module type names to better match project conventions
-- Switch to using yarn for dependencies
+- Switched deployment infrastructure from Firebase to base Google Cloud.
+- Refreshed the UI, removing some visual clutter and improving mobile responsiveness.
+- Made the reader names and colors configurable.
+- Changed the package manager from NPM to Yarn 2.
+- Switch the bundler for the frontend from Parcel to Vite.
+
+**Fixed:**
+
+- Make the stats widget operational on the retired page (previously only reflected accurate numbers for active books).
+
+**Removed:**
+
+- GitHub actions to deploy the project on release.
 
 ## [v1.0.0](https://github.com/mrewers/library/compare/v0.2.0...v1.0.0) - (2020-08-04)
 
